@@ -1,0 +1,293 @@
+﻿<UserControl x:Class="HouseKeeping_Wpf.sensor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HouseKeeping_Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFC9F9F9" Offset="0.157"/>
+                <GradientStop Color="#FFD9F3D3" Offset="0.851"/>
+                <GradientStop Color="#FFEEEE77" Offset="0.446"/>
+                <GradientStop Color="#FFBEF2F7"/>
+                <GradientStop Color="#FFC1C6F9" Offset="0.614"/>
+                <GradientStop Color="#FFC5BBF1" Offset="0.639"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Ellipse Margin="2" Grid.Column="0" Grid.Row="0" Name="Ep_mw_a"
+                         Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_mw_a,Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_mw_a" 
+                   Foreground="Blue"
+                   >动量轮A</TextBlock>
+        <TextBox Grid.Column="0" Grid.Row="0" Name="tB_mw_a" Visibility="Hidden">Red</TextBox>
+
+        <Ellipse Margin="2" Grid.Column="1" Grid.Row="0" 
+                        
+                         Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_hmr_a,Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_hmr_a" 
+                    Foreground="Blue"
+                   >磁强计A</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="0" Name="tB_hmr_a" Visibility="Hidden">Red</TextBox>
+
+
+      
+
+    
+
+     
+        <Ellipse Margin="2" Grid.Column="5" Grid.Row="0" 
+                 Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_dam, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_dam" 
+                   Foreground="Blue"
+                   >阻尼状态</TextBlock>
+        <TextBox Grid.Column="5" Grid.Row="0" Name="tB_dam" Visibility="Hidden">Red</TextBox>
+
+
+
+        <Ellipse Margin="2" Grid.Column="0" Grid.Row="1" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_mw_b, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_mw_b" 
+                    Foreground="Blue"
+                   >动量轮B</TextBlock>
+        <TextBox Grid.Column="0" Grid.Row="1" Name="tB_mw_b" Visibility="Hidden">Red</TextBox>
+
+
+        <Ellipse Margin="2" Grid.Column="1" Grid.Row="1" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_hmr_b, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_hmr_b" 
+                    Foreground="Blue"
+                   >磁强计B</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="1" Name="tB_hmr_b" Visibility="Hidden">Red</TextBox>
+
+        <Ellipse Margin="2" Grid.Column="2" Grid.Row="1" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_gps_b, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_gps_b" 
+                    Foreground="Blue"
+                   >ADCS</TextBlock>
+        <TextBox Grid.Column="2" Grid.Row="1" Name="tB_gps_b" Visibility="Hidden">Red</TextBox>
+
+     
+
+     
+
+        <Ellipse Margin="2" Grid.Column="5" Grid.Row="1" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_pitch, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_pitch" 
+                    Foreground="Blue"
+                   >俯仰控制</TextBlock>
+        <TextBox Grid.Column="5" Grid.Row="1" Name="tB_pitch" Visibility="Hidden">Red</TextBox>
+
+
+
+        <Ellipse Margin="2" Grid.Column="0" Grid.Row="2" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_atenna_arm, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_atenna_arm" 
+                    Foreground="Blue"
+                   >天线ARM</TextBlock>
+        <TextBox Grid.Column="0" Grid.Row="2" Name="tB_atenna_arm" Visibility="Hidden">Red</TextBox>
+
+
+
+        <Ellipse Margin="2" Grid.Column="1" Grid.Row="2" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_atenna_1, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_atenna_1" 
+                    Foreground="Blue"
+                   >天线1</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="2" Name="tB_atenna_1" Visibility="Hidden">Red</TextBox>
+
+
+        <Ellipse Margin="2" Grid.Column="2" Grid.Row="2" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_atenna_2, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_atenna_2" 
+                    Foreground="Blue"
+                   >天线2</TextBlock>
+        <TextBox Grid.Column="2" Grid.Row="2" Name="tB_atenna_2" Visibility="Hidden">Red</TextBox>
+
+        <Ellipse Margin="2" Grid.Column="3" Grid.Row="2" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_atenna_3, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_atenna_3" 
+                   Foreground="Blue"
+                   >天线3</TextBlock>
+        <TextBox Grid.Column="3" Grid.Row="2" Name="tB_atenna_3" Visibility="Hidden">Red</TextBox>
+
+        <Ellipse Margin="2" Grid.Column="4" Grid.Row="2" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_atenna_4, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_atenna_4" 
+                    Foreground="Blue"
+                   >天线4</TextBlock>
+        <TextBox Grid.Column="4" Grid.Row="2" Name="tB_atenna_4" Visibility="Hidden">Red</TextBox>
+
+
+        <Ellipse Margin="2" Grid.Column="5" Grid.Row="2" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_ctrl, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_ctrl" 
+                    Foreground="Blue"
+                   >三轴稳定</TextBlock>
+        <TextBox Grid.Column="5" Grid.Row="2" Name="tB_ctrl" Visibility="Hidden">Red</TextBox>
+
+
+
+        <Ellipse Margin="2" Grid.Column="0" Grid.Row="3" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_hmr_pwr, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_hmr_pwr" 
+                    Foreground="Blue"
+                   FontSize="18">磁强计电源</TextBlock>
+        <TextBox Grid.Column="0" Grid.Row="3" Name="tB_hmr_pwr" Visibility="Hidden">Red</TextBox>
+
+
+        <Ellipse Margin="2" Grid.Column="1" Grid.Row="3" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_atenna_pwr, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_atenna_pwr" 
+                    Foreground="Blue"
+                   >天线电源</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="3" Name="tB_atenna_pwr" Visibility="Hidden">Red</TextBox>
+
+      
+
+       
+
+        
+        <Ellipse Margin="2" Grid.Column="5" Grid.Row="3" Stroke="Yellow" StrokeThickness="1">
+            <Ellipse.Fill>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" GradientOrigin="0.7,0.3">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding ElementName=tB_always_dam, Path=Text}" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Name="tBk_always_dam" 
+                    Foreground="Blue"
+                   >永久阻尼</TextBlock>
+        <TextBox Grid.Column="5" Grid.Row="3" Name="tB_always_dam" Visibility="Hidden">Red</TextBox>
+    </Grid>
+
+</UserControl>
