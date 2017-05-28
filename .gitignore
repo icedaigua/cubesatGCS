@@ -1,6 +1,8 @@
 **/bin
 **/obj
 
+**/__pycache__
+
 .vscode
 .vs
 
