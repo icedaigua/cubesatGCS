@@ -51,50 +51,50 @@
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_mwa_open_Checked"
-						  Unchecked="cB_mwa_open_UnChecked"
+				
 						  >动量轮A开</CheckBox>
                     <CheckBox Name="cB_mwa_close" Grid.Column="0" Grid.Row="1" Margin="2,2,5,2"   
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 						  Checked="cB_mwa_close_Checked"
-						  Unchecked="cB_mwa_close_UnChecked"
+						
 						 >动量轮A关</CheckBox>
                     <CheckBox Name="cB_mwb_open" Grid.Column="0" Grid.Row="2" Margin="2,2,5,2"   
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_mwb_open_Checked"
-						  Unchecked="cB_mwb_open_UnChecked"
+						 
 						  >动量轮B开</CheckBox>
                     <CheckBox Name="cB_mwb_close" Grid.Column="0" Grid.Row="3" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						   Checked="cB_mwb_close_Checked"
-						  Unchecked="cB_mwb_close_UnChecked"
+					
 						  >动量轮B关</CheckBox>
 
                     <CheckBox Name="cB_hmra_open" Grid.Column="1" Grid.Row="0" Margin="2,2,5,2"   
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 						   FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_hmra_open_Checked"
-						  Unchecked="cB_hmra_open_UnChecked"
+						
 						  >磁强计A开</CheckBox>
                     <CheckBox Name="cB_hmra_close" Grid.Column="1" Grid.Row="1" Margin="2,2,5,2"  
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_hmra_close_Checked"
-						  Unchecked="cB_hmra_close_UnChecked"
+				
 						 >磁强计A关</CheckBox>
                     <CheckBox Name="cB_hmrb_open" Grid.Column="1" Grid.Row="2" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_hmrb_open_Checked"
-						  Unchecked="cB_hmrb_open_UnChecked"
+						
 						  >磁强计B开</CheckBox>
                     <CheckBox Name="cB_hmrb_close" Grid.Column="1" Grid.Row="3" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						   Checked="cB_hmrb_close_Checked"
-						  Unchecked="cB_hmrb_close_UnChecked"
+						
 						  >磁强计B关</CheckBox>
 
                 
@@ -103,99 +103,89 @@
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_batt_warm_open_Checked"
-						  Unchecked="cB_batt_warm_open_UnChecked"
+				
 						  >电池加热开</CheckBox>
                     <CheckBox Name="cB_batt_warm_close" Grid.Column="0" Grid.Row="5" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						   Checked="cB_batt_warm_close_Checked"
-						  Unchecked="cB_batt_warm_close_UnChecked"
+					
 						  >电池加热关</CheckBox>
 
                     <CheckBox Name="cB_atenna_pwr_open" Grid.Column="2" Grid.Row="0" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 						   FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_atenna_pwr_open_Checked"
-						  Unchecked="cB_atenna_pwr_open_UnChecked"
+		
 						  >天线电源开</CheckBox>
                     <CheckBox Name="cB_atenna_pwr_close" Grid.Column="2" Grid.Row="1" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						   Checked="cB_atenna_pwr_close_Checked"
-						  Unchecked="cB_atenna_pwr_close_UnChecked"
+				
 						  >天线电源关</CheckBox>
 
                     <CheckBox Name="cB_fan_open_start" Grid.Column="2" Grid.Row="2" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_fan_open_start_Checked"
-						  Unchecked="cB_fan_open_start_UnChecked"
+						
 						  >帆板展开启动</CheckBox>
                     <CheckBox Name="cB_fan_open_stop" Grid.Column="2" Grid.Row="3" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						   Checked="cB_fan_open_stop_Checked"
-						  Unchecked="cB_fan_open_stop_UnChecked"
+						
 						  >帆板展开停止</CheckBox>
 
                     <CheckBox Name="cB_atenna_open" Grid.Column="2" Grid.Row="4" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_atenna_open_Checked"
-						  Unchecked="cB_atenna_open_UnChecked"
 						  >天线展开启动</CheckBox>
                     <CheckBox Name="cB_hk_reset" Grid.Column="2" Grid.Row="5" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						   Checked="cB_hk_reset_Checked"
-						  Unchecked="cB_hk_reset_UnChecked"
 						  >星务重启</CheckBox>
 
                     <CheckBox Name="cB_start_down" Grid.Column="1" Grid.Row="4" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_start_down_Checked"
-						  Unchecked="cB_start_down_UnChecked"
+						
 						  >开始下行</CheckBox>
                     <CheckBox Name="cB_stop_down" Grid.Column="1" Grid.Row="5" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						   Checked="cB_stop_down_Checked"
-						  Unchecked="cB_stop_down_UnChecked"
 						  >空指令</CheckBox>
 
 
                     <CheckBox Name="cB_dam_mode" Grid.Column="3" Grid.Row="0" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 						   FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						   Checked="cB_dam_mode_Checked"
-						  Unchecked="cB_dam_mode_UnChecked"
+
 						  >速率阻尼模式</CheckBox>
                     <CheckBox Name="cB_pitch_mode" Grid.Column="3" Grid.Row="1" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						   Checked="cB_pitch_mode_Checked"
-						  Unchecked="cB_pitch_mode_UnChecked"
+
 						  >俯仰控制模式</CheckBox>
                     <CheckBox Name="cB_ctrl_mode" Grid.Column="3" Grid.Row="2" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						   Checked="cB_ctrl_mode_Checked"
-						  Unchecked="cB_ctrl_mode_UnChecked"
+
 						  >三轴稳定模式</CheckBox>
 
                     <CheckBox Name="cB_reDam" Grid.Column="3" Grid.Row="3" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						   Checked="cB_reDam_Checked"
-						  Unchecked="cB_reDam_UnChecked"
+
 						  >重阻尼</CheckBox>
 
                     <CheckBox Name="cB_always_dam" Grid.Column="3" Grid.Row="4" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center"
 							FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						   Checked="cB_always_dam_Checked"
-						  Unchecked="cB_always_dam_UnChecked"
+	
 						  >永久阻尼模式</CheckBox>
                  
 
@@ -227,40 +217,35 @@
                     <CheckBox  Name="cB_P_para" Grid.Column="0" Grid.Row="0" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"                         
-						  Checked="cB_P_para_Checked"
-						  Unchecked="cB_P_para_UnChecked">P参数</CheckBox>
+						 >P参数</CheckBox>
                     <CheckBox  Name="cB_Z_para" Grid.Column="0" Grid.Row="1" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_Z_para_Checked"
-						  Unchecked="cB_Z_para_UnChecked">Z参数</CheckBox>
+						  >Z参数</CheckBox>
                     <CheckBox  Name="cB_D_para" Grid.Column="0" Grid.Row="2" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_D_para_Checked"
-						  Unchecked="cB_D_para_UnChecked">D参数</CheckBox>
+						  >D参数</CheckBox>
                     <CheckBox  Name="cB_time_para" Grid.Column="0" Grid.Row="3" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_time_para_Checked"
-						  Unchecked="cB_time_para_UnChecked">星上时间</CheckBox>
+						  >星上时间</CheckBox>
                     <CheckBox  Name="cB_down_period_para" Grid.Column="0" Grid.Row="4" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_down_period_para_Checked"
-						  Unchecked="cB_down_period_para_UnChecked">下行周期</CheckBox>
+						  >下行周期</CheckBox>
 
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_P_para" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_P_para_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						 FontSize="22" Foreground="DarkGreen"
 						 >0</TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Name="tB_Z_para" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_Z_para_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						  FontSize="22" Foreground="DarkGreen"
 						 >0</TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Name="tB_D_para" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_D_para_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						  FontSize="22" Foreground="DarkGreen"
 						 >0</TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_time_para" 
@@ -268,7 +253,7 @@
 						  FontSize="22" Foreground="DarkGreen"
 						 >1442311200</TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_down_period" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_down_period_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						  FontSize="22" Foreground="DarkGreen"
 						 >2000</TextBox>
 
@@ -415,25 +400,17 @@
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_adcs_open_Checked"
-						  Unchecked="cB_adcs_open_UnChecked"
+				
 						  >姿控计算机开</CheckBox>
                     <CheckBox Name="cB_adcs_close" Grid.Column="0" Grid.Row="1" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						  Checked="cB_adcs_close_Checked"
-						  Unchecked="cB_adcs_close_UnChecked"
+					
 						  >姿控计算机关</CheckBox>
 
 
-                 
-
-                    <CheckBox Name="cB_close_all" Grid.Column="0" Grid.Row="5" Margin="2,2,5,2" 
-						  HorizontalAlignment="Left" VerticalAlignment="Center" 
-						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_close_all_Checked"
-						  Unchecked="cB_close_all_UnChecked"
-                          Visibility="Hidden"
-						  >CLOSE ALL</CheckBox>
+               
 
 
                   
@@ -441,8 +418,7 @@
                     <CheckBox Name="cB_error" Grid.Column="0" Grid.Row="4" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_error_Checked"
-						  Unchecked="cB_error_UnChecked"
+				
 						  >使能纠错</CheckBox>
 
 
@@ -474,20 +450,18 @@
                     <CheckBox Name="cB_pianzhi_mode" Grid.Column="0" Grid.Row="0" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_pianzhi_mode_Checked"
-						  Unchecked="cB_pianzhi_mode_UnChecked"
+					
 						  >加速离轨</CheckBox>
 
 
                     <CheckBox  Name="cB_delay_hk" Grid.Column="0" Grid.Row="2" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_delay_hk_Checked"
-						  Unchecked="cB_delay_hk_UnChecked">延时遥测</CheckBox>
+						 >延时遥测</CheckBox>
 
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_bias_mode" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_bias_mode_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						 FontSize="22" Foreground="DarkGreen"
 						 >0</TextBox>
 
@@ -498,41 +472,15 @@
 						 ></ComboBox>
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Name="tB_delay_index" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_delay_index_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						  FontSize="22" Foreground="DarkGreen"
 						 >0</TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_delay_hk" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_delay_hk_KeyDown"
+						 Width="200" TextAlignment="Center" 
 						  FontSize="22" Foreground="DarkGreen"
 						 >2085979698</TextBox>
 
 
-
-                    <CheckBox Name="cB_rsh" Grid.Column="0" Grid.Row="4" Margin="2,2,5,2" 
-						  HorizontalAlignment="Left" VerticalAlignment="Center" 
-						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_rsh_Checked"
-						  Unchecked="cB_rsh_UnChecked"
-                                      Visibility="Hidden"
-						  >RSH</CheckBox>
-
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_rsh" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_rsh_KeyDown"
-						  FontSize="22" Foreground="DarkGreen"
-                             Visibility="Hidden"
-						 ></TextBox>
-
-                    <CheckBox Name="cB_camera" Grid.Column="0" Grid.Row="5" Margin="2,2,5,2" 
-						  HorizontalAlignment="Left" VerticalAlignment="Center" 
-						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-						  Checked="cB_camera_Checked"
-						  Unchecked="cB_camera_UnChecked"
-						  >延时成像</CheckBox>
-
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_camera" 
-						 Width="200" TextAlignment="Center" KeyDown="tB_camera_KeyDown"
-						  FontSize="22" Foreground="DarkGreen"
-						 >1200</TextBox>
 
                 </Grid>
             </GroupBox>

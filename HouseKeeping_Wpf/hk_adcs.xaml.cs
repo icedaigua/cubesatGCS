@@ -21,7 +21,7 @@ namespace HouseKeeping_Wpf
             #region CPU
             //tB_sat_id.Text = "NJUST-2";
 
-            tB_reboot_count.Text = (down_info.rst_cnt - 28045).ToString();
+            tB_reboot_count.Text = (down_info.rst_cnt).ToString();
             tB_rec_cmd_count.Text = down_info.rcv_cnt.ToString();
             tB_down_count.Text = down_info.ack_cnt.ToString();
 
@@ -104,17 +104,17 @@ namespace HouseKeeping_Wpf
 
 
 
-            //tB_tempe_1.Text = ((down_info.adc_1 / 4096.0 * 5.0 - 0.273) * 1000.0).ToString("F2");
-            //tB_tempe_1.Text = ((down_info.adc_1 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_2.Text = ((down_info.adc_2 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_3.Text = ((down_info.adc_3 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_4.Text = ((down_info.adc_4 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_5.Text = ((down_info.adc_5 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_6.Text = ((down_info.adc_6 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_7.Text = ((down_info.adc_7 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_8.Text = ((down_info.adc_8 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_9.Text = ((down_info.adc_9 / 4096.0 * 5.0 - 2.73) * 300.0).ToString("F2");
-            //tB_tempe_10.Text = ((down_info.adc_10 / 4096.0 * 5.0 - 0.273) * 1000.0).ToString("F2");
+            tB_tempe_1.Text =   (down_info.adc[0]   ).ToString();
+            tB_tempe_2.Text =   (down_info.adc[1]  ).ToString();
+            tB_tempe_3.Text =   (down_info.adc[2]  ).ToString();
+            tB_tempe_4.Text =   (down_info.adc[3]  ).ToString();
+            tB_tempe_5.Text =   (down_info.adc[4]  ).ToString();
+            tB_tempe_6.Text =   (down_info.adc[5]  ).ToString();
+            tB_tempe_7.Text =   (down_info.adc[6]  ).ToString();
+            tB_tempe_8.Text =   (down_info.adc[7]  ).ToString();
+            tB_tempe_9.Text =   (down_info.adc[8]  ).ToString();
+            tB_tempe_10.Text =  (down_info.adc[9]  ).ToString();
+     
             //tB_tempe_2.Text = ((down_info.adc_2 / 4096.0 * 5.0 - 0.273) * 1000.0).ToString("F2");
             //tB_tempe_3.Text = ((down_info.adc_3 / 4096.0 * 5.0 - 0.273) * 1000.0).ToString("F2");
             //tB_tempe_4.Text = ((down_info.adc_4 / 4096.0 * 5.0 - 0.273) * 1000.0).ToString("F2");

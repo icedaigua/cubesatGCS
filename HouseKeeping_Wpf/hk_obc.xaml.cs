@@ -74,12 +74,12 @@ namespace HouseKeeping_Wpf
             tB_BusV.Text = down_info.out_BusV.ToString();
 
 
-            tB_outC_1.Text = down_info.Vol_5_C[0].ToString();
-            tB_outC_2.Text = down_info.Vol_5_C[1].ToString();
-            tB_outC_3.Text = down_info.Vol_5_C[2].ToString();
-            tB_outC_4.Text = down_info.Vol_5_C[3].ToString();
-            tB_outC_5.Text = down_info.Vol_5_C[4].ToString();
-            tB_outC_6.Text = down_info.Vol_5_C[5].ToString();
+            //tB_outC_1.Text = down_info.Vol_5_C[0].ToString();
+            //tB_outC_2.Text = down_info.Vol_5_C[1].ToString();
+            //tB_outC_3.Text = down_info.Vol_5_C[2].ToString();
+            //tB_outC_4.Text = down_info.Vol_5_C[3].ToString();
+            //tB_outC_5.Text = down_info.Vol_5_C[4].ToString();
+            //tB_outC_6.Text = down_info.Vol_5_C[5].ToString();
 
             //tB_outBusC_1.Text = down_info.Bus_c_1.ToString();
             //tB_outBusC_2.Text = down_info.Bus_c_2.ToString();
@@ -98,8 +98,8 @@ namespace HouseKeeping_Wpf
 
             #endregion
 
-            //tB_save_frame_cnt.Text = down_info.index.ToString();
-            //tB_flash_block.Text = down_info.num.ToString();
+            tB_save_frame_cnt.Text = down_info.aindex.ToString();
+            tB_flash_block.Text = down_info.mindex.ToString();
 
         }
 

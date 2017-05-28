@@ -201,7 +201,17 @@
 
             </TabItem>
 
+            <TabItem Header="电源信息">
 
+                    <HouseKeeping_Wpf:Eps />
+            </TabItem>
+
+            <TabItem Header="通信信息">
+
+                    <HouseKeeping_Wpf:commuNicator />
+            </TabItem>
+            
+            
             <TabItem Header="监控设置">
 
                 <Grid>
@@ -318,6 +328,7 @@
                             <TextBox Name="tB_recbuf" Width="800" Height="400" 
                                      Foreground="BlueViolet" FontWeight="Bold"
 									 TextWrapping="Wrap" 
+                                  
 								 ScrollViewer.CanContentScroll="True" 
 								 VerticalScrollBarVisibility="Auto"/>
                         </GroupBox>

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.IO.Ports;
-using System.Runtime.InteropServices;
 
 
 using CubeCOM;
@@ -246,6 +245,7 @@ namespace CubeGCS_Wpf
 
         private void btn_serial_rec_clear_Click(object sender, RoutedEventArgs e)
         {
+            builder.Clear();
             tB_recbuf.Clear();
         }
 
@@ -411,25 +411,6 @@ namespace CubeGCS_Wpf
                 cmd_cnt++;
             }
 
-            if (hk_up_frm.zero_mode_checked)   //控制模式
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                   cubeCOMM.INS_ZERO_MODE,
-                                   delay_time
-                                   );
-                cmd_cnt++;
-            }
-
-
-
-            if (hk_up_frm.close_all_checked) //CLOSE ALL
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_CLOSE_ALL,
-                     delay_time);
-
-                cmd_cnt++;
-            }
-
 
 
 
@@ -446,44 +427,44 @@ namespace CubeGCS_Wpf
 
             #endregion
 
+            GCS_send_cmd(up_buf, 0, cubeCOMM.ctrl_length,cmd_cnt);
+            //if (cmd_cnt < 1)
+            //{
+            //    MessageBox.Show("请选择一条指令！");
+            //    return;
+            //}
 
-            if (cmd_cnt < 1)
-            {
-                MessageBox.Show("请选择一条指令！");
-                return;
-            }
-
-            if (cmd_cnt>=2)
-            {
-                MessageBox.Show("每次只能执行一条指令，请重选！");
-                return;
-            }
+            //if (cmd_cnt>=2)
+            //{
+            //    MessageBox.Show("每次只能执行一条指令，请重选！");
+            //    return;
+            //}
 
 
-            //串口打开则用串口
-            if(In_Port.IsOpen)
-            {
-                In_Port.Write(up_buf, 0, cubeCOMM.ctrl_length);
-                return;
-            }
+            ////串口打开则用串口
+            //if(In_Port.IsOpen)
+            //{
+            //    In_Port.Write(up_buf, 0, cubeCOMM.ctrl_length);
+            //    return;
+            //}
 
-            if(client_up_Socket == null)
-            {
+            //if(client_up_Socket == null)
+            //{
 
-                MessageBox.Show("上行未创建，请先打开网络！");
-                return;
-            }
+            //    MessageBox.Show("上行未创建，请先打开网络！");
+            //    return;
+            //}
 
-            try
-            {
-                client_up_Socket.Send(up_buf, 0, cubeCOMM.ctrl_length, SocketFlags.None);
+            //try
+            //{
+            //    client_up_Socket.Send(up_buf, 0, cubeCOMM.ctrl_length, SocketFlags.None);
 
-                clear_up_buf();
-            }
-            catch
-            {
-                MessageBox.Show("网络错误！");
-            }
+            //    //clear_up_buf();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("网络错误！");
+            //}
 
 
         }
@@ -539,7 +520,9 @@ namespace CubeGCS_Wpf
                 UInt32 para1 = 0, para2 = 0;
 
 
-                para1 = hk_up_frm.delay_hk_select * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_index;
+                //para1 = hk_up_frm.delay_hk_select * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_index;
+                para1 = hk_up_frm.delay_hk_index * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_select;
+
 
                 para2 = hk_up_frm.delay_hk_orbit_cnt;
 
@@ -551,14 +534,7 @@ namespace CubeGCS_Wpf
             }
 
 
-            if (hk_up_frm.pianzhi_mode_checked)
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_PIANZHI_MODE,
-                   delay_time,
-                   hk_up_frm.bias_mode, 0);
-
-                cmd_cnt++;
-            }
+          
 
 
 
@@ -572,52 +548,43 @@ namespace CubeGCS_Wpf
             }
 
 
-            if (hk_up_frm.camera_checked) //延时成像
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, 0x71,//cube_com.INS_CAMERA,
-                        delay_time,
-                     hk_up_frm.camera_delay_time, 0);
-                cmd_cnt++;
+            GCS_send_cmd(up_buf, 0, cubeCOMM.para_length, cmd_cnt);
+            //if (cmd_cnt < 1)
+            //{
+            //    MessageBox.Show("请选择一条指令！");
+            //    return;
+            //}
 
-            }
+            //if (cmd_cnt >= 2)
+            //{
+            //    MessageBox.Show("每次只能执行一条指令，请重选！");
+            //    return;
+            //}
 
+            ////串口打开则用串口
+            //if (In_Port.IsOpen)
+            //{
+            //    In_Port.Write(up_buf, 0, cubeCOMM.para_length);
+            //    return;
+            //}
 
-            if (cmd_cnt < 1)
-            {
-                MessageBox.Show("请选择一条指令！");
-                return;
-            }
+            //if (client_up_Socket == null)
+            //{
 
-            if (cmd_cnt >= 2)
-            {
-                MessageBox.Show("每次只能执行一条指令，请重选！");
-                return;
-            }
+            //    MessageBox.Show("上行未创建，请先打开网络！");
+            //    return;
+            //}
 
-            //串口打开则用串口
-            if (In_Port.IsOpen)
-            {
-                In_Port.Write(up_buf, 0, cubeCOMM.para_length);
-                return;
-            }
+            //try
+            //{
+            //    client_up_Socket.Send(up_buf, 0, cubeCOMM.para_length, SocketFlags.None);
 
-            if (client_up_Socket == null)
-            {
-
-                MessageBox.Show("上行未创建，请先打开网络！");
-                return;
-            }
-
-            try
-            {
-                client_up_Socket.Send(up_buf, 0, cubeCOMM.para_length, SocketFlags.None);
-
-                clear_up_buf();
-            }
-            catch
-            {
-                MessageBox.Show("网络错误！");
-            }
+            ////    clear_up_buf();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("网络错误！");
+            //}
 
 
    
@@ -630,6 +597,7 @@ namespace CubeGCS_Wpf
         private void send_orbit_cmd_cs()
         {
             UInt32 delay_time = 0;
+            UInt16 cmd_cnt = 0;
 
             if (hk_up_frm.orbit_checked)
             {
@@ -637,12 +605,60 @@ namespace CubeGCS_Wpf
                      delay_time,
                      hk_up_frm.orbit);
 
+                cmd_cnt++;
+
             }
+
+            GCS_send_cmd(up_buf, 0, cubeCOMM.orbit_length, cmd_cnt);
+            ////串口打开则用串口
+            //if (In_Port.IsOpen)
+            //{
+            //    In_Port.Write(up_buf, 0, cubeCOMM.orbit_length);
+            //    return;
+            //}
+
+            //if (client_up_Socket == null)
+            //{
+
+            //    MessageBox.Show("上行未创建，请先打开网络！");
+            //    return;
+            //}
+
+            //try
+            //{
+            //    client_up_Socket.Send(up_buf, 0, cubeCOMM.orbit_length, SocketFlags.None);
+
+            //    //clear_up_buf();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("网络错误！");
+            //}
+
+
+        }
+
+
+
+        private void GCS_send_cmd(byte[] cmd,int addr,int length,UInt16 CMDcnt)
+        {
+            if (CMDcnt < 1)
+            {
+                MessageBox.Show("请选择一条指令！");
+                return;
+            }
+
+            if (CMDcnt >= 2)
+            {
+                MessageBox.Show("每次只能执行一条指令，请重选！");
+                return;
+            }
+
 
             //串口打开则用串口
             if (In_Port.IsOpen)
             {
-                In_Port.Write(up_buf, 0, cubeCOMM.orbit_length);
+                In_Port.Write(cmd, addr, length);
                 return;
             }
 
@@ -655,23 +671,21 @@ namespace CubeGCS_Wpf
 
             try
             {
-                client_up_Socket.Send(up_buf, 0, cubeCOMM.orbit_length, SocketFlags.None);
+                client_up_Socket.Send(cmd, addr, length, SocketFlags.None);
 
-                clear_up_buf();
+                //clear_up_buf();
             }
             catch
             {
                 MessageBox.Show("网络错误！");
             }
-
-
         }
 
-        private void clear_up_buf()
-        {
-            for (int kc = 0; kc < 200; kc++)
-                up_buf[kc] = 0;
-        }
+        //private void clear_up_buf()
+        //{
+        //    for (int kc = 0; kc < 200; kc++)
+        //        up_buf[kc] = 0;
+        //}
 
         #endregion
 
@@ -847,10 +861,11 @@ namespace CubeGCS_Wpf
                             rec_state = 3;
                         }
 
-                        //else if(Buf ==0x53)
-                        //{
+                        else if (Buf == 0x53)
+                        {
+                            rec_state = 4;
 
-                        //}
+                        }
 
                         //else if(Buf == 0x56)
                         //{
@@ -870,10 +885,9 @@ namespace CubeGCS_Wpf
                             if (down_info_buf_length >= cubeCOMM.obc_length)
                             {
                                 rec_down_info_count++;      //接收到的指令数加1
-                                rec_state = 0;
 
                                 cubeCOMM.get_info_from_obc_buf(down_info_buf, ref obc_info);
-
+                                rec_state = 0;
                                 obc_displayAndsave();
 
                             }
@@ -886,18 +900,26 @@ namespace CubeGCS_Wpf
                             if(down_info_buf_length>= cubeCOMM.adcs_length)
                             {
                                 rec_down_info_count++;      //接收到的指令数加1
-                                rec_state = 0;
-                                cubeCOMM.get_info_from_adcs_buf(down_info_buf, ref adcs_info);
 
+                                cubeCOMM.get_info_from_adcs_buf(down_info_buf, ref adcs_info);
+                                rec_state = 0;
                                 adcs_displayAndsave();
 
                             }
                             break;
                         }
 
-                    case 5:
+                    case 4:
                         {
+                            down_info_buf[down_info_buf_length++] = Buf;
+                            if (down_info_buf_length >= 5)
+                            {
+                                //byte[] new_rec = new byte[5];
+                                //down_info_buf.CopyTo(new_rec, 5);
+                                //rec_buff_display(new_rec);
+                                rec_state = 0;
 
+                            }
                             break;
                         }
 
@@ -1044,7 +1066,7 @@ namespace CubeGCS_Wpf
         /// <param name="buf"></param>
         private void rec_buff_display(byte[] rec_buf)
         {
-
+            builder.Clear();
             if (gcSerial_frm.rec_show_hex)
             {
                 foreach (byte b in rec_buf)
@@ -1057,7 +1079,10 @@ namespace CubeGCS_Wpf
             {
                 builder.Append(Encoding.ASCII.GetString(rec_buf));
             }
-            tB_recbuf.AppendText(builder.ToString());
+            builder.Append('\n');
+            tB_recbuf.Text += builder.ToString();
+
+            tB_recbuf.ScrollToEnd();
 
         }
 

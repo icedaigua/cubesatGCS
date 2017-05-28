@@ -142,9 +142,9 @@ namespace CubeCOM
 
         #endregion
 
-        public const UInt16 ctrl_length = 14,
-                            para_length = 22,
-                            orbit_length = 78;
+        public const byte ctrl_length = 15,
+                            para_length = 23,
+                            orbit_length = 79;
 
         public const byte
                         obc_length = 94,
@@ -282,6 +282,7 @@ namespace CubeCOM
         public struct UP_ctrl_cmd
         {
             public UInt32 id;
+            public byte len;
             public byte pid;
             public byte func;
             public UInt32 delay_time;
@@ -292,7 +293,8 @@ namespace CubeCOM
         public struct UP_para_cmd
         {
            public UInt32    id;
-           public byte      pid;
+            public byte len;
+            public byte      pid;
            public byte      func;
            public UInt32    delay_time;
            public UInt32    data;
@@ -306,7 +308,8 @@ namespace CubeCOM
         {
 
               public  UInt32 id;
-              public  byte pid;
+                public byte len;
+                public  byte pid;
               public  byte func;
               public  UInt32 delay_time;
               [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
@@ -333,6 +336,7 @@ namespace CubeCOM
 
             ctrl_cmd.id = generate_csp_header(flags, sport, dport, dst, src, pri);
 
+            ctrl_cmd.len = ctrl_length;
             ctrl_cmd.func = func;
             ctrl_cmd.pid = pid;
             ctrl_cmd.delay_time = delay_time;
@@ -366,6 +370,7 @@ namespace CubeCOM
 
             para_cmd.id = generate_csp_header(flags, sport, dport, dst, src, pri);
 
+            para_cmd.len = para_length;
             para_cmd.func = func;
             para_cmd.pid = pid;
             para_cmd.delay_time = delay_time;
@@ -396,6 +401,8 @@ namespace CubeCOM
 
             orbit_cmd.id = generate_csp_header(flags, sport, dport, dst, src, pri);
 
+
+            orbit_cmd.len = orbit_length;
             orbit_cmd.func = func;
             orbit_cmd.pid = pid;
             orbit_cmd.delay_time = delay_time;

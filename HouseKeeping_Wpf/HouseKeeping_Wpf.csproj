@@ -54,6 +54,12 @@
     <Compile Include="battery.xaml.cs">
       <DependentUpon>battery.xaml</DependentUpon>
     </Compile>
+    <Compile Include="commuNicator.xaml.cs">
+      <DependentUpon>commuNicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Eps.xaml.cs">
+      <DependentUpon>Eps.xaml</DependentUpon>
+    </Compile>
     <Compile Include="hk_adcs.xaml.cs">
       <DependentUpon>hk_adcs.xaml</DependentUpon>
     </Compile>
@@ -103,6 +109,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="battery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="commuNicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Eps.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

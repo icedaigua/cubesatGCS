@@ -122,30 +122,30 @@
 
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="CPU温度" />
                 
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Visibility="Hidden" Text="ADC1"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Visibility="Hidden" Text="ADC2"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Visibility="Hidden" Text="ADC3"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Visibility="Hidden" Text="ADC4"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Visibility="Hidden" Text="ADC5"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Visibility="Hidden" Text="ADC6"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Visibility="Hidden" Text="ADC7"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Visibility="Hidden" Text="ADC8"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Visibility="Hidden"  Text="ADC9"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Visibility="Hidden"  Text="ADC10"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2"  Text="ADC1"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3"  Text="ADC2"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4"  Text="ADC3"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5"  Text="ADC4"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6"  Text="ADC5"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7"  Text="ADC6"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8"  Text="ADC7"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9"  Text="ADC8"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10"   Text="ADC9"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11"   Text="ADC10"/>
 
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_tempe_cpu" Width="120" TextAlignment="Center"></TextBox>
 
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="2" Name="tB_tempe_1" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="3" Name="tB_tempe_2" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="4" Name="tB_tempe_3" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="5" Name="tB_tempe_4" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="6" Name="tB_tempe_5" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="7" Name="tB_tempe_6" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="8" Name="tB_tempe_7" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="9" Name="tB_tempe_8" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="10" Name="tB_tempe_9" Width="120" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Visibility="Hidden" Grid.Column="1" Grid.Row="11" Name="tB_tempe_10" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="2" Name="tB_tempe_1" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="3" Name="tB_tempe_2" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="4" Name="tB_tempe_3" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="5" Name="tB_tempe_4" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="6" Name="tB_tempe_5" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="7" Name="tB_tempe_6" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="8" Name="tB_tempe_7" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="9" Name="tB_tempe_8" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="10" Name="tB_tempe_9" Width="120" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2"  Grid.Column="1" Grid.Row="11" Name="tB_tempe_10" Width="120" TextAlignment="Center"></TextBox>
 
                 </Grid>
             </GroupBox>

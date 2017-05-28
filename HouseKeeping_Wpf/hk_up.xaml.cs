@@ -15,96 +15,85 @@ namespace HouseKeeping_Wpf
 
         #region 控制指令
 
-        public bool
-                 
+         public bool  mwa_open_checked  { get { return cB_mwa_open.IsChecked == true; } } //动量轮A
+         public bool  mwa_close_checked { get { return cB_mwa_close.IsChecked == true; } }
+         public bool  mwb_open_checked { get { return cB_mwb_close.IsChecked == true; } } //动量轮B
+         public bool  mwb_close_checked { get { return cB_mwb_close.IsChecked == true; } }
 
-                    mwa_open_checked = false,       //动量轮
-                    mwa_close_checked = false,
-                    mwb_open_checked = false,
-                    mwb_close_checked = false,
+         public bool  hmra_open_checked  { get { return cB_hmra_open.IsChecked == true; } }      //磁强计
+         public bool  hmra_close_checked { get { return cB_hmra_open.IsChecked == true; } }
+         public bool  hmrb_open_checked  { get { return cB_hmrb_open.IsChecked == true; } }
+         public bool  hmrb_close_checked { get { return cB_hmrb_open.IsChecked == true; } }
+  
+         public bool  fan_open_start_checked { get { return cB_fan_open_start.IsChecked == true; } } //帆板
+         public bool  fan_open_stop_checked { get { return cB_fan_open_stop.IsChecked == true; }}
 
-            
-             
 
-                    hmra_open_checked = false,      //磁强计
-                    hmra_close_checked = false,
-                    hmrb_open_checked = false,
-                    hmrb_close_checked = false,
 
-                    fan_open_start_checked = false, //帆板
-                    fan_open_stop_checked = false,
+         public bool   batt_warm_open_checked  { get { return cB_batt_warm_open.IsChecked == true; } }//电池阵加热
+         public bool   batt_warm_close_checked { get { return cB_batt_warm_close.IsChecked == true; } }
+        
+         public bool  atenna_open_checked    { get { return cB_atenna_open.IsChecked == true; } }        //天线展开
+         public bool  atenna_pwr_on_checked  { get { return cB_atenna_pwr_open.IsChecked == true; } } //天线电源
+         public bool  atenna_pwr_off_checked { get { return cB_atenna_pwr_close.IsChecked == true; } }
+        
+         public bool hk_reset_checked { get { return cB_hk_reset.IsChecked == true; } }        //星务重启
 
-                    ais_open_checked = false,       //AIS
-                    ais_close_checked = false,
+         public bool  down_start_checked  { get { return cB_start_down.IsChecked == true; } }     //开始下行
+         public bool down_stop_checked   { get { return cB_stop_down.IsChecked == true; } }       //停止下行
 
-                    batt_warm_open_checked = false,//电池阵加热
-                    batt_warm_close_checked = false,
+         public bool  dam_mode_checked     { get { return cB_dam_mode.IsChecked == true; } }      //控制模式
+         public bool  ctrl_mode_checked    { get { return cB_ctrl_mode.IsChecked == true; } } 
+         public bool  pitch_mode_checked   { get { return cB_pitch_mode.IsChecked == true; } } 
+         public bool  redam_checked        { get { return cB_reDam.IsChecked == true; } } 
+         public bool always_dam_checked     { get { return cB_always_dam.IsChecked == true; } }
 
-                    atenna_open_checked = false,         //天线展开
-                    atenna_pwr_on_checked = false,  //天线电源
-                    atenna_pwr_off_checked = false,
 
-                    hk_reset_checked = false,       //星务重启
 
-                    down_start_checked = false,     //开始下行
-                    down_stop_checked = false,       //停止下行
+         public bool  adcs_open_checked     { get { return cB_adcs_open.IsChecked == true; } } 
+         public bool  adcs_close_checked     { get { return cB_adcs_close.IsChecked == true; } }
+  
+         public bool error_checked { get { return cB_error.IsChecked == true; } }
 
-                    dam_mode_checked = false,       //控制模式
-                    ctrl_mode_checked = false,
-                    pitch_mode_checked = false,
-                    redam_checked = false,
-                    always_dam_checked = false,
+        //public bool   pianzhi_mode_checked = false,
+        //public bool   zero_mode_checked = false,
 
-                    pianzhi_mode_checked = false,
-                    zero_mode_checked = false,
+        //public bool  close_all_checked = false,
 
-                    close_all_checked = false,
-
-                    bpsk_1200_checked = false,
-                    bpsk_9600_checked = false,
-
-       
-
-                    adcs_open_checked = false,
-                    adcs_close_checked = false,
-                    down_fipex_checked = false,
-                    error_checked = false
-
-                    ;
-
+        //public bool  bpsk_1200_checked = false,
+        //public bool  bpsk_9600_checked = false,
+        //public bool  down_fipex_checked = false,
         #endregion
 
         #region 参数注入
 
-        public bool
-                    para_time_checked = false,
-                    para_P_checked = false,
-                    para_Z_checked = false,
-                    para_D_checked = false,
-                    para_down_period_checked = false,
-                    delay_hk_checked = false,
-                    camera_checked = false
-                    ;
+       
+          public bool    para_time_checked    { get { return cB_time_para .IsChecked == true; } }
+          public bool    para_P_checked       { get { return cB_P_para.IsChecked == true; } }
+          public bool    para_Z_checked       { get { return cB_Z_para.IsChecked == true; } }
+          public bool    para_D_checked       { get { return cB_D_para.IsChecked == true; } }
+          public bool    para_down_period_checked    { get { return cB_down_period_para.IsChecked == true; } }
+          public bool    delay_hk_checked            { get { return cB_delay_hk.IsChecked == true; } }
+          //public bool    camera_checked              { get { return cB_always_dam.IsChecked == true; } }
+        
 
-        public UInt32 para_P = 0,
-                     para_D = 0,
-                     para_Z = 0,
-                     para_down_period = 0,
-                     delay_hk_orbit_cnt = 0,
-                     delay_hk_select = 0,
-                     delay_hk_index = 0,
+         public UInt32 para_P { get { return Convert.ToUInt32(tB_P_para.Text); } }
+         public UInt32 para_D { get { return Convert.ToUInt32(tB_D_para.Text); } }
+         public UInt32 para_Z { get { return Convert.ToUInt32(tB_Z_para.Text); } }
+         public UInt32 para_down_period     { get { return Convert.ToUInt32(tB_down_period.Text); } }
+         public UInt32 delay_hk_orbit_cnt   { get { return Convert.ToUInt32(tB_delay_hk.Text); } }
+         public UInt32 delay_hk_select      { get { return Convert.ToUInt32(cB_delay_select.SelectedIndex); } }
+         public UInt32 delay_hk_index       { get { return Convert.ToUInt32(tB_delay_index.Text); } }
 
-                     bias_mode = 0,
-            camera_delay_time = 0
-                    ;
-
-        public UInt32 para_time = 0;
+         public UInt32   bias_mode             { get { return Convert.ToUInt32(tB_bias_mode.Text); } }
+                     //camera_delay_time = 0
+          public UInt32 para_time { get { return Convert.ToUInt32(tB_time_para.Text);}}
 
 
-        #endregion
+#endregion
 
         #region 轨道注入
-        public bool orbit_modi = false;
+        //public bool orbit_modi = false;
         public double[] orbit = new double[8];
 
 
@@ -132,7 +121,7 @@ namespace HouseKeeping_Wpf
         private void cB_delay_hk_select_init()
         {
 
-            List<String> NetNo_list = new List<String> { "SD", "RAM" };
+            List<String> NetNo_list = new List<String> { "SD", "RAM","FLASH" };
             cB_delay_select.ItemsSource = NetNo_list;
             cB_delay_select.SelectedIndex = cB_delay_select.Items.Count > 0 ? 1 : -1;
         }
@@ -145,19 +134,8 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_mwa_open_Checked(object sender, RoutedEventArgs e)
         {
-            mwa_open_checked = true;
             if (cB_mwa_close.IsChecked == true)
                 cB_mwa_close.IsChecked = false;
-        }
-
-        /// <summary>
-        /// 动量轮A开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_mwa_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            mwa_open_checked = false;
         }
 
         /// <summary>
@@ -167,22 +145,12 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_mwa_close_Checked(object sender, RoutedEventArgs e)
         {
-            mwa_close_checked = true;
 
             if (cB_mwa_open.IsChecked == true)
                 cB_mwa_open.IsChecked = false;
 
         }
 
-        /// <summary>
-        /// 动量轮A关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_mwa_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            mwa_close_checked = false;
-        }
 
         /// <summary>
         /// 动量轮B开选中
@@ -191,20 +159,9 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_mwb_open_Checked(object sender, RoutedEventArgs e)
         {
-            mwb_open_checked = true;
             if (cB_mwb_close.IsChecked == true)
                 cB_mwb_close.IsChecked = false;
 
-        }
-
-        /// <summary>
-        /// 动量轮B开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_mwb_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            mwb_open_checked = false;
         }
 
         /// <summary>
@@ -214,21 +171,10 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_mwb_close_Checked(object sender, RoutedEventArgs e)
         {
-            mwb_close_checked = true;
-
+           
             if (cB_mwb_open.IsChecked == true)
                 cB_mwb_open.IsChecked = false;
 
-        }
-
-        /// <summary>
-        /// 动量轮B关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_mwb_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            mwb_close_checked = false;
         }
 
         #endregion
@@ -242,20 +188,10 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_adcs_open_Checked(object sender, RoutedEventArgs e)
         {
-            adcs_open_checked = true;
+
             if (cB_adcs_close.IsChecked == true)
                 cB_adcs_close.IsChecked = false;
 
-        }
-
-        /// <summary>
-        /// 动量轮B开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_adcs_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            adcs_open_checked = false;
         }
 
         /// <summary>
@@ -265,48 +201,16 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_adcs_close_Checked(object sender, RoutedEventArgs e)
         {
-            adcs_close_checked = true;
+           
 
             if (cB_adcs_open.IsChecked == true)
                 cB_adcs_open.IsChecked = false;
 
         }
 
-        /// <summary>
-        /// 动量轮B关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_adcs_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            adcs_close_checked = false;
-        }
         #endregion
 
 
-        #region 其他
-
-        /// <summary>
-        /// 动量轮B关选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_close_all_Checked(object sender, RoutedEventArgs e)
-        {
-            close_all_checked = true;
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_close_all_UnChecked(object sender, RoutedEventArgs e)
-        {
-            close_all_checked = false;
-        }
-        #endregion
 
         #region 磁强计
         /// <summary>
@@ -316,19 +220,9 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_hmra_open_Checked(object sender, RoutedEventArgs e)
         {
-            hmra_open_checked = true;
+          
             if (cB_hmra_close.IsChecked == true)
                 cB_hmra_close.IsChecked = false;
-        }
-
-        /// <summary>
-        /// 磁强计A开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_hmra_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            hmra_open_checked = false;
         }
 
         /// <summary>
@@ -338,23 +232,11 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_hmra_close_Checked(object sender, RoutedEventArgs e)
         {
-            hmra_close_checked = true;
-
+      
             if (cB_hmra_open.IsChecked == true)
                 cB_hmra_open.IsChecked = false;
 
         }
-
-        /// <summary>
-        /// 磁强计A关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_hmra_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            hmra_close_checked = false;
-        }
-
         /// <summary>
         /// 磁强计B开选中
         /// </summary>
@@ -362,22 +244,10 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_hmrb_open_Checked(object sender, RoutedEventArgs e)
         {
-            hmrb_open_checked = true;
             if (cB_hmrb_close.IsChecked == true)
                 cB_hmrb_close.IsChecked = false;
 
         }
-
-        /// <summary>
-        /// 磁强计B开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_hmrb_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            hmrb_open_checked = false;
-        }
-
         /// <summary>
         /// 磁强计B关选中
         /// </summary>
@@ -385,22 +255,12 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_hmrb_close_Checked(object sender, RoutedEventArgs e)
         {
-            hmrb_close_checked = true;
 
             if (cB_hmrb_open.IsChecked == true)
                 cB_hmrb_open.IsChecked = false;
 
         }
 
-        /// <summary>
-        /// 磁强计B关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_hmrb_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            hmrb_close_checked = false;
-        }
         #endregion
 
 
@@ -411,21 +271,10 @@ namespace HouseKeeping_Wpf
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cB_batt_warm_open_Checked(object sender, RoutedEventArgs e)
-        {
-            batt_warm_open_checked = true;
+        {       
             if (cB_batt_warm_close.IsChecked == true)
                 cB_batt_warm_close.IsChecked = false;
 
-        }
-
-        /// <summary>
-        /// 电池加热开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_batt_warm_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            batt_warm_open_checked = false;
         }
 
         /// <summary>
@@ -435,22 +284,12 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_batt_warm_close_Checked(object sender, RoutedEventArgs e)
         {
-            batt_warm_close_checked = true;
-
+          
             if (cB_batt_warm_open.IsChecked == true)
                 cB_batt_warm_open.IsChecked = false;
 
         }
 
-        /// <summary>
-        /// 电池加热关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_batt_warm_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            batt_warm_close_checked = false;
-        }
         #endregion
 
         #region 天线电源
@@ -461,21 +300,12 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_atenna_pwr_open_Checked(object sender, RoutedEventArgs e)
         {
-            atenna_pwr_on_checked = true;
+         
             if (cB_atenna_pwr_close.IsChecked == true)
                 cB_atenna_pwr_close.IsChecked = false;
 
         }
 
-        /// <summary>
-        /// 天线电源开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_atenna_pwr_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            atenna_pwr_on_checked = false;
-        }
 
         /// <summary>
         /// 天线电源关选中
@@ -484,22 +314,12 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_atenna_pwr_close_Checked(object sender, RoutedEventArgs e)
         {
-            atenna_pwr_off_checked = true;
 
             if (cB_atenna_pwr_open.IsChecked == true)
                 cB_atenna_pwr_open.IsChecked = false;
 
         }
 
-        /// <summary>
-        /// 天线电源关取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_atenna_pwr_close_UnChecked(object sender, RoutedEventArgs e)
-        {
-            atenna_pwr_off_checked = false;
-        }
         #endregion
 
         #region 帆板展开
@@ -510,19 +330,9 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_fan_open_start_Checked(object sender, RoutedEventArgs e)
         {
-            fan_open_start_checked = true;
+            
             if (cB_fan_open_stop.IsChecked == true)
                 cB_fan_open_stop.IsChecked = false;
-        }
-
-        /// <summary>
-        /// 帆板展开启动取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_fan_open_start_UnChecked(object sender, RoutedEventArgs e)
-        {
-            fan_open_start_checked = false;
         }
 
         /// <summary>
@@ -532,89 +342,13 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_fan_open_stop_Checked(object sender, RoutedEventArgs e)
         {
-            fan_open_stop_checked = true;
+        
             if (cB_fan_open_start.IsChecked == true)
                 cB_fan_open_start.IsChecked = false;
         }
 
-        /// <summary>
-        /// 帆板展开停止选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_fan_open_stop_UnChecked(object sender, RoutedEventArgs e)
-        {
-            fan_open_stop_checked = false;
-        }
         #endregion
 
-        #region 天线展开
-        /// <summary>
-        /// 天线展开选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_atenna_open_Checked(object sender, RoutedEventArgs e)
-        {
-            atenna_open_checked = true;
-        }
-
-        /// <summary>
-        /// 天线展开取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_atenna_open_UnChecked(object sender, RoutedEventArgs e)
-        {
-            atenna_open_checked = false;
-        }
-        #endregion
-
-        #region 星务重启
-        /// <summary>
-        /// 星务重启选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_hk_reset_Checked(object sender, RoutedEventArgs e)
-        {
-            hk_reset_checked = true;
-        }
-
-        /// <summary>
-        /// 星务重启取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_hk_reset_UnChecked(object sender, RoutedEventArgs e)
-        {
-            hk_reset_checked = false;
-        }
-        #endregion
-
-
-
-        #region 使能纠错
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_error_Checked(object sender, RoutedEventArgs e)
-        {
-            error_checked = true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_error_UnChecked(object sender, RoutedEventArgs e)
-        {
-            error_checked = false;
-        }
-        #endregion
 
         #region 下行控制
         /// <summary>
@@ -624,19 +358,9 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_start_down_Checked(object sender, RoutedEventArgs e)
         {
-            down_start_checked = true;
+          
             if (cB_stop_down.IsChecked == true)
                 cB_stop_down.IsChecked = false;
-        }
-
-        /// <summary>
-        /// 开始下行取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_start_down_UnChecked(object sender, RoutedEventArgs e)
-        {
-            down_start_checked = false;
         }
 
         /// <summary>
@@ -646,289 +370,15 @@ namespace HouseKeeping_Wpf
         /// <param name="e"></param>
         private void cB_stop_down_Checked(object sender, RoutedEventArgs e)
         {
-            down_stop_checked = true;
+ 
             if (cB_start_down.IsChecked == true)
                 cB_start_down.IsChecked = false;
         }
 
-        /// <summary>
-        /// 停止下行取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_stop_down_UnChecked(object sender, RoutedEventArgs e)
-        {
-            down_stop_checked = false;
-        }
         #endregion
 
        
-
-        #region 姿控模式
-        /// <summary>
-        /// 阻尼模式选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_dam_mode_Checked(object sender, RoutedEventArgs e)
-        {
-            dam_mode_checked = true;
-        }
-
-        /// <summary>
-        /// 阻尼模式取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_dam_mode_UnChecked(object sender, RoutedEventArgs e)
-        {
-            dam_mode_checked = false;
-        }
-        /// <summary>
-        /// 俯仰控制模式选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_pitch_mode_Checked(object sender, RoutedEventArgs e)
-        {
-            pitch_mode_checked = true;
-        }
-
-        /// <summary>
-        /// 俯仰控制模式取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_pitch_mode_UnChecked(object sender, RoutedEventArgs e)
-        {
-            pitch_mode_checked = false;
-        }
-
-        /// <summary>
-        /// 三轴稳定模式选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_ctrl_mode_Checked(object sender, RoutedEventArgs e)
-        {
-            ctrl_mode_checked = true;
-        }
-
-        /// <summary>
-        /// 三轴稳定模式取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_ctrl_mode_UnChecked(object sender, RoutedEventArgs e)
-        {
-            ctrl_mode_checked = false;
-        }
-
-        /// <summary>
-        /// 重阻尼模式选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_reDam_Checked(object sender, RoutedEventArgs e)
-        {
-            redam_checked = true;
-        }
-
-        /// <summary>
-        /// 重阻尼模式取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_reDam_UnChecked(object sender, RoutedEventArgs e)
-        {
-            redam_checked = false;
-        }
-
-        /// <summary>
-        /// 永久阻尼模式选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_always_dam_Checked(object sender, RoutedEventArgs e)
-        {
-            always_dam_checked = true;
-        }
-
-        /// <summary>
-        /// 永久阻尼模式取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_always_dam_UnChecked(object sender, RoutedEventArgs e)
-        {
-            always_dam_checked = false;
-        }
-
-
-        /// <summary>
-        /// 偏置动量模式
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_pianzhi_mode_Checked(object sender, RoutedEventArgs e)
-        {
-            pianzhi_mode_checked = true;
-        }
-
-        /// <summary>
-        /// 取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_pianzhi_mode_UnChecked(object sender, RoutedEventArgs e)
-        {
-            pianzhi_mode_checked = false;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tB_bias_mode_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)//如果输入的是回车键 
-            {
-                MessageBox.Show(tB_bias_mode.Text);
-                bias_mode = Convert.ToUInt32(tB_bias_mode.Text);
-            }
-        }
-
-        #endregion
-
         #region 上行参数
-        /// <summary>
-        /// P参数上行选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_P_para_Checked(object sender, RoutedEventArgs e)
-        {
-            para_P_checked = true;
-            para_P = Convert.ToUInt32((Convert.ToDouble(tB_P_para.Text) * 1e7));
-        }
-
-        /// <summary>
-        /// P参数上行取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_P_para_UnChecked(object sender, RoutedEventArgs e)
-        {
-            para_P_checked = false;
-        }
-
-
-        /// <summary>
-        /// P参数输入框回车键响应
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tB_P_para_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)//如果输入的是回车键 
-            {
-                MessageBox.Show(tB_P_para.Text);
-                para_P = Convert.ToUInt32((Convert.ToDouble(tB_P_para.Text) * 1e7));
-            }
-        }
-
-        /// <summary>
-        /// Z参数上行选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_Z_para_Checked(object sender, RoutedEventArgs e)
-        {
-            para_Z_checked = true;
-            para_Z = Convert.ToUInt32((Convert.ToDouble(tB_Z_para.Text) * 1e7));
-        }
-
-        /// <summary>
-        /// Z参数上行取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_Z_para_UnChecked(object sender, RoutedEventArgs e)
-        {
-            para_Z_checked = false;
-        }
-
-        /// <summary>
-        /// Z参数输入框回车键响应
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tB_Z_para_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)//如果输入的是回车键 
-            {
-                MessageBox.Show(tB_Z_para.Text);
-                para_Z = Convert.ToUInt32((Convert.ToDouble(tB_Z_para.Text) * 1e7));
-            }
-        }
-
-        /// <summary>
-        /// D参数上行选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_D_para_Checked(object sender, RoutedEventArgs e)
-        {
-            para_D_checked = true;
-            para_D = Convert.ToUInt32((Convert.ToDouble(tB_D_para.Text) * 1e7));
-        }
-
-        /// <summary>
-        /// D参数上行取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_D_para_UnChecked(object sender, RoutedEventArgs e)
-        {
-            para_D_checked = false;
-        }
-
-        /// <summary>
-        /// D参数输入框回车键响应
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tB_D_para_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)//如果输入的是回车键 
-            {
-                MessageBox.Show(tB_D_para.Text);
-                para_D = Convert.ToUInt32((Convert.ToDouble(tB_D_para.Text) * 1e7));
-            }
-        }
-
-        /// <summary>
-        /// 星上时间上行选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_time_para_Checked(object sender, RoutedEventArgs e)
-        {
-            para_time_checked = true;
-            para_time = Convert.ToUInt32(tB_time_para.Text);
-        }
-
-        /// <summary>
-        /// 星上时间上行取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_time_para_UnChecked(object sender, RoutedEventArgs e)
-        {
-            para_time_checked = false;
-        }
 
         /// <summary>
         /// 星上时间输入框回车键响应
@@ -942,74 +392,11 @@ namespace HouseKeeping_Wpf
                 //MessageBox.Show(tB_time_para.Text);
                 tB_time_para.Text = xDateSeconds();//DateTime.Now.ToLongTimeString();
                                                    //MessageBox.Show(tB_time_para.Text);
-                para_time = Convert.ToUInt32(tB_time_para.Text);
             }
         }
 
-        /// <summary>
-        /// 下行周期上行选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_down_period_para_Checked(object sender, RoutedEventArgs e)
-        {
-            para_down_period_checked = true;
-            para_down_period = Convert.ToUInt32(tB_down_period.Text);
-        }
-
-        /// <summary>
-        /// 下行周期取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_down_period_para_UnChecked(object sender, RoutedEventArgs e)
-        {
-            para_down_period_checked = false;
-        }
-
-        /// <summary>
-        /// 下行周期输入框回车键响应
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tB_down_period_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)//如果输入的是回车键 
-            {
-                MessageBox.Show(tB_down_period.Text);
-                para_down_period = Convert.ToUInt32(tB_down_period.Text);
-            }
-        }
-
-        /// <summary>
-        /// 延时遥测上行选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_delay_hk_Checked(object sender, RoutedEventArgs e)
-        {
-            delay_hk_checked = true;
-
-            delay_hk_index = Convert.ToUInt32(tB_delay_index.Text);
-
-            delay_hk_orbit_cnt = Convert.ToUInt32(tB_delay_hk.Text);//(Convert.ToUInt32(xDateSeconds()) -
-                                                                    //     Convert.ToUInt32(tB_delay_hk.Text)
-                                                                    //   );
-
-            delay_hk_select = Convert.ToUInt32(cB_delay_select.SelectedIndex);
-
-        }
-
-        /// <summary>
-        /// 延时遥测取消选中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_delay_hk_UnChecked(object sender, RoutedEventArgs e)
-        {
-            delay_hk_checked = false;
-        }
-
+       
+       
         /// <summary>
         /// 延时遥测输入框回车键响应
         /// </summary>
@@ -1021,10 +408,7 @@ namespace HouseKeeping_Wpf
             {
                 MessageBox.Show(tB_delay_hk.Text);
 
-                delay_hk_orbit_cnt = Convert.ToUInt32(tB_delay_hk.Text);
-                //delay_hk_orbit_cnt = (Convert.ToUInt32(xDateSeconds()) -
-                //                        Convert.ToUInt32(tB_delay_hk.Text)
-                //                        );//DateTime.Now.ToLongTimeString();
+         
 
                 MessageBox.Show(delay_hk_orbit_cnt.ToString());
 
@@ -1032,85 +416,10 @@ namespace HouseKeeping_Wpf
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tB_delay_index_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)//如果输入的是回车键 
-            {
-
-                MessageBox.Show(tB_delay_index.Text);
-                delay_hk_index = Convert.ToUInt32(tB_delay_index.Text);
-            }
-        }
+      
         #endregion
 
-        #region RSH
-        /// <summary>
-        /// RSH
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_rsh_Checked(object sender, RoutedEventArgs e)
-        {
-            rsh_checked = true;
-
-            rsh_str = tB_rsh.Text;
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_rsh_UnChecked(object sender, RoutedEventArgs e)
-        {
-            rsh_checked = false;
-        }
-
-        private void tB_rsh_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                rsh_str = tB_rsh.Text;
-        }
-
-        #endregion
-
-        #region 延时成像
-        /// <summary>
-        /// RSH
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_camera_Checked(object sender, RoutedEventArgs e)
-        {
-            camera_checked = true;
-
-            camera_delay_time = Convert.ToUInt32(tB_camera.Text);
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cB_camera_UnChecked(object sender, RoutedEventArgs e)
-        {
-            camera_checked = false;
-        }
-
-        private void tB_camera_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                camera_delay_time = Convert.ToUInt32(tB_camera.Text);
-        }
-
-        #endregion
+      
 
         #region  轨道参数
         private void cB_orbit_para_Checked(object sender, RoutedEventArgs e)
