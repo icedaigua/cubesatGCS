@@ -142,9 +142,6 @@ namespace CubeGCS_Wpf
 
         #region  菜单及Button函数
 
-
-
-
         /// <summary>
         /// 发送上行控制指令
         /// </summary>
@@ -152,7 +149,7 @@ namespace CubeGCS_Wpf
         /// <param name="e"></param>
         private void Menu_up_ctrl_cmd(object sender, EventArgs e)
         {
-
+            send_ctrl_cmd_cs();
         }
 
         /// <summary>
@@ -162,7 +159,7 @@ namespace CubeGCS_Wpf
         /// <param name="e"></param>
         private void Menu_up_para_cmd(object sender, EventArgs e)
         {
-            
+            send_para_cmd_cs();
         }
 
         /// <summary>
@@ -172,7 +169,7 @@ namespace CubeGCS_Wpf
         /// <param name="e"></param>
         private void Menu_up_orbit_cmd(object sender, EventArgs e)
         {
-           
+            send_orbit_cmd_cs();
         }
 
         private void FileMode_Click(object sender, RoutedEventArgs e)
@@ -732,10 +729,7 @@ namespace CubeGCS_Wpf
 
         private Dictionary<string, Socket> dic = new Dictionary<string, Socket>();
 
-        private Socket hk_client;
-
         private Socket client_down_Socket, client_up_Socket;
-
 
         //EndPoint Remote;
         /// <summary>
@@ -814,7 +808,7 @@ namespace CubeGCS_Wpf
                         for (int kc = 0; kc < n; kc++)
                             csp_buff[kc] = buffer_rc[kc];
 
-
+                        Dispatcher.Invoke(DispatcherPriority.Send, new UpdateUiTextDelegate(rec_buff_proc), csp_buff);
 
                         //analysis_down_cmd_81(csp_buff);
                     }
@@ -828,109 +822,122 @@ namespace CubeGCS_Wpf
             }
         }
 
-        /// <summary>
-        /// 下行链路协议解析
-        /// </summary>
-        /// <param name="buffer"></param>
+    
+
         private void analysis_rec_buf(byte[] buffer)
         {
-
+          
             foreach (byte Buf in buffer)
             {
+                if(rec_state <= cubeCOMM.FRAME_START)
+                {
+                    searchHearder(Buf);
+                    continue;
+                }
                 switch (rec_state)
                 {
-                    case 0:
-                        down_info_buf_length = 0;
-                        down_info_buf[down_info_buf_length++] = Buf;
-
-                        if ((Buf == 0x1A))
-                        { 
-                            rec_state = 1;
-                        }
-
+                    case cubeCOMM.FRAME_OBC:
+                        ParseOBC(Buf);
                         break;
-                    #region 星务帧
-                    case 1:
-                        down_info_buf[down_info_buf_length++] = Buf;
-                        if ((Buf == 0x50))
-                        {
-                            rec_state = 2;
-                        }
-                        else if (Buf == 0x51)
-                        {                    
-                            rec_state = 3;
-                        }
-
-                        else if (Buf == 0x53)
-                        {
-                            rec_state = 4;
-
-                        }
-
-                        //else if(Buf == 0x56)
-                        //{
-                        //    rec_state = 5;
-                        //}
-
-                        else
-                        {
-                            rec_state = 0;
-                        }
-
+                    case cubeCOMM.FRAME_ADCS:
+                        ParseADCS(Buf);
                         break;
-                    case 2:
-                        {
-                            down_info_buf[down_info_buf_length++] = Buf;
-
-                            if (down_info_buf_length >= cubeCOMM.obc_length)
-                            {
-                                rec_down_info_count++;      //接收到的指令数加1
-
-                                cubeCOMM.get_info_from_obc_buf(down_info_buf, ref obc_info);
-                                rec_state = 0;
-                                obc_displayAndsave();
-
-                            }
-                            break;
-                        }
-
-                    case 3:
-                        {
-                            down_info_buf[down_info_buf_length++] = Buf;
-                            if(down_info_buf_length>= cubeCOMM.adcs_length)
-                            {
-                                rec_down_info_count++;      //接收到的指令数加1
-
-                                cubeCOMM.get_info_from_adcs_buf(down_info_buf, ref adcs_info);
-                                rec_state = 0;
-                                adcs_displayAndsave();
-
-                            }
-                            break;
-                        }
-
-                    case 4:
-                        {
-                            down_info_buf[down_info_buf_length++] = Buf;
-                            if (down_info_buf_length >= 5)
-                            {
-                                //byte[] new_rec = new byte[5];
-                                //down_info_buf.CopyTo(new_rec, 5);
-                                //rec_buff_display(new_rec);
-                                rec_state = 0;
-
-                            }
-                            break;
-                        }
-
-                    #endregion
-
-                    default:
+                    case cubeCOMM.FRAME_RESPONSE:
+                        ParseResponse(Buf);
+                        break;
+                    case cubeCOMM.FRAME_NULL:
                         break;
                 }
+                
             }
         }
 
+        private byte searchHearder(byte Buf)
+        {
+            switch (rec_state)
+            {
+                case cubeCOMM.FRAME_NULL:
+                    down_info_buf_length = 0;
+                    down_info_buf[down_info_buf_length++] = Buf;
+
+                    if ((Buf == 0x1A))
+                    {
+                        rec_state = cubeCOMM.FRAME_START;
+                    }
+                    break;
+
+                case 1:
+                    down_info_buf[down_info_buf_length++] = Buf;
+                    if ((Buf == 0x50))
+                    {
+                        rec_state = cubeCOMM.FRAME_OBC;                 
+                    }
+                    else if (Buf == 0x51)
+                    {
+                        rec_state = cubeCOMM.FRAME_ADCS;
+                    }
+
+                    else if (Buf == 0x53)
+                    {
+                        rec_state = cubeCOMM.FRAME_RESPONSE;
+
+                    }
+                    else
+                    {
+                        rec_state = cubeCOMM.FRAME_NULL;
+                    }
+                    break;
+                default:
+                    {
+                        rec_state = cubeCOMM.FRAME_NULL;
+                        break;
+                    }
+                   
+            }
+            return rec_state;
+        }
+
+        private void ParseOBC(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
+
+            if (down_info_buf_length >= cubeCOMM.obc_length)
+            {
+                rec_down_info_count++;      //接收到的指令数加1
+
+                cubeCOMM.get_info_from_obc_buf(down_info_buf, ref obc_info);
+                rec_state = 0;
+                obc_displayAndsave();
+            }
+        }
+
+        private void ParseResponse(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
+            if (down_info_buf_length >= 5)
+            {
+                byte[] new_rec = new byte[5];
+                down_info_buf.CopyTo(new_rec, 5);
+                rec_buff_display(new_rec);
+                rec_state = 0;
+            }
+        }
+
+        private void ParseADCS(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
+            if (down_info_buf_length >= cubeCOMM.adcs_length)
+            {
+                rec_down_info_count++;      //接收到的指令数加1
+
+                cubeCOMM.get_info_from_adcs_buf(down_info_buf, ref adcs_info);
+                rec_state = 0;
+                adcs_displayAndsave();
+
+            }
+        }
+
+   
 
         private void obc_displayAndsave()
         {
@@ -1120,6 +1127,7 @@ namespace CubeGCS_Wpf
 
         #region socket server代码
 
+        private Socket hk_client;
         /// <summary>
         ///使用 IP4地址。
         /// </summary>

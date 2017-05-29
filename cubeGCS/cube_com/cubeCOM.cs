@@ -151,7 +151,11 @@ namespace CubeCOM
                         adcs_length = 96
                        ;
 
-
+        #region 下行帧分类
+        public const byte FRAME_NULL = 0x00, FRAME_START = 0x01,
+                        FRAME_OBC = 0x50, FRAME_ADCS = 0x51, FRAME_UV = 0x10,
+                            FRAME_RESPONSE = 0x53;
+        #endregion
 
         #region 星务下行帧
 

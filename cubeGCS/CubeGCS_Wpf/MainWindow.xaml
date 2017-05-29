@@ -42,9 +42,9 @@
                     <Grid>
                         <Image x:Name="cubesat_jpg" Margin="2" Source="cubesat.jpg" Stretch="Fill"/>
                         <TextBlock Margin="2,150,2,2" Foreground="#FFFF8000" HorizontalAlignment="Center"
-							   FontSize="200" FontFamily="隶书">八一卫星</TextBlock>
+							   FontSize="200" FontFamily="隶书">NJUST 卫星</TextBlock>
                         <TextBlock Margin="2,450,2,2" Foreground="#FFFFC500" HorizontalAlignment="Center"
-							   FontSize="150" FontFamily="Stencil">地面监测系统</TextBlock>
+							   FontSize="150" FontFamily="Stencil">地面监控系统</TextBlock>
                     </Grid>
                 </Viewbox>
             </TabItem>
