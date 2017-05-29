@@ -1,14 +1,14 @@
-#! /usr/bin
 
 import sys
 import socket
-from socket import socket,AF_INET,SOCK_STREAM,SOCK_DGRAM
+from socket import socket, AF_INET, SOCK_STREAM
 
 #tcp ->SOCK_STREAM,udp->SOCK_DGRAM
 class TcpClient:
-
-    def __init__(self,host,port):
-        self._client = socket(AF_INET,SOCK_STREAM)
+    '''My Tcp Client
+    '''
+    def __init__(self, host, port):
+        self._client = socket(AF_INET, SOCK_STREAM)
         self._BUFSIZE = 1024
         self._host = host
         self._port = port
