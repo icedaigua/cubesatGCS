@@ -1,14 +1,15 @@
 
-from comm.iClient import TcpClient
-from protocol.cubesat import obc_decode
-from ui.control import ui_control
+from iNet.iClient import TcpClient
+from iSerial.iSerial import iSerial
+from comProtocol.cubesat import obc_decode
+from ui.uiCreate import uiCreate
 
 import threading
 import sys
 import time
 
 
-class crossGCS(ui_control):
+class crossGCS(uiCreate):
 
     def __init__(self):
         super(crossGCS,self).__init__()
@@ -32,6 +33,31 @@ class crossGCS(ui_control):
             self.show_msg("down conn fail!")
 
         threading._start_new_thread(self.rec_process,())
+    
+    def pBtn_open_serial_click(self):
+        print("Open Serial")
+        self.gcSerial = iSerial()
+        self.gcSerial.openSerialPort("COM8",115200)
+        
+        threading._start_new_thread(self.serial_rec_process,())
+
+    def serial_rec_process(self):
+        while True:
+            # try:
+            data = self.gcSerial.read(190)
+            # print(str(data))
+            # print("len =" + str(len(data)))
+            if(len(data)>=190):
+                obc = obc_decode(data)
+                self.displayOBC(obc)
+                self.displayEPS(obc)
+                self.displayADCS(obc)
+            else:
+                self.gcSerial.clear()
+               
+            # except:
+            #     print("serial Error")
+                # sys.exit()
 
     def rec_process(self):
         while True:
@@ -40,15 +66,14 @@ class crossGCS(ui_control):
                 if len(data)<200:
                     obc_de = obc_decode(data)
                     print(obc_de)
-                    ui.set_display(obc_de[6])
+                    set_display(obc_de[6])
             except:
                 print("socket disconnet")
-                process_exit = False
                 sys.exit()
 
 
-
-gcs = crossGCS()
+if __name__ == '__main__':
+    gcs = crossGCS()
 
 
 

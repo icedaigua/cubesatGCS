@@ -1,62 +1,189 @@
 #!/usr/bin/python
 
-import serial, time
-#initialization and open the port
+import serial
 
-#possible timeout values:
-#    1. None: wait forever, block call
-#    2. 0: non-blocking mode, return immediately
-#    3. x, x is bigger than 0, float allowed, timeout block call
-# ser=serial.Serial("com1",9600,timeout=0.5)
-ser = serial.Serial()
-#ser.port = "/dev/ttyUSB0"
-ser.port = "COM9"   #"/dev/ttyUSB7"
-#ser.port = "/dev/ttyS2"
-ser.baudrate = 115200
-ser.bytesize = serial.EIGHTBITS #number of bits per bytes
-ser.parity = serial.PARITY_NONE #set parity check: no parity
-ser.stopbits = serial.STOPBITS_ONE #number of stop bits
-#ser.timeout = None          #block read
-ser.timeout = 1            #non-block read
-#ser.timeout = 2              #timeout block read
-ser.xonxoff = False     #disable software flow control
-ser.rtscts = False     #disable hardware (RTS/CTS) flow control
-ser.dsrdtr = False       #disable hardware (DSR/DTR) flow control
-ser.writeTimeout = 2     #timeout for write
+class iSerial:
 
-try: 
-    ser.open()
-except e:
-    print("error open serial port: ")
-    exit()
+    """serial functions include :
+                    checkports()
+                    openSerialPort()
+                    closeSerialPort()
+                    baudRateChanged()"""
 
-if ser.isOpen():
+    def __init__(self):
+        self.ser = serial.Serial()
 
-    try:
-        ser.flushInput() #flush input buffer, discarding all its contents
-        ser.flushOutput()#flush output buffer, aborting current output 
-                 #and discard all that is in buffer
+    # def checkPorts(self):
+    #     list = list_ports.comports()
+    #     ports = []
+    #     for port in list:
+    #         if not port[0].startswith("/dev/ttyS"):
+    #             ports.append(port[0])
+    #     return ports
 
-        #write data
-        ser.write("AT+CSQ")
-        print("write data: AT+CSQ")
+    def openSerialPort(self, serialName, serialBaudRate):
+        self.ser.baudrate = serialBaudRate
+        self.ser.port = serialName
+        self.ser.bytesize = serial.EIGHTBITS #number of bits per bytes
+        self.ser.parity = serial.PARITY_NONE #set parity check: no parity
+        self.ser.stopbits = serial.STOPBITS_ONE #number of stop bits
+        self.ser.timeout = 1          #block read
+        # xonxoff = False,     #disable software flow control
+        self.ser.rtscts = False     #disable hardware (RTS/CTS) flow control
+        # # ser.dsrdtr = False       #disable hardware (DSR/DTR) flow control
+        # # ser.writeTimeout = 2     #timeout for write
+        # interCharTimeout=None
+        self.ser.open()
+        # self.protocol.write_line('Serial opened !')
 
-        time.sleep(0.5)  #give the serial port sometime to receive the data
+    def closeSerialPort(self):
+        # self.ReadThread.stop()
+        self.ser.close()
+        # print(b'Serialport closed!')
 
-        numOfLines = 0
+    def baudRatechanged(self, baudRate):
+        serialconfdict = self.ser.get_settings()
+        serialconfdict['baudrate'] = baudRate
+        self.ser.apply_settings(serialconfdict)
+        print("serial baudrate changed !")
+    def write(self, send_buf):
+        self.ser.write(send_buf)
+    def read(self,len):
+        response = self.ser.read(len)
+        # print("read data: " + str(response))
+        return response
+    def clear(self):
+        self.ser.flushInput()
+        self.ser.flushOutput()
 
-        while(True):
-            response = ser.readline()
-            print("read data: " + response)
-           
-            numOfLines = numOfLines + 1
 
-            if (numOfLines >= 5):
-                break
+# def iSerial():
+#     ser = serial.Serial()
+   
+#     ser.port = "COM8"  #"/dev/ttyUSB7"
+#     ser.baudrate = 115200
+#     ser.bytesize = serial.EIGHTBITS #number of bits per bytes
+#     ser.parity = serial.PARITY_NONE #set parity check: no parity
+#     ser.stopbits = serial.STOPBITS_ONE #number of stop bits
+#     ser.timeout = 1          #block read
+#     # xonxoff = False,     #disable software flow control
+#     ser.rtscts = False     #disable hardware (RTS/CTS) flow control
+#     # # ser.dsrdtr = False       #disable hardware (DSR/DTR) flow control
+#     # # ser.writeTimeout = 2     #timeout for write
+#     # interCharTimeout=None
+#     # )
+#     try: 
+#         ser.open()
+#     except:
+#         print("error open serial port: ")
+#         exit()
 
-            ser.close()
-    except :
-        print ("error communicating...: ")
+#     if ser.isOpen():
 
-else:
-    print("cannot open serial port")
+#         # try:
+#             # ser.flushInput() #flush input buffer, discarding all its contents
+#             # ser.flushOutput()#flush output buffer, aborting current output 
+#             #          #and discard all that is in buffer
+
+#             # #write data
+#             # ser.write("AT+CSQ")
+#             # print("write data: AT+CSQ")
+
+#             # time.sleep(0.5)  #give the serial port sometime to receive the data
+
+#             # numOfLines = 0
+
+#         while(True):
+#             # rec_len = ser.inWaiting()
+#             # if(rec_len>0):
+#             response = ser.read(190)
+#             # print("read data: " + str(response))
+#             # info = unpack('=4B 3H 1I 2B 1I 1h 6h 12H 14H 1I 2H 2B 3H 1I 1H 1I 1h 1B 3H 3h 1f 6h 1H 3h 3f 3h 10h 1B',response)
+#                 # numOfLines = numOfLines + 1
+
+#                 # if (numOfLines >= 5):
+#                 #     break
+
+#                 # ser.close()
+#         # except IOError as err:
+#         #     print("I/O error: {0}".format(err))
+#         # except:
+#         #      print("serial communication error")
+
+#     # else:
+#     #     print("cannot open serial port")
+
+if __name__ == '__main__':
+    # print("OK")
+    iSerial()
+
+
+
+# from serial import threaded
+# from serial.tools import list_ports
+
+# LineReader = serial.threaded.LineReader
+# ReaderThread = serial.threaded.ReaderThread
+
+# class PrintLines(LineReader):
+
+#     def connection_made(self, transport):
+#         super(PrintLines, self).connection_made(transport)
+#         print('port opened\n')
+
+#     def handle_line(self, data):
+#         print('line received: {!r}\n'.format(data))
+
+#     def data_received(self,data):
+#         super(PrintLines, self).data_received(data)
+#         sys.stdout.write(data)
+#         """data为串行口输出内容"""
+
+#     def connection_lost(self, exc):
+#         if exc:
+#             traceback.print_exc(exc)
+#         print('port closed\n')
+
+
+# class aserialPort:
+
+#     """serial functions include :
+#                     checkports()
+#                     openSerialPort()
+#                     closeSerialPort()
+#                     baudRateChanged()"""
+
+#     def __init__(self):
+#         self.threadOpenedOnce = False
+#         self.ser = serial.Serial()
+
+#     def checkPorts(self):
+#         list = list_ports.comports()
+#         ports = []
+#         for port in list:
+#             if not port[0].startswith("/dev/ttyS"):
+#                 ports.append(port[0])
+#         return ports
+
+#     def openSerialPort(self, serialName, serialBaudRate):
+#         self.ser.baudrate = serialBaudRate
+#         self.ser.port = serialName
+#         self.ser.open()
+#         self.ReadThread = ReaderThread(self.ser, PrintLines)
+#         self.ReadThread.start()
+#         self.ReadThread.connect()
+#         self.transport, self.protocol = self.ReadThread.connect()
+#         self.protocol.write_line('Serial opened !')
+
+#     def closeSerialPort(self):
+#         self.ReadThread.stop()
+#         self.ser.close()
+#         print(b'Serialport closed!')
+
+#     def baudRatechanged(self, baudRate):
+#         serialconfdict = self.ser.get_settings()
+#         serialconfdict['baudrate'] = baudRate
+#         self.ser.apply_settings(serialconfdict)
+#         print("serial baudrate changed !")
+
+
