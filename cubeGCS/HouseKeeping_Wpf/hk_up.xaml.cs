@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.IO;
 using System.Collections.Generic;
+using CubeCOM;
+
 
 namespace HouseKeeping_Wpf
 {
@@ -85,7 +87,7 @@ namespace HouseKeeping_Wpf
          public UInt32 delay_hk_select      { get { return Convert.ToUInt32(cB_delay_select.SelectedIndex); } }
          public UInt32 delay_hk_index       { get { return Convert.ToUInt32(tB_delay_index.Text); } }
 
-         public UInt32   bias_mode             { get { return Convert.ToUInt32(tB_bias_mode.Text); } }
+         //public UInt32   bias_mode             { get { return Convert.ToUInt32(tB_bias_mode.Text); } }
                      //camera_delay_time = 0
           public UInt32 para_time { get { return Convert.ToUInt32(tB_time_para.Text);}}
 
@@ -125,6 +127,278 @@ namespace HouseKeeping_Wpf
             cB_delay_select.ItemsSource = NetNo_list;
             cB_delay_select.SelectedIndex = cB_delay_select.Items.Count > 0 ? 1 : -1;
         }
+
+
+
+        #region 控制指令生成
+        /// <summary>
+        /// 生成控制指令
+        /// </summary>
+        public void createCtrlCmd(byte[] up_buf,byte selectIndex,UInt32 delay_time,ref byte cmd_cnt)
+        {
+
+            if (mwa_open_checked || mwa_close_checked)    //动量轮A
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                        (mwa_open_checked) ? cubeCOMM.INS_MW_A_ON : cubeCOMM.INS_MW_A_OFF,
+                                        delay_time
+                                        );
+
+                cmd_cnt++;
+            }
+
+            if (mwb_open_checked || mwb_close_checked)    //动量轮B
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      (mwb_open_checked) ? cubeCOMM.INS_MW_B_ON : cubeCOMM.INS_MW_B_OFF,
+                                      delay_time
+                                      );
+
+                cmd_cnt++;
+            }
+
+
+            if (hk_reset_checked)                                     //星务重启
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      cubeCOMM.INS_OBC_RST,
+                                      delay_time
+                                      );
+
+                cmd_cnt++;
+            }
+
+            if (hmra_open_checked || hmra_close_checked)                                     //磁强计A
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                       (hmra_open_checked) ? cubeCOMM.INS_SW_MAG_A_ON : cubeCOMM.INS_SW_MAG_A_OFF,
+                                      delay_time
+                                      );
+
+                cmd_cnt++;
+            }
+
+            if (hmrb_open_checked || hmrb_close_checked)                                     //磁强计B
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      (hmrb_open_checked) ? cubeCOMM.INS_SW_MAG_B_ON : cubeCOMM.INS_SW_MAG_B_OFF,
+                                      delay_time
+                                      );
+                cmd_cnt++;
+            }
+
+            if (fan_open_start_checked || fan_open_stop_checked)                                     //帆板开
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      (fan_open_start_checked) ? cubeCOMM.INS_SLBRD_ON : cubeCOMM.INS_SLBRD_OFF,
+                                      delay_time
+                                      );
+
+                cmd_cnt++;
+            }
+
+            if (atenna_open_checked)                                     //天线开
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      cubeCOMM.INS_USB_ON,
+                                      delay_time
+                                      );
+
+                cmd_cnt++;
+            }
+
+
+            if (batt_warm_open_checked || batt_warm_close_checked)                                     //电池加热
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      (batt_warm_open_checked) ? cubeCOMM.INS_SW_BATT_WARM_ON : cubeCOMM.INS_SW_BATT_WARM_OFF,
+                                      delay_time
+                                      );
+
+                cmd_cnt++;
+            }
+
+            if (down_start_checked || down_stop_checked)                                     //星务下行
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      (down_start_checked) ? cubeCOMM.INS_DOWN_CMD_ON : cubeCOMM.INS_DOWN_CMD_OFF,
+                                      delay_time
+                                      );
+                cmd_cnt++;
+            }
+
+            if (atenna_pwr_on_checked || atenna_pwr_off_checked)                                     //天线电源开关
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                      (atenna_pwr_on_checked) ? cubeCOMM.INS_S2_ON : cubeCOMM.INS_S2_OFF,
+                                      delay_time
+                                      );
+                cmd_cnt++;
+            }
+
+
+            if (adcs_open_checked || adcs_close_checked)    //姿控计算机开关
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                                        (adcs_open_checked) ? cubeCOMM.INS_ADCS_ON : cubeCOMM.INS_ADCS_OFF,
+                                        delay_time
+                                        );
+
+                cmd_cnt++;
+            }
+
+            if (redam_checked)//重阻尼
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                    cubeCOMM.INS_DET,
+                     delay_time);
+                cmd_cnt++;
+            }
+
+            if (always_dam_checked)//永久阻尼
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_STA,
+                     delay_time);
+                cmd_cnt++;
+            }
+
+            if (dam_mode_checked) //阻尼置位
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_DMP_FLAG,
+                     delay_time);
+
+                cmd_cnt++;
+            }
+
+            if (ctrl_mode_checked) //三轴稳定置位
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_CTL_FLAG,
+                     delay_time);
+
+                cmd_cnt++;
+            }
+
+            if (pitch_mode_checked) //俯仰控制置位
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_FLT_FLAG,
+                     delay_time);
+
+                cmd_cnt++;
+            }
+
+
+
+
+            if (error_checked)
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs( up_buf, selectIndex,
+                     cubeCOMM.INS_ERROR_ENABLE,
+                    delay_time);
+
+                cmd_cnt++;
+            }
+
+
+        }
+
+
+        #endregion
+
+        #region 参数指令生成
+        /// <summary>
+        /// 生成注入指令
+        /// </summary>
+        public void createParametersCmd(byte[] up_buf, byte selectIndex, UInt32 delay_time, ref byte cmd_cnt)
+        {
+          
+
+            if (para_D_checked)   //D参数注入
+            {
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_CTL_D_PRA,
+                    delay_time,
+                   para_D, 0);
+
+                cmd_cnt++;
+            }
+
+            if (para_Z_checked)   //Z参数注入
+            {
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_ZJD_CTL,
+                     delay_time,
+                    para_Z, 0);
+
+                cmd_cnt++;
+            }
+
+            if (para_P_checked)  //P参数注入
+            {
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_CTL_P_PRA,
+                     delay_time,
+                    para_P, 0);
+
+                cmd_cnt++;
+            }
+
+            if (para_down_period_checked) //更新下行周期
+            {
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_COM_PERIOD,
+                     delay_time,
+                     para_down_period, 0);
+
+                cmd_cnt++;
+            }
+
+
+            if (delay_hk_checked) //下行延时遥测
+            {
+                UInt32 para1 = 0, para2 = 0;
+
+
+                //para1 = hk_up_frm.delay_hk_select * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_index;
+                para1 = delay_hk_index * Convert.ToUInt32(Math.Pow(2, 16)) + delay_hk_select;
+
+
+                para2 = delay_hk_orbit_cnt;
+
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_DOWN_TEL,
+                     delay_time,
+                     para1, para2);
+
+                cmd_cnt++;
+            }
+
+
+            if (para_time_checked) //星上时间注入
+            {
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_ADCS_TIME_IN,
+                     delay_time,
+                     para_time, 0);
+                cmd_cnt++;
+
+            }
+
+        }
+        #endregion
+
+        #region 轨道指令生成
+        /// <summary>
+        /// 生成轨道参数指令
+        /// </summary>
+        public void createOrbitCmd(byte[] up_buf, byte selectIndex, UInt32 delay_time, ref byte cmd_cnt)
+        {
+            if (orbit_checked)
+            {
+                cubeCOMM.generate_up_orbit_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_ORB_TLE_FLAG,
+                     delay_time,
+                     orbit);
+
+                cmd_cnt++;
+
+            }
+
+
+        }
+        #endregion
 
         #region 动量轮
         /// <summary>

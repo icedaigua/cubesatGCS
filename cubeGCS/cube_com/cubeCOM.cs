@@ -331,7 +331,7 @@ namespace CubeCOM
         #region 序列化函数
 
 
-        public static void generate_up_ctrl_cmd_cs(ref byte[] up_ctrl_buf, byte pid, byte func, UInt32 delay_time)
+        public static void generate_up_ctrl_cmd_cs(byte[] up_ctrl_buf, byte pid, byte func, UInt32 delay_time)
         {
             UP_ctrl_cmd ctrl_cmd = new UP_ctrl_cmd();
 
@@ -361,7 +361,7 @@ namespace CubeCOM
         }
 
 
-        public static void generate_up_para_cmd_cs(ref byte[] up_para_buf, byte pid, byte func, UInt32 delay_time, UInt32 para, UInt32 para2)
+        public static void generate_up_para_cmd_cs(byte[] up_para_buf, byte pid, byte func, UInt32 delay_time, UInt32 para, UInt32 para2)
         {
             UP_para_cmd para_cmd = new UP_para_cmd();
 
@@ -392,7 +392,7 @@ namespace CubeCOM
 
         }
 
-        public static void generate_up_orbit_cmd_cs(ref byte[] up_orbit_buf, byte pid, byte func, UInt32 delay_time, double[] orbit_para)
+        public static void generate_up_orbit_cmd_cs(byte[] up_orbit_buf, byte pid, byte func, UInt32 delay_time, double[] orbit_para)
 		{
             UP_orbit_cmd orbit_cmd = new UP_orbit_cmd();
           

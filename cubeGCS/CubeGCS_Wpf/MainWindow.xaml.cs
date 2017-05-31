@@ -254,215 +254,12 @@ namespace CubeGCS_Wpf
 
             UInt32 delay_time = 0;
 
-            UInt16 cmd_cnt = 0;
+            byte cmd_cnt = 0;
 
-            #region 数据生成
+            hk_up_frm.createCtrlCmd(up_buf, (byte)cB_pid_81.SelectedIndex, delay_time, ref cmd_cnt);
 
-
-
-            if (hk_up_frm.mwa_open_checked || hk_up_frm.mwa_close_checked)    //动量轮A
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                        (hk_up_frm.mwa_open_checked) ? cubeCOMM.INS_MW_A_ON : cubeCOMM.INS_MW_A_OFF,
-                                        delay_time
-                                        );
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.mwb_open_checked || hk_up_frm.mwb_close_checked)    //动量轮B
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      (hk_up_frm.mwb_open_checked) ? cubeCOMM.INS_MW_B_ON : cubeCOMM.INS_MW_B_OFF,
-                                      delay_time
-                                      );
-
-                cmd_cnt++;
-            }
-
-
-            if (hk_up_frm.hk_reset_checked)                                     //星务重启
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      cubeCOMM.INS_OBC_RST,
-                                      delay_time
-                                      );
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.hmra_open_checked || hk_up_frm.hmra_close_checked)                                     //磁强计A
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                       (hk_up_frm.hmra_open_checked) ? cubeCOMM.INS_SW_MAG_A_ON : cubeCOMM.INS_SW_MAG_A_OFF,
-                                      delay_time
-                                      );
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.hmrb_open_checked || hk_up_frm.hmrb_close_checked)                                     //磁强计B
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      (hk_up_frm.hmrb_open_checked) ? cubeCOMM.INS_SW_MAG_B_ON : cubeCOMM.INS_SW_MAG_B_OFF,
-                                      delay_time
-                                      );
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.fan_open_start_checked || hk_up_frm.fan_open_stop_checked)                                     //帆板开
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      (hk_up_frm.fan_open_start_checked) ? cubeCOMM.INS_SLBRD_ON : cubeCOMM.INS_SLBRD_OFF,
-                                      delay_time
-                                      );
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.atenna_open_checked)                                     //天线开
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      cubeCOMM.INS_USB_ON,
-                                      delay_time
-                                      );
-
-                cmd_cnt++;
-            }
-
-
-            if (hk_up_frm.batt_warm_open_checked || hk_up_frm.batt_warm_close_checked)                                     //电池加热
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      (hk_up_frm.batt_warm_open_checked) ? cubeCOMM.INS_SW_BATT_WARM_ON : cubeCOMM.INS_SW_BATT_WARM_OFF,
-                                      delay_time
-                                      );
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.down_start_checked || hk_up_frm.down_stop_checked)                                     //星务下行
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      (hk_up_frm.down_start_checked) ? cubeCOMM.INS_DOWN_CMD_ON : cubeCOMM.INS_DOWN_CMD_OFF,
-                                      delay_time
-                                      );
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.atenna_pwr_on_checked || hk_up_frm.atenna_pwr_off_checked)                                     //天线电源开关
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                      (hk_up_frm.atenna_pwr_on_checked) ? cubeCOMM.INS_S2_ON : cubeCOMM.INS_S2_OFF,
-                                      delay_time
-                                      );
-                cmd_cnt++;
-            }
-
-
-            if (hk_up_frm.adcs_open_checked || hk_up_frm.adcs_close_checked)    //姿控计算机开关
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                                        (hk_up_frm.adcs_open_checked) ? cubeCOMM.INS_ADCS_ON : cubeCOMM.INS_ADCS_OFF,
-                                        delay_time
-                                        );
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.redam_checked)//重阻尼
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_DET,
-                     delay_time);
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.always_dam_checked)//永久阻尼
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_STA,
-                     delay_time);
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.dam_mode_checked) //阻尼置位
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_DMP_FLAG,
-                     delay_time);
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.ctrl_mode_checked) //三轴稳定置位
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_CTL_FLAG,
-                     delay_time);
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.pitch_mode_checked) //俯仰控制置位
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_FLT_FLAG,
-                     delay_time);
-
-                cmd_cnt++;
-            }
-
-
-
-
-            if (hk_up_frm.error_checked)
-            {
-                cubeCOMM.generate_up_ctrl_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex,
-                     cubeCOMM.INS_ERROR_ENABLE,
-                    delay_time);
-
-                cmd_cnt++;
-            }
-
-
-
-            #endregion
 
             GCS_send_cmd(up_buf, 0, cubeCOMM.ctrl_length,cmd_cnt);
-            //if (cmd_cnt < 1)
-            //{
-            //    MessageBox.Show("请选择一条指令！");
-            //    return;
-            //}
-
-            //if (cmd_cnt>=2)
-            //{
-            //    MessageBox.Show("每次只能执行一条指令，请重选！");
-            //    return;
-            //}
-
-
-            ////串口打开则用串口
-            //if(In_Port.IsOpen)
-            //{
-            //    In_Port.Write(up_buf, 0, cubeCOMM.ctrl_length);
-            //    return;
-            //}
-
-            //if(client_up_Socket == null)
-            //{
-
-            //    MessageBox.Show("上行未创建，请先打开网络！");
-            //    return;
-            //}
-
-            //try
-            //{
-            //    client_up_Socket.Send(up_buf, 0, cubeCOMM.ctrl_length, SocketFlags.None);
-
-            //    //clear_up_buf();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("网络错误！");
-            //}
-
 
         }
 
@@ -473,118 +270,11 @@ namespace CubeGCS_Wpf
         {
             UInt32 delay_time = 0;
 
-            UInt16 cmd_cnt = 0;
+            byte cmd_cnt = 0;
 
-            if (hk_up_frm.para_D_checked)   //D参数注入
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_CTL_D_PRA,
-                    delay_time,
-                    hk_up_frm.para_D, 0);
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.para_Z_checked)   //Z参数注入
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_ZJD_CTL,
-                     delay_time,
-                    hk_up_frm.para_Z, 0);
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.para_P_checked)  //P参数注入
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_CTL_P_PRA,
-                     delay_time,
-                     hk_up_frm.para_P, 0);
-
-                cmd_cnt++;
-            }
-
-            if (hk_up_frm.para_down_period_checked) //更新下行周期
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_COM_PERIOD,
-                     delay_time,
-                     hk_up_frm.para_down_period, 0);
-
-                cmd_cnt++;
-            }
-
-
-            if (hk_up_frm.delay_hk_checked) //下行延时遥测
-            {
-                UInt32 para1 = 0, para2 = 0;
-
-
-                //para1 = hk_up_frm.delay_hk_select * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_index;
-                para1 = hk_up_frm.delay_hk_index * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_select;
-
-
-                para2 = hk_up_frm.delay_hk_orbit_cnt;
-
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_DOWN_TEL,
-                     delay_time,
-                     para1, para2);
-
-                cmd_cnt++;
-            }
-
-
-          
-
-
-
-            if (hk_up_frm.para_time_checked) //星上时间注入
-            {
-                cubeCOMM.generate_up_para_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_ADCS_TIME_IN,
-                     delay_time,
-                     hk_up_frm.para_time, 0);
-                cmd_cnt++;
-
-            }
-
+            hk_up_frm.createParametersCmd(up_buf, (byte)cB_pid_81.SelectedIndex, delay_time, ref cmd_cnt);
 
             GCS_send_cmd(up_buf, 0, cubeCOMM.para_length, cmd_cnt);
-            //if (cmd_cnt < 1)
-            //{
-            //    MessageBox.Show("请选择一条指令！");
-            //    return;
-            //}
-
-            //if (cmd_cnt >= 2)
-            //{
-            //    MessageBox.Show("每次只能执行一条指令，请重选！");
-            //    return;
-            //}
-
-            ////串口打开则用串口
-            //if (In_Port.IsOpen)
-            //{
-            //    In_Port.Write(up_buf, 0, cubeCOMM.para_length);
-            //    return;
-            //}
-
-            //if (client_up_Socket == null)
-            //{
-
-            //    MessageBox.Show("上行未创建，请先打开网络！");
-            //    return;
-            //}
-
-            //try
-            //{
-            //    client_up_Socket.Send(up_buf, 0, cubeCOMM.para_length, SocketFlags.None);
-
-            ////    clear_up_buf();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("网络错误！");
-            //}
-
-
-   
 
         }
 
@@ -594,43 +284,11 @@ namespace CubeGCS_Wpf
         private void send_orbit_cmd_cs()
         {
             UInt32 delay_time = 0;
-            UInt16 cmd_cnt = 0;
+            byte cmd_cnt = 0;
 
-            if (hk_up_frm.orbit_checked)
-            {
-                cubeCOMM.generate_up_orbit_cmd_cs(ref up_buf, (byte)cB_pid_81.SelectedIndex, cubeCOMM.INS_ORB_TLE_FLAG,
-                     delay_time,
-                     hk_up_frm.orbit);
-
-                cmd_cnt++;
-
-            }
+            hk_up_frm.createOrbitCmd(up_buf, (byte)cB_pid_81.SelectedIndex, delay_time, ref cmd_cnt);
 
             GCS_send_cmd(up_buf, 0, cubeCOMM.orbit_length, cmd_cnt);
-            ////串口打开则用串口
-            //if (In_Port.IsOpen)
-            //{
-            //    In_Port.Write(up_buf, 0, cubeCOMM.orbit_length);
-            //    return;
-            //}
-
-            //if (client_up_Socket == null)
-            //{
-
-            //    MessageBox.Show("上行未创建，请先打开网络！");
-            //    return;
-            //}
-
-            //try
-            //{
-            //    client_up_Socket.Send(up_buf, 0, cubeCOMM.orbit_length, SocketFlags.None);
-
-            //    //clear_up_buf();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("网络错误！");
-            //}
 
 
         }
@@ -678,11 +336,6 @@ namespace CubeGCS_Wpf
             }
         }
 
-        //private void clear_up_buf()
-        //{
-        //    for (int kc = 0; kc < 200; kc++)
-        //        up_buf[kc] = 0;
-        //}
 
         #endregion
 
@@ -916,9 +569,9 @@ namespace CubeGCS_Wpf
             down_info_buf[down_info_buf_length++] = Buf;
             if (down_info_buf_length >= 5)
             {
-                byte[] new_rec = new byte[5];
-                down_info_buf.CopyTo(new_rec, 5);
-                rec_buff_display(new_rec);
+                //byte[] new_rec = new byte[5];
+                //down_info_buf.CopyTo(new_rec, 5);
+                //rec_buff_display(new_rec);
                 rec_state = 0;
             }
         }

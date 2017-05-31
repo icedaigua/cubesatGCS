@@ -4,8 +4,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:local="clr-namespace:HouseKeeping_Wpf"
-			 mc:Ignorable="d" 
-			 d:DesignHeight="600" d:DesignWidth="1600">
+			 mc:Ignorable="d">
     <Grid Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -447,11 +446,6 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <CheckBox Name="cB_pianzhi_mode" Grid.Column="0" Grid.Row="0" Margin="2,2,5,2" 
-						  HorizontalAlignment="Left" VerticalAlignment="Center" 
-						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
-					
-						  >加速离轨</CheckBox>
 
 
                     <CheckBox  Name="cB_delay_hk" Grid.Column="0" Grid.Row="2" Margin="2,2,5,2" 
@@ -459,11 +453,6 @@
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
 						 >延时遥测</CheckBox>
 
-
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_bias_mode" 
-						 Width="200" TextAlignment="Center" 
-						 FontSize="22" Foreground="DarkGreen"
-						 >0</TextBox>
 
 
                     <ComboBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Name="cB_delay_select" 
