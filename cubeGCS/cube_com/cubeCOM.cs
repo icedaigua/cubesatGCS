@@ -279,6 +279,127 @@ namespace CubeCOM
 
 
 
+        #region  下行解码
+
+        private static byte[] down_info_buf = new byte[512];
+        private static byte down_info_buf_length = 0;
+
+        private static byte rec_state = 0;
+
+        public static void analysis_rec_buf(byte[] buffer)
+        {
+
+            foreach (byte Buf in buffer)
+            {
+                if (rec_state <= cubeCOMM.FRAME_START)
+                {
+                    searchHearder(Buf);
+                    continue;
+                }
+                switch (rec_state)
+                {
+                    case cubeCOMM.FRAME_OBC:
+                        ParseOBC(Buf);
+                        break;
+                    case cubeCOMM.FRAME_ADCS:
+                        ParseADCS(Buf);
+                        break;
+                    case cubeCOMM.FRAME_RESPONSE:
+                        ParseResponse(Buf);
+                        break;
+                    case cubeCOMM.FRAME_NULL:
+                        break;
+                }
+
+            }
+        }
+
+        private static byte searchHearder(byte Buf)
+        {
+            switch (rec_state)
+            {
+                case cubeCOMM.FRAME_NULL:
+                    down_info_buf_length = 0;
+                    down_info_buf[down_info_buf_length++] = Buf;
+
+                    if ((Buf == 0x1A))
+                    {
+                        rec_state = cubeCOMM.FRAME_START;
+                    }
+                    break;
+
+                case 1:
+                    down_info_buf[down_info_buf_length++] = Buf;
+                    if ((Buf == 0x50))
+                    {
+                        rec_state = cubeCOMM.FRAME_OBC;
+                    }
+                    else if (Buf == 0x51)
+                    {
+                        rec_state = cubeCOMM.FRAME_ADCS;
+                    }
+
+                    else if (Buf == 0x53)
+                    {
+                        rec_state = cubeCOMM.FRAME_RESPONSE;
+
+                    }
+                    else
+                    {
+                        rec_state = cubeCOMM.FRAME_NULL;
+                    }
+                    break;
+                default:
+                    {
+                        rec_state = cubeCOMM.FRAME_NULL;
+                        break;
+                    }
+
+            }
+            return rec_state;
+        }
+
+        private static void ParseOBC(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
+
+            if (down_info_buf_length >= cubeCOMM.obc_length)
+            {
+                //rec_down_info_count++;      //接收到的指令数加1
+
+                //cubeCOMM.get_info_from_obc_buf(down_info_buf, ref obc_info);
+                rec_state = 0;
+                //obc_displayAndsave();
+            }
+        }
+
+        private static void ParseResponse(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
+            if (down_info_buf_length >= 5)
+            {
+                //byte[] new_rec = new byte[5];
+                //down_info_buf.CopyTo(new_rec, 5);
+                //rec_buff_display(new_rec);
+                rec_state = 0;
+            }
+        }
+
+        private static void ParseADCS(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
+            if (down_info_buf_length >= cubeCOMM.adcs_length)
+            {
+                //rec_down_info_count++;      //接收到的指令数加1
+
+                //cubeCOMM.get_info_from_adcs_buf(down_info_buf, ref adcs_info);
+                rec_state = 0;
+                //adcs_displayAndsave();
+
+            }
+        }
+        #endregion
+
 
         #region 星务上行命令帧
 
@@ -328,7 +449,7 @@ namespace CubeCOM
   
     
 
-        #region 序列化函数
+        #region 上行序列化函数
 
 
         public static void generate_up_ctrl_cmd_cs(byte[] up_ctrl_buf, byte pid, byte func, UInt32 delay_time)
