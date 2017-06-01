@@ -475,14 +475,31 @@ namespace CubeGCS_Wpf
             }
         }
 
-    
 
+  
+
+        private void ShowMsg(string str)
+        {
+
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    tB_recbuf.AppendText(str + "\r\n");
+                }));
+            }).Start();
+
+        }
+
+        #endregion
+
+        #region 下行解码
         private void analysis_rec_buf(byte[] buffer)
         {
-          
+
             foreach (byte Buf in buffer)
             {
-                if(rec_state <= cubeCOMM.FRAME_START)
+                if (rec_state <= cubeCOMM.FRAME_START)
                 {
                     searchHearder(Buf);
                     continue;
@@ -501,7 +518,7 @@ namespace CubeGCS_Wpf
                     case cubeCOMM.FRAME_NULL:
                         break;
                 }
-                
+
             }
         }
 
@@ -523,7 +540,7 @@ namespace CubeGCS_Wpf
                     down_info_buf[down_info_buf_length++] = Buf;
                     if ((Buf == 0x50))
                     {
-                        rec_state = cubeCOMM.FRAME_OBC;                 
+                        rec_state = cubeCOMM.FRAME_OBC;
                     }
                     else if (Buf == 0x51)
                     {
@@ -545,7 +562,7 @@ namespace CubeGCS_Wpf
                         rec_state = cubeCOMM.FRAME_NULL;
                         break;
                     }
-                   
+
             }
             return rec_state;
         }
@@ -590,21 +607,22 @@ namespace CubeGCS_Wpf
             }
         }
 
-   
+
 
         private void obc_displayAndsave()
         {
 
-            double seconds = obc_info.utc_time;
+            //double seconds = obc_info.utc_time;
 
-            double secs = Convert.ToDouble(seconds);
+            //double secs = Convert.ToDouble(seconds);
 
             DateTime dt = new DateTime(                 //显示为本地时间
-            1970, 1, 1, 0, 0, 0, DateTimeKind.Local).AddSeconds(secs);
+            1970, 1, 1, 0, 0, 0, DateTimeKind.Local).
+            AddSeconds(Convert.ToDouble(obc_info.utc_time));
 
 
             timerCnt_frm.setCounter(rec_down_info_count, obc_info.down_count);
-        
+
             timerCnt_frm.setCubetime(dt.ToString("yyyy年MM月dd日hh:mm:ss"));
 
             Temp_frm.displayTemperature(obc_info);
@@ -612,7 +630,8 @@ namespace CubeGCS_Wpf
 
             sat_status.dis_cubesat_status(obc_info.on_off_status, obc_info.work_mode);
             hk_obc_frm.display_obc_info(obc_info);
-                 
+            hk_eps_frm.display_eps_info(obc_info);
+
             io_func.WriteObcFrameFile(obc_info);
 
         }
@@ -624,21 +643,6 @@ namespace CubeGCS_Wpf
             hk_adcs_frm.display_adcs_info(adcs_info);
             //sat_status.set_sat_color(down_adcs_81.control_mode);
             io_func.WriteAdcsFrameFile(adcs_info);
-
-        }
-
-
-
-        private void ShowMsg(string str)
-        {
-
-            new Thread(() =>
-            {
-                this.Dispatcher.Invoke(new Action(() =>
-                {
-                    tB_recbuf.AppendText(str + "\r\n");
-                }));
-            }).Start();
 
         }
 

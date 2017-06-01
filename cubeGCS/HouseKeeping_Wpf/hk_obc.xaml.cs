@@ -55,48 +55,7 @@ namespace HouseKeeping_Wpf
 
             #endregion
 
-            #region 电源
-            tB_sunC_1.Text = down_info.sun_c[0].ToString();
-            tB_sunC_2.Text = down_info.sun_c[1].ToString();
-            tB_sunC_3.Text = down_info.sun_c[2].ToString();
-            tB_sunC_4.Text = down_info.sun_c[3].ToString();
-            tB_sunC_5.Text = down_info.sun_c[4].ToString();
-            tB_sunC_6.Text = down_info.sun_c[5].ToString();
-
-            tB_sunV_1.Text = down_info.sun_v[0].ToString();
-            tB_sunV_2.Text = down_info.sun_v[1].ToString();
-            tB_sunV_3.Text = down_info.sun_v[2].ToString();
-            tB_sunV_4.Text = down_info.sun_v[3].ToString();
-            tB_sunV_5.Text = down_info.sun_v[4].ToString();
-            tB_sunV_6.Text = down_info.sun_v[5].ToString();
-
-            tB_BusC.Text = down_info.out_BusC.ToString();
-            tB_BusV.Text = down_info.out_BusV.ToString();
-
-
-            //tB_outC_1.Text = down_info.Vol_5_C[0].ToString();
-            //tB_outC_2.Text = down_info.Vol_5_C[1].ToString();
-            //tB_outC_3.Text = down_info.Vol_5_C[2].ToString();
-            //tB_outC_4.Text = down_info.Vol_5_C[3].ToString();
-            //tB_outC_5.Text = down_info.Vol_5_C[4].ToString();
-            //tB_outC_6.Text = down_info.Vol_5_C[5].ToString();
-
-            //tB_outBusC_1.Text = down_info.Bus_c_1.ToString();
-            //tB_outBusC_2.Text = down_info.Bus_c_2.ToString();
-            //tB_outBusC_3.Text = down_info.Bus_c_3.ToString();
-            //tB_outBusC_4.Text = down_info.Bus_c_4.ToString();
-            //tB_outBusC_5.Text = down_info.Bus_c_5.ToString();
-
-            //tB_batt_tempe_1.Text = down_info.temp_batt_board_1.ToString();
-            //tB_batt_tempe_2.Text = down_info.temp_batt_board_2.ToString();
-            //tB_batt_tempe_3.Text = down_info.temp_eps_1.ToString();
-            //tB_batt_tempe_4.Text = down_info.temp_eps_2.ToString();
-            //tB_batt_tempe_5.Text = down_info.temp_eps_3.ToString();
-            //tB_batt_tempe_6.Text = down_info.temp_eps_4.ToString();
-
-            tB_batt_on_off.Text = down_info.on_off_status.ToString();
-
-            #endregion
+        
 
             tB_save_frame_cnt.Text = down_info.aindex.ToString();
             tB_flash_block.Text = down_info.mindex.ToString();

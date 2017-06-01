@@ -203,7 +203,7 @@
 
             <TabItem Header="电源信息">
 
-                    <HouseKeeping_Wpf:Eps />
+                    <HouseKeeping_Wpf:hk_eps Name="hk_eps_frm"/>
             </TabItem>
 
             <TabItem Header="通信信息">
