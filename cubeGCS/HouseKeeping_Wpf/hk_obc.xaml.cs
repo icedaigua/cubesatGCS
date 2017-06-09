@@ -19,7 +19,7 @@ namespace HouseKeeping_Wpf
         {
 
             #region CPU   
-            tB_sat_id.Text = "八一卫星";
+            tB_sat_id.Text = "NJUST";
 
             tB_reboot_count.Text = down_info.reboot_count.ToString();
 
