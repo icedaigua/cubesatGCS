@@ -641,7 +641,7 @@ namespace CubeGCS_Wpf
             //tBk_rec_frame_cnt.Text = rec_down_info_count.ToString();
             //tBk_sat_down_frame_cnt.Text = down_adcs_81.response_count.ToString();
             hk_adcs_frm.display_adcs_info(adcs_info);
-            //sat_status.set_sat_color(down_adcs_81.control_mode);
+            sat_status.set_sat_color(adcs_info.adcs_ctrl_mode);
             io_func.WriteAdcsFrameFile(adcs_info);
 
         }

@@ -12,12 +12,12 @@ namespace HouseKeeping_Wpf
     public partial class sensor : UserControl
     {
 
-        const byte ANTS1 = (0x01 << 0),       //第一个字节
+        const byte  ANTS1 = (0x01 << 0),       //第一个字节
                     ANTS2 = (0x01 << 1),
                     ANTS3 = (0x01 << 2),
                     ANTS4 = (0x01 << 3),
                     ARM = (0x01 << 4),
-                    ANTSMSK = (0x1F),       //No sue
+                    //ANTSMSK = (0x1F),       //No sue
 
                     PANELA = (0x01 << 5),
                     PANELB = (0x01 << 6),
