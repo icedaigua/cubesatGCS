@@ -18,6 +18,10 @@ namespace CubeCOM
             INS_OBC_RST = 0x08,//星务计算机重启
             INS_DOWN_CMD_OFF = 0x09,//停止下行星上指令数据
 
+            INS_OBC_EPS_ON		=	0x0A ,
+            INS_OBC_EPS_OFF		=	0x0B ,
+            INS_OBC_WORKMODE	=	0x0C ,
+
                      INS_OBC_REVD_1 = 0x0A, //星务计算
                      INS_OBC_REVD_2 = 0x0B, //星务计算
                      INS_OBC_REVD_3 = 0x0C, //星务计算

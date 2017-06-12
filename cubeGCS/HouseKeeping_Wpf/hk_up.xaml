@@ -408,11 +408,22 @@
 					
 						  >姿控计算机关</CheckBox>
 
+                    <CheckBox Name="cB_obc_eps_open" Grid.Column="0" Grid.Row="2" Margin="2,2,5,2" 
+						  HorizontalAlignment="Left" VerticalAlignment="Center" 
+						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
+						  Checked="cB_obc_eps_open_Checked"
+				
+						  >电源控制开</CheckBox>
+                    <CheckBox Name="cB_obc_eps_close" Grid.Column="0" Grid.Row="3" Margin="2,2,5,2" 
+						  HorizontalAlignment="Left" VerticalAlignment="Center" 
+						  FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
+						  Checked="cB_obc_eps_close_Checked"
+					
+						  >电源控制关</CheckBox>
 
-               
 
 
-                  
+
 
                     <CheckBox Name="cB_error" Grid.Column="0" Grid.Row="4" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
@@ -446,8 +457,14 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-
-
+                    <CheckBox    Name="cB_obc_workmode" Grid.Column="0" Grid.Row="0" Margin="2,2,5,2" 
+						         HorizontalAlignment="Left" VerticalAlignment="Center" 
+							     FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"
+						         >星务工作模式</CheckBox>
+                    <ComboBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="cbB_obc_workmode" 
+						  Width="200" 
+						  FontSize="20" Foreground="DarkGreen"
+						 ></ComboBox>
                     <CheckBox  Name="cB_delay_hk" Grid.Column="0" Grid.Row="2" Margin="2,2,5,2" 
 						  HorizontalAlignment="Left" VerticalAlignment="Center" 
 							 FontFamily="宋体" FontWeight="DemiBold" Foreground="#FFD83F12" FontSize="24"

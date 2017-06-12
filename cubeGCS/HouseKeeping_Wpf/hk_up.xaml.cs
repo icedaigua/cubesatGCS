@@ -57,20 +57,23 @@ namespace HouseKeeping_Wpf
   
          public bool error_checked { get { return cB_error.IsChecked == true; } }
 
+         public bool obc_eps_open_checked { get { return cB_obc_eps_open.IsChecked == true; } }
+         public bool obc_eps_close_checked { get { return cB_obc_eps_close.IsChecked == true; } }
+
+      
+       
+
+
         //public bool   pianzhi_mode_checked = false,
         //public bool   zero_mode_checked = false,
 
-        //public bool  close_all_checked = false,
 
-        //public bool  bpsk_1200_checked = false,
-        //public bool  bpsk_9600_checked = false,
-        //public bool  down_fipex_checked = false,
         #endregion
 
         #region 参数注入
 
-       
-          public bool    para_time_checked    { get { return cB_time_para .IsChecked == true; } }
+
+        public bool    para_time_checked    { get { return cB_time_para .IsChecked == true; } }
           public bool    para_P_checked       { get { return cB_P_para.IsChecked == true; } }
           public bool    para_Z_checked       { get { return cB_Z_para.IsChecked == true; } }
           public bool    para_D_checked       { get { return cB_D_para.IsChecked == true; } }
@@ -91,8 +94,10 @@ namespace HouseKeeping_Wpf
                      //camera_delay_time = 0
           public UInt32 para_time { get { return Convert.ToUInt32(tB_time_para.Text);}}
 
+        public bool obc_mode_checked { get { return cB_obc_workmode.IsChecked == true; } }
+        public UInt32 obc_work_mode { get { return Convert.ToUInt32(cbB_obc_workmode.SelectedIndex); } }
 
-#endregion
+        #endregion
 
         #region 轨道注入
         //public bool orbit_modi = false;
@@ -126,6 +131,10 @@ namespace HouseKeeping_Wpf
             List<String> NetNo_list = new List<String> { "SD", "RAM","FLASH" };
             cB_delay_select.ItemsSource = NetNo_list;
             cB_delay_select.SelectedIndex = cB_delay_select.Items.Count > 0 ? 1 : -1;
+
+            List<String> mode_list = new List<String> { "LOWPOWER", "NORMAL", "SLEEP" };
+            cbB_obc_workmode.ItemsSource = mode_list;
+            cbB_obc_workmode.SelectedIndex = cbB_obc_workmode.Items.Count > 0 ? 1 : -1;
         }
 
 
@@ -287,6 +296,14 @@ namespace HouseKeeping_Wpf
             }
 
 
+            if (obc_eps_open_checked||obc_eps_close_checked) //电源控制
+            {
+                cubeCOMM.generate_up_ctrl_cmd_cs(up_buf, selectIndex,
+                    (obc_eps_open_checked) ? cubeCOMM.INS_OBC_EPS_ON : cubeCOMM.INS_OBC_EPS_OFF,
+                     delay_time);
+
+                cmd_cnt++;
+            }
 
 
             if (error_checked)
@@ -353,10 +370,7 @@ namespace HouseKeeping_Wpf
             {
                 UInt32 para1 = 0, para2 = 0;
 
-
-                //para1 = hk_up_frm.delay_hk_select * Convert.ToUInt32(Math.Pow(2, 16)) + hk_up_frm.delay_hk_index;
                 para1 = delay_hk_index * Convert.ToUInt32(Math.Pow(2, 16)) + delay_hk_select;
-
 
                 para2 = delay_hk_orbit_cnt;
 
@@ -373,6 +387,15 @@ namespace HouseKeeping_Wpf
                 cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_ADCS_TIME_IN,
                      delay_time,
                      para_time, 0);
+                cmd_cnt++;
+
+            }
+
+            if (obc_mode_checked) //星上时间注入
+            {
+                cubeCOMM.generate_up_para_cmd_cs(up_buf, selectIndex, cubeCOMM.INS_OBC_WORKMODE,
+                     delay_time,
+                     obc_work_mode, 0);
                 cmd_cnt++;
 
             }
@@ -783,6 +806,20 @@ namespace HouseKeeping_Wpf
         }
         #endregion
 
+
+        #region 电源控制模式
+        private void cB_obc_eps_open_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cB_obc_eps_close.IsChecked == true)
+                cB_obc_eps_close.IsChecked = false;
+        }
+
+        private void cB_obc_eps_close_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cB_obc_eps_open.IsChecked == true)
+                cB_obc_eps_open.IsChecked = false;
+        }
+        #endregion
 
         private string xDateSeconds()
         {
