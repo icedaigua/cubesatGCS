@@ -150,7 +150,7 @@ namespace CubeCOM
                             orbit_length = 79;
 
         public const byte
-                        obc_length = 94,
+                        obc_length = 98,
                         adcs_length = 96
                        ;
 
@@ -173,11 +173,12 @@ namespace CubeCOM
             public byte sat_id;                             //1
             public byte soft_id;                            //1
             public UInt16 reboot_count;                     //2
+            public byte reset_cause;
             public UInt16 rec_cmd_count;                    //2
             public UInt16 down_count;                       //2
             public UInt32 last_reset_time;                  //4
             public byte work_mode;                          //1
-            public byte status_sensor_on_off;               //1
+            //public byte status_sensor_on_off;               //1
             public UInt32 utc_time;                         //4
             public Int16 temp_hk;                           //2
 
@@ -204,7 +205,7 @@ namespace CubeCOM
 
             public UInt16 mindex;                                   //2
             public UInt16 aindex;					                //2
-
+            public UInt32 file_sd_time_latest;
 
 
         };

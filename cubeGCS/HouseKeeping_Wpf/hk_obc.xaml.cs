@@ -47,8 +47,8 @@ namespace HouseKeeping_Wpf
             1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(secs);
 
             tB_utc_time.Text = dt.ToString();
-
-            tB_status_sensor_on_off.Text = down_info.status_sensor_on_off.ToString();
+            
+            tB_reset_cause.Text = down_info.reset_cause.ToString();
 
             tB_tmep_hk.Text = ((down_info.temp_hk * 2370 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2");
             //System.Diagnostics.Trace.WriteLine("ADCS" + down_info.temp_hk.ToString());

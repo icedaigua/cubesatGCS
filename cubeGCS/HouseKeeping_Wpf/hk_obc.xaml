@@ -8,226 +8,86 @@
     <Grid>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="卫星状态">
-                <GroupBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" 
+        <GroupBox Grid.Column="0" Header="卫星状态">
+            <GroupBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" 
                         MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="#FFC9D8A0" Offset="1"/>
-                        <GradientStop Color="#FFE8E8B2" Offset="0.94"/>
-                        <GradientStop Color="#FFBFE2C0" Offset="0.149"/>
-                    </LinearGradientBrush>
-                </GroupBox.Background>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="卫星ID" />
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="卫星重启计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="接收指令计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="下行计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="复位时间"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="工作模式"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="UTC时间"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="开关状态"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="星务温度"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="已存轨道"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="已存帧数"/>
+                    <GradientStop Color="#FFC9D8A0" Offset="1"/>
+                    <GradientStop Color="#FFE8E8B2" Offset="0.94"/>
+                    <GradientStop Color="#FFBFE2C0" Offset="0.149"/>
+                </LinearGradientBrush>
+            </GroupBox.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="卫星ID" />
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="卫星重启计数"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="接收指令计数"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="下行计数"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="复位时间"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="工作模式"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="UTC时间"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="复位原因"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="星务温度"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="SD文件最新时间"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="已存轨道"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="已存帧数"/>
 
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
                              Name="tB_sat_id" Width="190" TextAlignment="Center">0</TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Foreground="Chocolate" 
                              Name="tB_reboot_count" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Foreground="Chocolate" 
                              Name="tB_rec_cmd_count" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Foreground="Chocolate" 
                              Name="tB_down_count" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Foreground="Chocolate" 
-                             Name="tB_last_reset_time" Width="240" TextAlignment="Left"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Foreground="Chocolate" 
+                             Name="tB_last_reset_time" Width="190" TextAlignment="Left"
+                             FontSize="20"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
                              Name="tB_work_mode" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
-                             Name="tB_utc_time" Width="240" TextAlignment="Left"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
-                             Name="tB_status_sensor_on_off" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
+                             Name="tB_utc_time" Width="190" TextAlignment="Left"
+                             FontSize="20"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
+                             Name="tB_reset_cause" Width="190" TextAlignment="Center"
+                             ></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
                              Name="tB_tmep_hk" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Foreground="Chocolate" 
+                             Name="tB_file_sd_time" Width="190" TextAlignment="Center"
+                             FontSize="20"></TextBox>
+
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Foreground="Chocolate" 
                              Name="tB_flash_block" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Foreground="Chocolate" 
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Foreground="Chocolate" 
                              Name="tB_save_frame_cnt" Width="190" TextAlignment="Center"></TextBox>
 
-                </Grid>
-            </GroupBox>
-
-            <GroupBox Grid.Column="1" Header="UV通信机">
-                <Grid>
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFE6F0CE" Offset="0"/>
-                            <GradientStop Color="#FF77D0F1" Offset="1"/>
-                            <GradientStop Color="#FEDCF5BE" Offset="0.562"/>
-                            <GradientStop Color="#FEBBF1F1" Offset="0.952"/>
-                            <GradientStop Color="#FE7DD4F5" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="RF TX错误计数" />
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="RF RX错误计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="I2C TX计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="I2C RX计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="I2C TX错误计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="I2C RX错误计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="TC偏置"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="HAM偏置"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="TC RSSI"/>
-
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="HAM RSSI" />
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="复位标识"/>
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="系统状态标识"/>
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="12" Text="运行时间"/>
-
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="13" Text="复位计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="14" Text="CTCSS启动时间"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="15" Text="DMA溢出"/>
+            </Grid>
+        </GroupBox>
 
 
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_rf_tx_err" Width="140" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Name="tB_rf_rx_err" Width="140" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Name="tB_i2c_tx_n" Width="140" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_i2c_rx_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_i2c_tx_err_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_i2c_rx_err_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Name="tB_tc_bias" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Name="tB_ham_bias" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Name="tB_tc_rssi" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Name="tB_ham_rssi" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Name="tB_reset" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Name="tB_run" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Name="tB_run_time" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Name="tB_reset_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Name="tB_ctsss_time" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="15" Name="tB_dma" Width="160" TextAlignment="Center"></TextBox>
-                </Grid>
-            </GroupBox>
-
-            <GroupBox Grid.Column="2" Header="UV通信机">
-                <Grid>
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFE6F0CE" Offset="0"/>
-                            <GradientStop Color="#FF77D0F1" Offset="1"/>
-                            <GradientStop Color="#FEDCF5BE" Offset="0.562"/>
-                            <GradientStop Color="#FEBBF1F1" Offset="0.952"/>
-                            <GradientStop Color="#FE7DD4F5" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="配置状态" />
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="直接指令状态"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="载荷工作模式"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="发射机增益"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="3.3V电流"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="3.3V电压"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="VBAT发射电流"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="VBAT发射电压"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="VBAT接收电流"/>
-
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="VBAT接收电压" />
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="STM32温度"/>
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="PA温度"/>
-                    <TextBlock Margin="1"  Foreground="Chocolate" Grid.Column="0" Grid.Row="12" Text="RF TX计数"/>
-
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="13" Text="RF RX计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="14" Text="指令计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="15" Text="发射机工作模式"/>
-                    
-                    
-
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_set_status" Width="140" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Name="tB_direct_status" Width="140" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Name="tB_payload_mode" Width="140" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_tx_gain" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_3V3_cur" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_3V3_vol" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Name="tB_vbat_send_cur" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Name="tB_vbat_send_vol" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Name="tB_vbat_rec_cur" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Name="tB_vbat_rec_vol" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Name="tB_stm32_temp" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Name="tB_pa_temp" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Name="tB_rf_tx_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Name="tB_rf_rx_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Name="tB_cmd_n" Width="160" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="15" Name="tB_send_mode" Width="160" TextAlignment="Center"></TextBox>
-
-                </Grid>
-            </GroupBox>
-            
-            
-        </Grid>
+    </Grid>
 
 </UserControl>
