@@ -11,9 +11,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Column="0" Header="电池状态" Foreground="Chocolate">
+        <GroupBox Grid.Column="0" Header="充电状态" Foreground="Chocolate">
             <Grid>
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -98,7 +99,7 @@
         </GroupBox>
 
 
-        <GroupBox Grid.Column="1" Header="电池状态" Foreground="Chocolate">
+        <GroupBox Grid.Column="1" Header="电压状态" Foreground="Chocolate">
             <Grid>
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -178,7 +179,7 @@
         </GroupBox>
 
 
-        <GroupBox Grid.Column="2" Header="电池状态" Foreground="Chocolate" >
+        <GroupBox Grid.Column="2" Header="温度状态" Foreground="Chocolate" >
             <Grid>
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -221,8 +222,7 @@
                 <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="tmep4"/>
                 <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="tmep5" />
                 <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="tmep6"/>
-                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="开关状态"/>
-
+             
                 <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="0" Name="tB_batt_tempe_1" 
                          Width="80" TextAlignment="Center"></TextBox>
                 <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="1" Name="tB_batt_tempe_2" 
@@ -235,9 +235,90 @@
                          Width="80" TextAlignment="Center"></TextBox>
                 <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="5" Name="tB_batt_tempe_6" 
                          Width="80" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="6" Name="tB_batt_on_off" 
-                         Width="120" TextAlignment="Center"></TextBox>
 
+
+
+
+
+
+            </Grid>
+
+        </GroupBox>
+
+        <GroupBox Grid.Column="3" Header="开关状态" Foreground="Chocolate" >
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE0D8D8" Offset="0.225"/>
+                        <GradientStop Color="#FFD8F1C6" Offset="0.494"/>
+                        <GradientStop Color="#FFB29191" Offset="0.02"/>
+                        <GradientStop Color="#FFF3DEEF" Offset="0.703"/>
+                        <GradientStop Color="#FFCBD398" Offset="0.948"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+
+
+
+
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="5/3.3V-1" />
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="5/3.3V-2"/>
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="5/3.3V-3"/>
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="5/3.3V-4"/>
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="5/3.3V-5" />
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="5/3.3V-6"/>
+             
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="7V-1" />
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="7V-2"/>
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="7V-3"/>
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="7V-4"/>
+                <TextBlock   Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="7V-5" />
+
+
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="0" Name="tB_5_33V_1" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="1" Name="tB_5_33V_2" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="2" Name="tB_5_33V_3" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="7" Grid.Row="3" Name="tB_5_33V_4" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="4" Name="tB_5_33V_5" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="5" Name="tB_5_33V_6" 
+                         Width="80" TextAlignment="Center"></TextBox>
+
+
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="7" Name="tB_7V_1" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="8" Name="tB_7V_2" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="9" Name="tB_7V_3" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="7" Grid.Row="10" Name="tB_7V_4" 
+                         Width="80" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,3,2,10" Grid.Column="1" Grid.Row="11" Name="tB_7V_5" 
+                         Width="80" TextAlignment="Center"></TextBox>
 
 
 

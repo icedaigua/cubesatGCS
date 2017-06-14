@@ -150,7 +150,7 @@ namespace CubeCOM
                             orbit_length = 79;
 
         public const byte
-                        obc_length = 98,
+                        obc_length = 100,
                         adcs_length = 96
                        ;
 
@@ -178,27 +178,29 @@ namespace CubeCOM
             public UInt16 down_count;                       //2
             public UInt32 last_reset_time;                  //4
             public byte work_mode;                          //1
-            //public byte status_sensor_on_off;               //1
+
             public UInt32 utc_time;                         //4
             public Int16 temp_hk;                           //2
 
             //eps 64
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-            public Int16[] temp_batt_board;                         //4
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-            public Int16[] temp_eps;                                //8
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
             public UInt16[] sun_c;                                  //12
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
             public UInt16[] sun_v;                                  //12
-
+            public UInt16 UV_board_C;                               //2
             public UInt16 out_BusC;                                 //2
             public UInt16 out_BusV;                                 //2
-            public UInt16 UV_board_C;                               //2
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
             public UInt16[] Vol_5_C;                                //12
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
             public UInt16[] Bus_c;                                  //10
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            public Int16[] temp_eps;                                //8
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            public Int16[] temp_batt_board;                         //4
+            public UInt16 eps_switch_status;
+
 
             public UInt32 on_off_status;                            //4
 

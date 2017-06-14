@@ -74,10 +74,6 @@ namespace HouseKeeping_Wpf
             tB_atenna_3.Text = ((atenna_sat & 0x04) == 4) ? "Green" : "Red";
             tB_atenna_4.Text = ((atenna_sat & 0x08) == 8) ? "Green" : "Red";
             tB_atenna_arm.Text = ((atenna_sat & 0x10) == 16) ? "Green" : "Red";
-            //tB_ais.Text = ((atenna_sat & 0x20) == 0x20) ? "Green" : "Red";
-
-
-
 
         }
 

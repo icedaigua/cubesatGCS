@@ -59,6 +59,7 @@ namespace HouseKeeping_Wpf
 
             tB_save_frame_cnt.Text = down_info.aindex.ToString();
             tB_flash_block.Text = down_info.mindex.ToString();
+            tB_file_sd_time.Text = down_info.file_sd_time_latest.ToString();
 
         }
 
