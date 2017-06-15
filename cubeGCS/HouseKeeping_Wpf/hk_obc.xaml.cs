@@ -50,7 +50,7 @@ namespace HouseKeeping_Wpf
             
             tB_reset_cause.Text = down_info.reset_cause.ToString();
 
-            tB_tmep_hk.Text = ((down_info.temp_hk * 2370 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2");
+            tB_tmep_hk.Text = ((down_info.temp_hk * 2030 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2");
             //System.Diagnostics.Trace.WriteLine("ADCS" + down_info.temp_hk.ToString());
 
             #endregion
@@ -60,7 +60,7 @@ namespace HouseKeeping_Wpf
             tB_save_frame_cnt.Text = down_info.aindex.ToString();
             tB_flash_block.Text = down_info.mindex.ToString();
             tB_file_sd_time.Text = down_info.file_sd_time_latest.ToString();
-
+            tB_sd_status.Text = down_info.sd_card_status.ToString();
         }
 
 

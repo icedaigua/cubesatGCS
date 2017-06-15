@@ -150,7 +150,7 @@ namespace CubeCOM
                             orbit_length = 79;
 
         public const byte
-                        obc_length = 100,
+                        obc_length = 72,
                         adcs_length = 96
                        ;
 
@@ -166,14 +166,14 @@ namespace CubeCOM
         public struct down_obc_ST
         {
             // header 2
-
             public byte header0;  //0xeb 0x50               //2
             public byte header1;  //0xeb 0x50         
-            //obc  20
+            
+            //obc  32
             public byte sat_id;                             //1
             public byte soft_id;                            //1
             public UInt16 reboot_count;                     //2
-            public byte reset_cause;
+            public byte reset_cause;                        //1
             public UInt16 rec_cmd_count;                    //2
             public UInt16 down_count;                       //2
             public UInt32 last_reset_time;                  //4
@@ -182,33 +182,35 @@ namespace CubeCOM
             public UInt32 utc_time;                         //4
             public Int16 temp_hk;                           //2
 
-            //eps 64
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-            public UInt16[] sun_c;                                  //12
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-            public UInt16[] sun_v;                                  //12
-            public UInt16 UV_board_C;                               //2
-            public UInt16 out_BusC;                                 //2
-            public UInt16 out_BusV;                                 //2
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-            public UInt16[] Vol_5_C;                                //12
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
-            public UInt16[] Bus_c;                                  //10
-
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-            public Int16[] temp_eps;                                //8
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-            public Int16[] temp_batt_board;                         //4
-            public UInt16 eps_switch_status;
-
-
             public UInt32 on_off_status;                            //4
-
 
             public UInt16 mindex;                                   //2
             public UInt16 aindex;					                //2
-            public UInt32 file_sd_time_latest;
+            public UInt32 file_sd_time_latest;                      //4
+            public byte sd_card_status;                             //1
 
+            //eps 37
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            public sbyte[] temp_batt_board;                         //2
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            public sbyte[] temp_eps;                                //4
+
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            public byte[] sun_c;                                  //6
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            public byte[] sun_v;                                  //6
+       
+            public UInt16 out_BusC;                                 //2
+            public UInt16 out_BusV;                                 //2
+            public UInt16 UV_board_C;                               //2
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            public byte[] Vol_5_C;                                //6
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+            public byte[] Bus_c;                                  //5
+
+            public UInt16 eps_switch_status;                      //2
 
         };
 
