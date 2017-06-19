@@ -337,7 +337,22 @@
                 </Grid>
 
             </TabItem>
+            
+            <TabItem Header="TEST">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <HouseKeeping_Wpf:iSensor Grid.Row="0" Width="300" Height="250"/>
 
+                    <Button Name="btn_test" Grid.Row="1"
+                            Click="btn_test_click">TEST</Button>
+                </Grid>
+               
+
+            </TabItem>
         </TabControl>
 
 

@@ -857,6 +857,11 @@ namespace CubeGCS_Wpf
 
         }
 
+        private void btn_test_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void serverReceiveMsg(object o)
         {
             Socket client = o as Socket;

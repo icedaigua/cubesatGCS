@@ -72,6 +72,12 @@
     <Compile Include="iNet.xaml.cs">
       <DependentUpon>iNet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="iSensor.xaml.cs">
+      <DependentUpon>iSensor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="iSwitch.xaml.cs">
+      <DependentUpon>iSwitch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -133,6 +139,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="iNet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="iSensor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="iSwitch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
