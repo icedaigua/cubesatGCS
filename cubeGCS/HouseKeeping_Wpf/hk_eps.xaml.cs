@@ -58,18 +58,18 @@ namespace HouseKeeping_Wpf
 
             //tB_batt_on_off.Text = eps.on_off_status.ToString();
 
-            tB_5_33V_1.Text = (((eps.eps_switch_status & 0x0001)>0)?1:0).ToString();
-            tB_5_33V_2.Text = (((eps.eps_switch_status & 0x0002) > 0) ? 1 : 0).ToString();
-            tB_5_33V_3.Text = (((eps.eps_switch_status & 0x0004) > 0) ? 1 : 0).ToString();
-            tB_5_33V_4.Text = (((eps.eps_switch_status & 0x0008) > 0) ? 1 : 0).ToString();
-            tB_5_33V_5.Text = (((eps.eps_switch_status & 0x0010) > 0) ? 1 : 0).ToString();
-            tB_5_33V_6.Text = (((eps.eps_switch_status & 0x0020) > 0) ? 1 : 0).ToString();
+            tB_5_33V_1.Text = (((eps.eps_switch_status & 0x0001)>0) ? "1:开" : "0:关").ToString();
+            tB_5_33V_2.Text = (((eps.eps_switch_status & 0x0002) > 0) ?  "1:开" : "0:关").ToString();
+            tB_5_33V_3.Text = (((eps.eps_switch_status & 0x0004) > 0) ?  "1:开" : "0:关").ToString();
+            tB_5_33V_4.Text = (((eps.eps_switch_status & 0x0008) > 0) ?  "1:开" : "0:关").ToString();
+            tB_5_33V_5.Text = (((eps.eps_switch_status & 0x0010) > 0) ?  "1:开" : "0:关").ToString();
+            tB_5_33V_6.Text = (((eps.eps_switch_status & 0x0020) > 0) ?  "1:开" : "0:关").ToString();
 
-            tB_7V_1.Text = (((eps.eps_switch_status & 0x0100) > 0) ? 1 : 0).ToString();
-            tB_7V_2.Text = (((eps.eps_switch_status & 0x0200) > 0) ? 1 : 0).ToString();
-            tB_7V_3.Text = (((eps.eps_switch_status & 0x0400) > 0) ? 1 : 0).ToString();
-            tB_7V_4.Text = (((eps.eps_switch_status & 0x0800) > 0) ? 1 : 0).ToString();
-            tB_7V_5.Text = (((eps.eps_switch_status & 0x1000) > 0) ? 1 : 0).ToString();
+            tB_7V_1.Text = (((eps.eps_switch_status & 0x0100) > 0) ? "1:开" : "0:关");
+            tB_7V_2.Text = (((eps.eps_switch_status & 0x0200) > 0) ? "1:开" : "0:关");
+            tB_7V_3.Text = (((eps.eps_switch_status & 0x0400) > 0) ? "1:开" : "0:关");
+            tB_7V_4.Text = (((eps.eps_switch_status & 0x0800) > 0) ? "1:开" : "0:关");
+            tB_7V_5.Text = (((eps.eps_switch_status & 0x1000) > 0) ? "1:开" : "0:关");
 
         }
     }
