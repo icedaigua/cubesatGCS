@@ -150,11 +150,11 @@ namespace CubeCOM
                             orbit_length = 79;
 
         public const byte
-                        obc_length = 72,
+                        obc_length = 74,
                         adcs_length = 96
                        ;
 
-        #region 下行帧分类
+        #region 下行帧定义
         public const byte FRAME_NULL = 0x00, FRAME_START = 0x01,
                         FRAME_OBC = 0x50, FRAME_ADCS = 0x51, FRAME_UV = 0x10,
                             FRAME_RESPONSE = 0x53;
@@ -184,10 +184,11 @@ namespace CubeCOM
 
             public UInt32 on_off_status;                            //4
 
-            public UInt16 mindex;                                   //2
-            public UInt16 aindex;					                //2
+            public UInt16 flash_block;                                   //2
+            public UInt16 flash_index;					                //2
             public UInt32 file_sd_time_latest;                      //4
             public byte sd_card_status;                             //1
+            public UInt16 sd_saved_cnt;                             //2
 
             //eps 37
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]

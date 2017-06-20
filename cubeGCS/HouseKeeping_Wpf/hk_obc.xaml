@@ -55,8 +55,9 @@
                 <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="星务温度"/>
                 <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="SD文件最新时间"/>
                 <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="SD卡文件操作状态"/>
-                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="已存轨道"/>
-                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="12" Text="已存帧数"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="SD卡已存文件数"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="12" Text="已存轨道"/>
+                <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="13" Text="已存帧数"/>
 
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
                              Name="tB_sat_id" Width="190" TextAlignment="Center">0</TextBox>
@@ -86,8 +87,11 @@
                              Name="tB_sd_status" Width="190" TextAlignment="Center"
                              ></TextBox>
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Foreground="Chocolate" 
-                             Name="tB_flash_block" Width="190" TextAlignment="Center"></TextBox>
+                             Name="tB_sd_saved_cnt" Width="190" TextAlignment="Center"
+                             ></TextBox>
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Foreground="Chocolate" 
+                             Name="tB_flash_block" Width="190" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Foreground="Chocolate" 
                              Name="tB_save_frame_cnt" Width="190" TextAlignment="Center"></TextBox>
 
             </Grid>

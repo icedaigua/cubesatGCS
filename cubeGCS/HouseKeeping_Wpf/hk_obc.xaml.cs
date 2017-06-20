@@ -97,10 +97,11 @@ namespace HouseKeeping_Wpf
 
         
 
-            tB_save_frame_cnt.Text = down_info.aindex.ToString();
-            tB_flash_block.Text = down_info.mindex.ToString();
-            tB_file_sd_time.Text = down_info.file_sd_time_latest.ToString();
-            tB_sd_status.Text = sd_card_error[down_info.sd_card_status];
+            tB_save_frame_cnt.Text  = down_info.flash_index.ToString();
+            tB_flash_block.Text     = down_info.flash_block.ToString();
+            tB_file_sd_time.Text    = down_info.file_sd_time_latest.ToString();
+            tB_sd_status.Text       = sd_card_error[down_info.sd_card_status];
+            tB_sd_saved_cnt.Text    = down_info.sd_saved_cnt.ToString();
         }
 
 
