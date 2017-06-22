@@ -51,6 +51,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="adcsCmd_up.xaml.cs">
+      <DependentUpon>adcsCmd_up.xaml</DependentUpon>
+    </Compile>
     <Compile Include="battery.xaml.cs">
       <DependentUpon>battery.xaml</DependentUpon>
     </Compile>
@@ -69,6 +72,9 @@
     <Compile Include="hk_up.xaml.cs">
       <DependentUpon>hk_up.xaml</DependentUpon>
     </Compile>
+    <Compile Include="iChart.xaml.cs">
+      <DependentUpon>iChart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="iNet.xaml.cs">
       <DependentUpon>iNet.xaml</DependentUpon>
     </Compile>
@@ -77,6 +83,9 @@
     </Compile>
     <Compile Include="iSwitch.xaml.cs">
       <DependentUpon>iSwitch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="obcCmd_up.xaml.cs">
+      <DependentUpon>obcCmd_up.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -114,6 +123,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="adcsCmd_up.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="battery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="iChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="iNet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="iSwitch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="obcCmd_up.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

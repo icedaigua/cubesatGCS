@@ -24,13 +24,12 @@
                 <Separator/>
                 <MenuItem Header="退出" />
             </MenuItem>
-            <MenuItem Header="功能" Margin="3" >
-                <MenuItem Header="控制指令" Click="Menu_up_ctrl_cmd"/>
-                <MenuItem Header="参数指令" Click="Menu_up_para_cmd"/>
-                <MenuItem Header="轨道指令" Click="Menu_up_orbit_cmd"/>
-                <Separator/>
-                <MenuItem Header="清除上行" />
-            </MenuItem>
+    
+            <MenuItem Header="控制指令" Click="Menu_up_ctrl_cmd"/>
+            <MenuItem Header="参数指令" Click="Menu_up_para_cmd"/>
+            <MenuItem Header="轨道指令" Click="Menu_up_orbit_cmd"/>
+
+
             <MenuItem Header="关于" VerticalAlignment="Center"/>
 
         </Menu>
