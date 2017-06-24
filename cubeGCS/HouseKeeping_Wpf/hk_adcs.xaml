@@ -58,24 +58,24 @@
               
                  
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
-                             Name="tB_reboot_count" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_reboot_count" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Foreground="Chocolate" 
-                             Name="tB_rec_cmd_count" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_rec_cmd_count" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Foreground="Chocolate" 
-                             Name="tB_down_count" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_down_count" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Foreground="Chocolate" 
-                             Name="tB_last_reset_time" Width="120" TextAlignment="Left"></TextBox>
+                             Name="tB_last_reset_time" Width="190" TextAlignment="Left"></TextBox>
                
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Foreground="Chocolate" 
-                             Name="tB_utc_time" Width="120" TextAlignment="Left"></TextBox>
+                             Name="tB_utc_time" Width="190" TextAlignment="Left"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
-                             Name="tB_control_mode" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_control_mode" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
-                             Name="tB_dam_cnt" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_dam_cnt" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
-                             Name="tB_pitch_cnt" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_pitch_cnt" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
-                             Name="tB_ctrl_cnt" Width="120" TextAlignment="Center"></TextBox>
+                             Name="tB_ctrl_cnt" Width="190" TextAlignment="Center"></TextBox>
                
                 </Grid>
             </GroupBox>
@@ -142,10 +142,6 @@
                 </Grid>
             </GroupBox>
          
-            <Expander Grid.Column="4" Header="姿控指令"
-                      IsExpanded="True" ExpandDirection="Right">
-                <local:adcsCmd_up x:Name="adcsCmd_frm"/>
-            </Expander>
         
         </Grid>
 

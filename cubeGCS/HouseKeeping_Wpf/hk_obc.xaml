@@ -102,12 +102,7 @@
             </GroupBox>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <Expander Header="星务指令"
-                  IsExpanded="True">
-                <local:obcCmd_up x:Name="obcCmd_frm"/>
-            </Expander>
-        </Grid>
+
 
     </Grid>
 

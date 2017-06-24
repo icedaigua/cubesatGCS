@@ -67,19 +67,19 @@
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_rf_tx_err" Width="140" TextAlignment="Center"></TextBox>
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Name="tB_rf_rx_err" Width="140" TextAlignment="Center"></TextBox>
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Name="tB_i2c_tx_n" Width="140" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_i2c_rx_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_i2c_tx_err_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_i2c_rx_err_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Name="tB_tc_bias" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Name="tB_ham_bias" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Name="tB_tc_rssi" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Name="tB_ham_rssi" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Name="tB_reset" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Name="tB_run" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Name="tB_run_time" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Name="tB_reset_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Name="tB_ctsss_time" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="15" Name="tB_dma" Width="160" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_i2c_rx_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_i2c_tx_err_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_i2c_rx_err_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Name="tB_tc_bias" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Name="tB_ham_bias" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Name="tB_tc_rssi" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Name="tB_ham_rssi" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Name="tB_reset" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Name="tB_run" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Name="tB_run_time" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Name="tB_reset_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Name="tB_ctsss_time" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="15" Name="tB_dma" Width="140" TextAlignment="Center"></TextBox>
             </Grid>
         </GroupBox>
 
@@ -141,19 +141,19 @@
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Name="tB_set_status" Width="140" TextAlignment="Center"></TextBox>
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Name="tB_direct_status" Width="140" TextAlignment="Center"></TextBox>
                 <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Name="tB_payload_mode" Width="140" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_tx_gain" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_3V3_cur" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_3V3_vol" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Name="tB_vbat_send_cur" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Name="tB_vbat_send_vol" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Name="tB_vbat_rec_cur" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Name="tB_vbat_rec_vol" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Name="tB_stm32_temp" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Name="tB_pa_temp" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Name="tB_rf_tx_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Name="tB_rf_rx_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Name="tB_cmd_n" Width="160" TextAlignment="Center"></TextBox>
-                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="15" Name="tB_send_mode" Width="160" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Name="tB_tx_gain" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Name="tB_3V3_cur" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Name="tB_3V3_vol" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Name="tB_vbat_send_cur" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Name="tB_vbat_send_vol" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Name="tB_vbat_rec_cur" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Name="tB_vbat_rec_vol" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Name="tB_stm32_temp" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Name="tB_pa_temp" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Name="tB_rf_tx_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Name="tB_rf_rx_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Name="tB_cmd_n" Width="140" TextAlignment="Center"></TextBox>
+                <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="15" Name="tB_send_mode" Width="140" TextAlignment="Center"></TextBox>
 
             </Grid>
         </GroupBox>
