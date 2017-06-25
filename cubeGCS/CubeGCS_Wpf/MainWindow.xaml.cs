@@ -252,7 +252,7 @@ namespace CubeGCS_Wpf
         private void send_ctrl_cmd_cs()
         {
 
-            UInt32 delay_time = 0;
+            UInt32 delay_time =Convert.ToUInt32( tB_delay_time.Text);
 
             byte cmd_cnt = 0;
 
@@ -261,6 +261,8 @@ namespace CubeGCS_Wpf
 
             GCS_send_cmd(up_buf, 0, cubeCOMM.ctrl_length,cmd_cnt);
 
+            tB_delay_time.Text = 0.ToString();
+
         }
 
         /// <summary>
@@ -268,13 +270,15 @@ namespace CubeGCS_Wpf
         /// </summary>
         private void send_para_cmd_cs()
         {
-            UInt32 delay_time = 0;
+            UInt32 delay_time = Convert.ToUInt32(tB_delay_time.Text);
 
             byte cmd_cnt = 0;
 
             hk_up_frm.createParametersCmd(up_buf, (byte)cB_pid_81.SelectedIndex, delay_time, ref cmd_cnt);
 
             GCS_send_cmd(up_buf, 0, cubeCOMM.para_length, cmd_cnt);
+
+            tB_delay_time.Text = 0.ToString();
 
         }
 
@@ -283,13 +287,14 @@ namespace CubeGCS_Wpf
         /// </summary>
         private void send_orbit_cmd_cs()
         {
-            UInt32 delay_time = 0;
+            UInt32 delay_time = Convert.ToUInt32(tB_delay_time.Text);
             byte cmd_cnt = 0;
 
             hk_up_frm.createOrbitCmd(up_buf, (byte)cB_pid_81.SelectedIndex, delay_time, ref cmd_cnt);
 
             GCS_send_cmd(up_buf, 0, cubeCOMM.orbit_length, cmd_cnt);
 
+            tB_delay_time.Text = 0.ToString();
 
         }
 

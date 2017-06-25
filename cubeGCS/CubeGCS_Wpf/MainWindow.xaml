@@ -138,6 +138,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <ComboBox Grid.Column="0" Name="cB_pid_81"  Width="200" Height="40" 
 												VerticalAlignment="Center" Foreground="IndianRed" 
@@ -180,8 +181,11 @@
                                 轨道参数
                             </Button>
 
-
-                        </Grid>
+                            <TextBox Margin="2" Grid.Column="4"  Name="tB_delay_time" 
+						            Width="200" TextAlignment="Center" ToolTip="延时时间"
+						            FontSize="22" Foreground="DarkGreen"
+						            >0</TextBox>
+                          </Grid>
                     </Grid>
 
                 </Grid>
