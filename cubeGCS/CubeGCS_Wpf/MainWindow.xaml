@@ -340,7 +340,16 @@
                 </Grid>
 
             </TabItem>
-            
+
+            <TabItem Header="载荷任务">
+                <Grid>
+                    <payLoading:Camera />
+
+                </Grid>
+
+
+            </TabItem>
+
             <TabItem Header="TEST">
                 <Grid>
                     <Grid.RowDefinitions>

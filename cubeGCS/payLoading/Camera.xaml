@@ -10,10 +10,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="相机指令" Height="600">
+        <GroupBox Grid.Column="0" Header="相机指令" Foreground="BlueViolet" FontWeight="Bold">
                 <GroupBox.Background>
                     <LinearGradientBrush EndPoint="0.5,1" 
                         MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -23,65 +22,40 @@
                     </LinearGradientBrush>
                 </GroupBox.Background>
                 <Grid>
-                    <ComboBox Margin="61,93,55.8,435" Name="cB_camera"  Width="200" Height="40" 
-												VerticalAlignment="Center" Foreground="IndianRed" 
-												FontFamily="宋体" FontWeight="DemiBold" >
-                    </ComboBox>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-                    <TextBox Name="tB_uv_params"
+                <TextBlock Margin="2" Grid.Column="0" Grid.Row="0" Foreground="Chocolate" Text="相机指令" />
+                <ComboBox  Margin="2" Grid.Column="1" Grid.Row="0"  Name="cB_camera"  Width="120" Height="40" 
+							VerticalAlignment="Center" Foreground="IndianRed" 
+							FontFamily="宋体" FontWeight="DemiBold" >
+                 </ComboBox>
+                
+                 <TextBlock Margin="2" Grid.Column="0" Grid.Row="1" Foreground="Chocolate" Text="指令参数" />
+
+                <TextBox Grid.Column="1" Grid.Row="1" Name="tB_uv_params"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Width="200" Height="40">00</TextBox>
+                                     Width="120" Height="40">00</TextBox>
 
-                    <Button Margin="10,369,0,159" Width="200"  Height="40" VerticalAlignment="Center"
-                                   >
+                <Button  Grid.Column="0" Grid.Row="2" Margin="2" Width="120"  Height="40" VerticalAlignment="Center"
+                         Click="btn_send_camera_cmd_click"          
+                         >
                         发送相机指令
                     </Button>
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Column="1" Header="音频指令" Foreground="Chocolate">
-                <Grid>
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="#FFE0D8D8" Offset="0.225"/>
-                            <GradientStop Color="#FFD8F1C6" Offset="0.494"/>
-                            <GradientStop Color="#FFB29191" Offset="0.02"/>
-                            <GradientStop Color="#FFF3DEEF" Offset="0.703"/>
-                            <GradientStop Color="#FFCBD398" Offset="0.948"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
 
-
-                    </Grid.RowDefinitions>
-
-
-
-                    <Button Grid.Row="1" Grid.ColumnSpan="1"
-                                    Name="BN_send_wav_cmd"
-                                  
-                                    >
-                        发送音频指令
-                    </Button>
-                    <Button Grid.Row="2" Grid.ColumnSpan="1"
-                                    Name="BN_stop_send_wav_cmd"
-                                   
-                                    >
-                        停止发送指令
-                    </Button>
-                </Grid>
-
-            </GroupBox>
-
-            <GroupBox Grid.Column="2" Header="图像" Height="600">
+        <GroupBox Grid.Column="2" Header="图像显示" Foreground="BlueViolet" FontWeight="Bold">
                 <GroupBox.Background>
                     <LinearGradientBrush EndPoint="0.5,1" 
                         MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -91,11 +65,15 @@
                     </LinearGradientBrush>
                 </GroupBox.Background>
                 <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
 
+                </Grid.RowDefinitions>
 
-
-                    <Button Margin="10,369,0,159" Width="200"  Height="40" VerticalAlignment="Center"
-                                    >
+                <Image Margin="2" Grid.Row="0" Name="Img_camera" Height="640" Width="480"></Image>
+                    <Button Margin="2" Grid.Row="1" Width="200"  Height="40" VerticalAlignment="Center"
+                            Click="btn_image_click">
                         图像转换
                     </Button>
                 </Grid>

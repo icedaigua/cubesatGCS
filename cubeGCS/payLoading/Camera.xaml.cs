@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace payLoading
 {
@@ -39,6 +30,70 @@ namespace payLoading
 
             cB_camera.ItemsSource = camera_list;
             cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 0 : -1;
+        }
+
+
+        private void btn_send_camera_cmd_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_image_click(object sender, RoutedEventArgs e)
+        {
+
+            string PATH = Directory.GetCurrentDirectory();
+
+            BitmapImage myBitmapImage  = new BitmapImage(new Uri(PATH +"\\resource\\lena.png"));
+            Img_camera.Source = myBitmapImage;
+
+            byte[] img_byte = ImageToByte(myBitmapImage);
+
+            BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);
+
+            SavePhoto(PATH+"\\camera\\", myBitmapImage_tmp);
+
+        }
+
+        public  BitmapImage GetBitmapImage(byte[] imageBytes)
+        {
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = new MemoryStream(imageBytes);
+            bitmapImage.EndInit();
+            return bitmapImage;
+        }
+
+        public Byte[] ImageToByte(BitmapImage imageSource)
+        {
+
+            MemoryStream ms = new MemoryStream();
+
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(imageSource));
+            encoder.Save(ms);
+
+            byte[] image_bytes =  ms.ToArray();
+
+            ms.Close();
+            return image_bytes;
+        }
+
+        public Guid SavePhoto(string istrImagePath, BitmapImage imageSource)
+        {
+       
+            Guid photoID = System.Guid.NewGuid();
+            string photolocation = istrImagePath + photoID.ToString() + ".jpg";  //file name
+            FileStream filestream = new FileStream(photolocation, FileMode.Create);
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(imageSource));
+            encoder.Save(filestream);
+
+            return photoID;
+
+            //反向
+            //Image back_image = Image.FromStream(new MemoryStream(image_bytes));
+            //保存文件
+            //back_image.Save("文件名.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
     }
 }
