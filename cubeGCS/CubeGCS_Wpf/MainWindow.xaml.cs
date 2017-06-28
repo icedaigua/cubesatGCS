@@ -186,6 +186,25 @@ namespace CubeGCS_Wpf
         }
 
 
+
+        private void btn_down_img_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_send_cameraCmd_Click(object sender, RoutedEventArgs e)
+        {
+            camera_frm.send_camera_cmd(up_buf);
+
+            GCS_send_cmd(up_buf, 0, cubeCOMM.ctrl_length, 1);
+        }
+
+        private void btn_img_proc_Click(object sender, RoutedEventArgs e)
+        {
+            camera_frm.image_proc();
+
+        }
+
         /// <summary>
         /// 打开网络按键响应
         /// </summary>
@@ -521,6 +540,8 @@ namespace CubeGCS_Wpf
                         ParseResponse(Buf);
                         break;
                     case cubeCOMM.FRAME_NULL:
+                        break;
+                    default:
                         break;
                 }
 
@@ -898,8 +919,8 @@ namespace CubeGCS_Wpf
                 }
             }
         }
-        #endregion
 
+        #endregion
 
         #region TEST
         public void test()

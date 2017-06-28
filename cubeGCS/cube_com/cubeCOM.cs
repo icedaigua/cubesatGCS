@@ -7,12 +7,12 @@ namespace CubeCOM
     {
 
         #region 指令定义
-        public const byte INS_CONN_TST = 0x01,    //通信链路测试
-                     INS_COMM_SWITCH_CLR = 0x02,//星载计算机12小时重置
-                     INS_DOWN_TEL = 0x03,//下行星上状态遥测数据
-                     INS_DOWN_PLD = 0x04,//下行QB50载荷数据
+        public const byte INS_CONN_TST = 0x01,    //
+                     INS_APP_HK_GET = 0x02,//
+                     INS_HK_GET = 0x03,//下行星上状态遥测数据
+                     INS_DOWN_PLD = 0x04,//
                      INS_DOWN_CMD_ON = 0x05,  //下行星上指令数据
-                     INS_SD_CLR = 0x06,//SD卡清空
+                     INS_APP_STR_DOWN = 0x06,//
                      INS_FLASH_RST = 0x07,//FLASH指针还原
 
             INS_OBC_RST = 0x08,//星务计算机重启
@@ -22,13 +22,10 @@ namespace CubeCOM
             INS_OBC_EPS_OFF		=	0x0B ,
             INS_OBC_WORKMODE	=	0x0C ,
 
-                     INS_OBC_REVD_1 = 0x0A, //星务计算
-                     INS_OBC_REVD_2 = 0x0B, //星务计算
-                     INS_OBC_REVD_3 = 0x0C, //星务计算
 
             //开关指令
             INS_MTQ_ON = 0x10, //磁棒开
-                     INS_MTQ_OFF = 0x11, //磁棒关
+            INS_MTQ_OFF = 0x11, //磁棒关
 
             INS_GPS_A_ON = 0x12, //GPSA开
             INS_GPS_A_OFF = 0x13, //GPSA关

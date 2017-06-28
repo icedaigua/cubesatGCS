@@ -54,6 +54,7 @@
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="下行计数"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="复位时间"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="工作模式"/>
+
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="UTC时间"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="复位原因"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="星务温度"/>
@@ -62,6 +63,7 @@
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="SD卡已存文件数"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="12" Text="已存轨道"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="13" Text="已存帧数"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="14" Text="电源自动控制"/>
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
                              Name="tB_sat_id" Width="190" TextAlignment="Center">0</TextBox>
@@ -97,6 +99,8 @@
                              Name="tB_flash_block" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Foreground="Chocolate" 
                              Name="tB_save_frame_cnt" Width="190" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Foreground="Chocolate" 
+                             Name="tB_obc_control_eps" Width="190" TextAlignment="Center"></TextBox>
 
                 </Grid>
             </GroupBox>

@@ -374,7 +374,7 @@ namespace HouseKeeping_Wpf
 
                 para2 = delay_hk_orbit_cnt;
 
-                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_DOWN_TEL,
+                cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_HK_GET,
                      delay_time,
                      para1, para2);
 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+
+using CubeCOM;
 
 namespace payLoading
 {
@@ -33,12 +34,26 @@ namespace payLoading
         }
 
 
-        private void btn_send_camera_cmd_click(object sender, RoutedEventArgs e)
+        public void send_camera_cmd(byte[] cmd)
         {
+            UInt32 delay_time = Convert.ToUInt32(tB_delay_time.Text);
+            switch (cB_camera.Text)
+            {
+                case "建立Download任务":
+                    cubeCOMM.generate_up_ctrl_cmd_cs(cmd, 1,
+                                       cubeCOMM.INS_APP_STR_DOWN,
+                                       delay_time
+                                       );
+                    break;
+                default:
+                    break;
+            }
+
+            tB_delay_time.Text = 0.ToString();
 
         }
 
-        private void btn_image_click(object sender, RoutedEventArgs e)
+        public void image_proc()
         {
 
             string PATH = Directory.GetCurrentDirectory();
@@ -54,7 +69,7 @@ namespace payLoading
 
         }
 
-        public  BitmapImage GetBitmapImage(byte[] imageBytes)
+        private  BitmapImage GetBitmapImage(byte[] imageBytes)
         {
             var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
@@ -63,7 +78,7 @@ namespace payLoading
             return bitmapImage;
         }
 
-        public Byte[] ImageToByte(BitmapImage imageSource)
+        private Byte[] ImageToByte(BitmapImage imageSource)
         {
 
             MemoryStream ms = new MemoryStream();
@@ -78,7 +93,7 @@ namespace payLoading
             return image_bytes;
         }
 
-        public Guid SavePhoto(string istrImagePath, BitmapImage imageSource)
+        private Guid SavePhoto(string istrImagePath, BitmapImage imageSource)
         {
        
             Guid photoID = System.Guid.NewGuid();
