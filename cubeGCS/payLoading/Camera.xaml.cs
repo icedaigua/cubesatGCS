@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 using CubeCOM;
+using System.Text;
 
 namespace payLoading
 {
@@ -12,6 +13,10 @@ namespace payLoading
     /// </summary>
     public partial class Camera : UserControl
     {
+
+        private byte[] img = new byte[1024 * 1024 * 2]; //2M
+        byte frameCnt = 0,length = 0;
+
         public Camera()
         {
             InitializeComponent();
@@ -53,19 +58,61 @@ namespace payLoading
 
         }
 
+        public void CameraProcess(byte[] camerabuffer)
+        {
+            length = camerabuffer[2];
+            frameCnt = camerabuffer[3];
+
+            tB_frameCnt.Text = frameCnt.ToString();
+            for (byte kc = 0;kc<100;kc++)
+            {
+                img[frameCnt*100 + kc] = camerabuffer[4+kc];
+            }
+        }
+
+
         public void image_proc()
         {
-
             string PATH = Directory.GetCurrentDirectory();
 
-            BitmapImage myBitmapImage  = new BitmapImage(new Uri(PATH +"\\resource\\lena.png"));
-            Img_camera.Source = myBitmapImage;
+            byte[] img_dst = new byte[((frameCnt - 1) * 100 + length)];
 
-            byte[] img_byte = ImageToByte(myBitmapImage);
+            //img.CopyTo(img_dst,0);
+            Array.Copy(img, img_dst, img_dst.Length);
 
-            BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);
+            StreamWriter camFrame = new StreamWriter(PATH + "\\camera\\" + "\\Cam.jpg");
 
-            SavePhoto(PATH+"\\camera\\", myBitmapImage_tmp);
+            string camStr = Encoding.Default.GetString(img_dst);
+
+            camFrame.WriteLine(camStr);
+
+            camFrame.Close();
+
+            try
+            {
+                BitmapImage myBitmapImage = GetBitmapImage(img_dst);
+                Img_camera.Source = myBitmapImage;
+
+                SavePhoto(PATH + "\\camera\\", myBitmapImage);
+            }
+            catch(Exception e)
+            {
+                System.Windows.MessageBox.Show("图像处理错误："+ e.Message);
+                return;
+            }
+
+
+
+
+
+            //BitmapImage myBitmapImage = new BitmapImage(new Uri(PATH + "\\resource\\lena.png"));
+            //Img_camera.Source = myBitmapImage;
+
+            //byte[] img_byte = ImageToByte(myBitmapImage);
+
+            //BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);
+
+            //SavePhoto(PATH + "\\camera\\", myBitmapImage_tmp);
 
         }
 

@@ -202,6 +202,7 @@ namespace CubeGCS_Wpf
         private void btn_img_proc_Click(object sender, RoutedEventArgs e)
         {
             camera_frm.image_proc();
+           
 
         }
 
@@ -520,8 +521,10 @@ namespace CubeGCS_Wpf
         #region 下行解码
         private void analysis_rec_buf(byte[] buffer)
         {
+            //new Thread(() => {
+            //this.Dispatcher.Invoke(new Action(() => {
 
-            foreach (byte Buf in buffer)
+             foreach (byte Buf in buffer)
             {
                 if (rec_state <= cubeCOMM.FRAME_START)
                 {
@@ -539,13 +542,19 @@ namespace CubeGCS_Wpf
                     case cubeCOMM.FRAME_RESPONSE:
                         ParseResponse(Buf);
                         break;
-                    case cubeCOMM.FRAME_NULL:
+                    case cubeCOMM.FRAME_CAMERA:
+                        ParseCamera(Buf);
                         break;
+                    case cubeCOMM.FRAME_NULL:
+                    break;
                     default:
                         break;
                 }
 
             }
+
+            //}));
+            //}).Start();
         }
 
         private byte searchHearder(byte Buf)
@@ -576,6 +585,11 @@ namespace CubeGCS_Wpf
                     else if (Buf == 0x53)
                     {
                         rec_state = cubeCOMM.FRAME_RESPONSE;
+
+                    }
+                    else if (Buf == 0x56)
+                    {
+                        rec_state = cubeCOMM.FRAME_CAMERA;
 
                     }
                     else
@@ -633,14 +647,26 @@ namespace CubeGCS_Wpf
             }
         }
 
+        private void ParseCamera(byte Buf)
+        {
+            down_info_buf[down_info_buf_length++] = Buf;
 
+            if (down_info_buf_length >= down_info_buf[2]+4)
+            {
+                rec_down_info_count++;      //接收到的指令数加1
+
+                camera_frm.CameraProcess(down_info_buf);
+                rec_state = 0;
+                //obc_displayAndsave();
+            }
+        }
 
         private void obc_displayAndsave()
         {
 
-            //double seconds = obc_info.utc_time;
+                //double seconds = obc_info.utc_time;
 
-            //double secs = Convert.ToDouble(seconds);
+                //double secs = Convert.ToDouble(seconds);
 
             DateTime dt = new DateTime(                 //显示为本地时间
             1970, 1, 1, 0, 0, 0, DateTimeKind.Local).
@@ -756,7 +782,9 @@ namespace CubeGCS_Wpf
         /// <param name="buf"></param>
         private void rec_buff_display(byte[] rec_buf)
         {
-            builder.Clear();
+            new Thread(() => {
+            this.Dispatcher.Invoke(new Action(() => {
+                builder.Clear();
             if (gcSerial_frm.rec_show_hex)
             {
                 foreach (byte b in rec_buf)
@@ -773,7 +801,8 @@ namespace CubeGCS_Wpf
             tB_recbuf.Text += builder.ToString();
 
             tB_recbuf.ScrollToEnd();
-
+            }));
+            }).Start();
         }
 
         private void serial_send()
