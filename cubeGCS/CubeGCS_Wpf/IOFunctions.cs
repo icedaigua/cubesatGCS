@@ -114,7 +114,16 @@ namespace CubeGCS_Wpf
             #endregion
             ;
 
-            File_obcFrame.WriteLine(str);
+            try
+            {
+                File_obcFrame.WriteLine(str);
+            }
+            catch(Exception e)
+            {
+                System.Windows.MessageBox.Show("OBC文件IO错误:" + e.Message);
+                File_obcFrame.Close();
+            }
+
         }
 
 
@@ -200,8 +209,16 @@ namespace CubeGCS_Wpf
 
                     ;
 
-
-            File_obcFrame.WriteLine(str);
+            try
+            {
+                File_obcFrame.WriteLine(str);
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show("OBC文件IO错误:" + e.Message);
+                File_obcFrame.Close();
+            }
+    
         }
 
 
@@ -372,7 +389,16 @@ namespace CubeGCS_Wpf
             #endregion
 
                 + '\t';
-            File_adcsFrame.WriteLine(str);
+
+            try
+            {
+                File_adcsFrame.WriteLine(str);
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show("ADCS文件IO错误:" + e.Message);
+                File_adcsFrame.Close();
+            }
 
         }
 
@@ -390,17 +416,6 @@ namespace CubeGCS_Wpf
             if (File_adcsFrame != null)
                 File_adcsFrame.Close();
 
-            //if (File_camera_Frame != null)
-            //    File_camera_Frame.Close();
-
-            //if (File_uv_Frame != null)
-            //    File_uv_Frame.Close();
-
-            //if (File_wav_Frame != null)
-            //    File_wav_Frame.Close();
-
-            //if (wav_old_frame_sw != null)
-            //    wav_old_frame_sw.Close();
         }
     }
 }

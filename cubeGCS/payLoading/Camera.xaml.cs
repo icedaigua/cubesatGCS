@@ -1,10 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.IO.Ports;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 using CubeCOM;
+using Dongzr.MidiLite;
+
 using System.Text;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace payLoading
 {
@@ -38,6 +43,10 @@ namespace payLoading
             cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 0 : -1;
         }
 
+        #region 上行图像指令
+
+        byte[] imagebuf;
+        byte[] startCmd = { 0x30, 0xAA, 0xBB, 0xCC }, endCmd = { 0x30, 0xDD, 0xEE, 0xFF };
 
         public void send_camera_cmd(byte[] cmd)
         {
@@ -50,6 +59,14 @@ namespace payLoading
                                        delay_time
                                        );
                     break;
+
+                case "本机复位":
+                    imagebuf = getNewImage();
+                    serial_create("COM5");
+                    serial_send(startCmd, 4);
+                    local_timer_start();
+
+                    break;
                 default:
                     break;
             }
@@ -57,6 +74,102 @@ namespace payLoading
             tB_delay_time.Text = 0.ToString();
 
         }
+
+        #endregion
+
+        #region 定时器
+
+        private int sendLength = 0;
+        private byte[] sendbuf = new byte[100];
+        private MmTimer local_time_timer = new MmTimer();
+
+
+
+        private void local_timer_start()
+        {
+            local_time_timer.Interval = 100;
+            local_time_timer.Mode = MmTimerMode.Periodic;
+            local_time_timer.Tick += new EventHandler(local_timer_handler);
+            local_time_timer.Start();
+        }
+
+        private void local_timer_handler(object sender, EventArgs e)
+        {
+            if (imagebuf.Length - sendLength < 100)
+            {
+                Array.Copy(imagebuf, sendLength, sendbuf, 0, imagebuf.Length - sendLength);
+                serial_send(sendbuf, imagebuf.Length - sendLength);
+
+                System.Threading.Thread.Sleep(100);
+                serial_send(endCmd, 4);
+
+                local_time_timer.Stop();
+
+            }
+            else
+            {
+                sendLength = sendLength + 100;
+
+                Array.Copy(imagebuf,sendLength, sendbuf,0, 100);
+                serial_send(sendbuf,100);
+            }
+            
+
+        }
+
+        #endregion
+
+
+        #region 串口
+
+        private SerialPort CameraPort = new SerialPort();      ///接收数据串口
+    
+
+        /// <summary>
+        /// 创建串口
+        /// </summary>
+        private void serial_create(string portID)
+        {
+            if (CameraPort.IsOpen)
+            {
+                MessageBox.Show("串口已打开！");
+                return;
+            }
+
+            CameraPort.PortName = portID;
+            CameraPort.BaudRate = 115200;
+
+            CameraPort.Parity = Parity.None;
+            CameraPort.StopBits = StopBits.One;
+            CameraPort.DataBits = 8;
+            //In_Port.ReadTimeout = 200;
+            //In_Port.WriteTimeout = 50;
+
+            CameraPort.ReadBufferSize = 4096;
+     
+            CameraPort.Open();
+
+
+        }
+
+        /// <summary>
+        /// 关闭串口
+        /// </summary>
+        private void SerialPort_Close()
+        {
+            if (CameraPort.IsOpen) CameraPort.Close();
+        }
+
+
+        private void serial_send(byte[] sendbuf,int length)
+        {
+            CameraPort.Write(sendbuf, 0, length);
+        }
+
+        #endregion
+
+
+        #region 图像处理
 
         public void CameraProcess(byte[] camerabuffer)
         {
@@ -77,7 +190,6 @@ namespace payLoading
 
             byte[] img_dst = new byte[((frameCnt - 1) * 100 + length)];
 
-            //img.CopyTo(img_dst,0);
             Array.Copy(img, img_dst, img_dst.Length);
 
             StreamWriter camFrame = new StreamWriter(PATH + "\\camera\\" + "\\Cam.jpg");
@@ -102,17 +214,6 @@ namespace payLoading
             }
 
 
-
-
-
-            //BitmapImage myBitmapImage = new BitmapImage(new Uri(PATH + "\\resource\\lena.png"));
-            //Img_camera.Source = myBitmapImage;
-
-            //byte[] img_byte = ImageToByte(myBitmapImage);
-
-            //BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);
-
-            //SavePhoto(PATH + "\\camera\\", myBitmapImage_tmp);
 
         }
 
@@ -157,5 +258,20 @@ namespace payLoading
             //保存文件
             //back_image.Save("文件名.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
+
+        private byte[] getNewImage()
+        {
+            string PATH = Directory.GetCurrentDirectory();
+            BitmapImage myBitmapImage = new BitmapImage(new Uri(PATH + "\\resource\\lena.png"));
+            Img_camera.Source = myBitmapImage;
+
+            return ImageToByte(myBitmapImage);
+
+
+            //BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);
+
+            //SavePhoto(PATH + "\\camera\\", myBitmapImage_tmp);
+        }
+        #endregion
     }
 }
