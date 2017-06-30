@@ -61,11 +61,19 @@ namespace CubeGCS_Wpf
                     + "UTCTime" + '\t'
                     + "tempe_hk" + '\t'
                     + "sensorOnOff" + '\t'
-                    + "flash num" + '\t'
+
+                    + "flash block" + '\t'
                     + "frame index" + '\t'
+
+                    + "sram block" + '\t'
+                    + "sram index" + '\t'
+
                     + "sdtime" + '\t'
                     + "sdstatus" + '\t'
                     + "sdsavecnt" + '\t'
+
+                    + "cameratime" + '\t'
+                    + "cameracnt" + '\t'
 
             #endregion
 
@@ -150,13 +158,24 @@ namespace CubeGCS_Wpf
                     + down_info.last_reset_time.ToString() + '\t'
                     + down_info.work_mode.ToString() + '\t'
                     + down_info.utc_time.ToString() + '\t'
+
                     + ((down_info.temp_hk * 2030 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2") + '\t'
                     + down_info.on_off_status.ToString() + '\t'
+
+
                     + down_info.flash_block.ToString()+ '\t'
                     + down_info.flash_index.ToString() + '\t'
+
+                    + down_info.sram_block.ToString() + '\t'
+                    + down_info.sram_index.ToString() + '\t'
+
+
                     + down_info.file_sd_time_latest.ToString() + '\t'
                     + down_info.sd_card_status.ToString() + '\t'
                     + down_info.sd_saved_cnt.ToString() + '\t'
+
+                    + down_info.camera_time_latest.ToString() + '\t'
+                    + down_info.camera_saved_cnt.ToString() + '\t'
             #endregion
 
 
