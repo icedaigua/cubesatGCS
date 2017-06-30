@@ -10,6 +10,8 @@ using Dongzr.MidiLite;
 using System.Text;
 using System.Windows;
 using System.Windows.Threading;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace payLoading
 {
@@ -19,13 +21,19 @@ namespace payLoading
     public partial class Camera : UserControl
     {
 
+        private const byte CAMERA_LENGTH = 200;
         private byte[] img = new byte[1024 * 1024 * 2]; //2M
-        byte frameCnt = 0,length = 0;
+        UInt16 frameCnt = 0;
+        byte length = 0;
 
         public Camera()
         {
             InitializeComponent();
             cB_camera_initz();
+
+            local_timer_start();
+            //CameraListInitz();
+            //dG_camera_time.ItemsSource = LoadCollectionData();
         }
 
 
@@ -45,8 +53,10 @@ namespace payLoading
 
         #region 上行图像指令
 
-        byte[] imagebuf;
-        byte[] startCmd = { 0x30, 0xAA, 0xBB, 0xCC }, endCmd = { 0x30, 0xDD, 0xEE, 0xFF };
+        private byte[] imagebuf;
+        private byte[] startCmd = { 0x30, 0xAA, 0xBB, 0xCC }, endCmd = { 0x30, 0xDD, 0xEE, 0xFF };
+
+        private byte imageUp = 0;
 
         public void send_camera_cmd(byte[] cmd)
         {
@@ -54,17 +64,22 @@ namespace payLoading
             switch (cB_camera.Text)
             {
                 case "建立Download任务":
-                    cubeCOMM.generate_up_ctrl_cmd_cs(cmd, 1,
+                    cubeCOMM.generate_up_para_cmd_cs(cmd, 1,
                                        cubeCOMM.INS_APP_STR_DOWN,
-                                       delay_time
+                                       delay_time,
+                                       0,Convert.ToUInt32(tB_camera_params.Text)
                                        );
                     break;
 
                 case "本机复位":
+
                     imagebuf = getNewImage();
+                    if (imagebuf == null) break;
+                    if (CameraPort.IsOpen)
+                        CameraPort.Close();
                     serial_create("COM5");
                     serial_send(startCmd, 4);
-                    local_timer_start();
+                    imageUp = 1;
 
                     break;
                 default:
@@ -77,17 +92,63 @@ namespace payLoading
 
         #endregion
 
+        #region 图像数据绑定
+        List<CameraLIst> camList = new List<CameraLIst>();
+
+        public class CameraLIst
+        {
+            public string ID { get; set; }
+            public string Name { get; set; }
+           // public string time { get; set; }
+        }
+
+        private void CameraListInitz()
+        {
+            ObservableCollection<CameraLIst> memberData = new ObservableCollection<CameraLIst>();
+            memberData.Add(new CameraLIst()
+            {
+                ID = 101.ToString(),
+                Name = 12324244.ToString(),
+            });
+
+            dG_camera_time.DataContext = memberData;
+        }
+
+        private List<CameraLIst> LoadCollectionData()
+        {
+           
+            camList.Add(new CameraLIst()
+            {
+                ID = 101.ToString(),
+                Name = 12324244.ToString(),
+            });
+    
+            return camList;
+        }
+
+
+        private void dG_camera_time_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            camList.Add(new CameraLIst()
+            {
+                ID = 112.ToString(),
+                Name = 12324244.ToString(),
+            });
+        }
+
+        #endregion
+
         #region 定时器
 
         private int sendLength = 0;
-        private byte[] sendbuf = new byte[100];
+        private byte[] sendbuf = new byte[CAMERA_LENGTH];
         private MmTimer local_time_timer = new MmTimer();
 
 
 
         private void local_timer_start()
         {
-            local_time_timer.Interval = 100;
+            local_time_timer.Interval = 400;
             local_time_timer.Mode = MmTimerMode.Periodic;
             local_time_timer.Tick += new EventHandler(local_timer_handler);
             local_time_timer.Start();
@@ -95,26 +156,38 @@ namespace payLoading
 
         private void local_timer_handler(object sender, EventArgs e)
         {
-            if (imagebuf.Length - sendLength < 100)
+            switch (imageUp)
             {
-                Array.Copy(imagebuf, sendLength, sendbuf, 0, imagebuf.Length - sendLength);
-                serial_send(sendbuf, imagebuf.Length - sendLength);
+                case 0:
+                    break;
+                case 1:
+                    if (imagebuf.Length - sendLength <= CAMERA_LENGTH)
+                    {
+                        Array.Copy(imagebuf, sendLength, sendbuf, 0, imagebuf.Length - sendLength);
+                        serial_send(sendbuf, imagebuf.Length - sendLength);
+    
+                        sendLength = 0;
 
-                System.Threading.Thread.Sleep(100);
-                serial_send(endCmd, 4);
+                        imageUp = 2;
 
-                local_time_timer.Stop();
+                    }
+                    else
+                    {
+                        Array.Copy(imagebuf, sendLength, sendbuf, 0, CAMERA_LENGTH);
+                        sendLength = sendLength + CAMERA_LENGTH;
+                        serial_send(sendbuf, CAMERA_LENGTH);
+                    }
+                    break;
 
+                case 2:
+                    serial_send(endCmd, 4);
+                    imageUp = 0;
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                sendLength = sendLength + 100;
 
-                Array.Copy(imagebuf,sendLength, sendbuf,0, 100);
-                serial_send(sendbuf,100);
-            }
             
-
         }
 
         #endregion
@@ -137,7 +210,7 @@ namespace payLoading
             }
 
             CameraPort.PortName = portID;
-            CameraPort.BaudRate = 115200;
+            CameraPort.BaudRate = 1500000;
 
             CameraPort.Parity = Parity.None;
             CameraPort.StopBits = StopBits.One;
@@ -148,14 +221,12 @@ namespace payLoading
             CameraPort.ReadBufferSize = 4096;
      
             CameraPort.Open();
-
-
         }
 
         /// <summary>
         /// 关闭串口
         /// </summary>
-        private void SerialPort_Close()
+        public void SerialPort_Close()
         {
             if (CameraPort.IsOpen) CameraPort.Close();
         }
@@ -163,7 +234,16 @@ namespace payLoading
 
         private void serial_send(byte[] sendbuf,int length)
         {
-            CameraPort.Write(sendbuf, 0, length);
+            try
+            {
+                CameraPort.Write(sendbuf, 0, length);
+            }
+            catch(Exception e)
+            {
+                System.Windows.MessageBox.Show("串口发送错误:" + e.Message);
+                CameraPort.Close();
+            }
+            
         }
 
         #endregion
@@ -174,15 +254,34 @@ namespace payLoading
         public void CameraProcess(byte[] camerabuffer)
         {
             length = camerabuffer[2];
-            frameCnt = camerabuffer[3];
+            frameCnt = (UInt16)((UInt16)(camerabuffer[4]<<8) + camerabuffer[3]);
 
             tB_frameCnt.Text = frameCnt.ToString();
             for (byte kc = 0;kc<100;kc++)
             {
-                img[frameCnt*100 + kc] = camerabuffer[4+kc];
+                img[frameCnt*100 + kc] = camerabuffer[5+kc];
             }
         }
 
+        public void image_trans()
+        {
+            string PATH = Directory.GetCurrentDirectory();
+            try
+            {
+                StreamReader camFrame = new StreamReader(PATH + "\\camera\\" + "\\2085979490.txt");
+                string ss = camFrame.ReadToEnd();
+                byte[] img_dst = Encoding.Default.GetBytes(ss);
+                BitmapImage myBitmapImage = GetBitmapImage(img_dst);
+                Img_camera.Source = myBitmapImage;
+
+                SavePhoto(PATH + "\\camera\\", myBitmapImage);
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show("图像处理错误：" + e.Message);
+                return;
+            }
+        }
 
         public void image_proc()
         {
@@ -241,6 +340,8 @@ namespace payLoading
             return image_bytes;
         }
 
+
+
         private Guid SavePhoto(string istrImagePath, BitmapImage imageSource)
         {
        
@@ -262,10 +363,18 @@ namespace payLoading
         private byte[] getNewImage()
         {
             string PATH = Directory.GetCurrentDirectory();
-            BitmapImage myBitmapImage = new BitmapImage(new Uri(PATH + "\\resource\\lena.png"));
-            Img_camera.Source = myBitmapImage;
+            try
+            {
+                BitmapImage myBitmapImage = new BitmapImage(new Uri(PATH + "\\resource\\" + tB_image_id.Text));
+                Img_camera.Source = myBitmapImage;
+                return  ImageToByte(myBitmapImage);
+            }
+            catch(Exception e)
+            {
+                System.Windows.MessageBox.Show("Get Image Error:" + e.Message);
+                return null;
+            }
 
-            return ImageToByte(myBitmapImage);
 
 
             //BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);

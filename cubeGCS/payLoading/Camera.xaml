@@ -26,6 +26,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -41,7 +42,7 @@
                 
                  <TextBlock Margin="2" Grid.Column="0" Grid.Row="1" Foreground="Chocolate" Text="指令参数" />
 
-                <TextBox Grid.Column="1" Grid.Row="1" Name="tB_uv_params"
+                <TextBox Grid.Column="1" Grid.Row="1" Name="tB_camera_params"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
                                      Width="120" Height="40">00</TextBox>
@@ -52,6 +53,31 @@
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
                                      Width="120" Height="40">00</TextBox>
+
+                <TextBlock Margin="2" Grid.Column="0" Grid.Row="3" Foreground="Chocolate" Text="图像名称" />
+
+                <TextBox Grid.Column="1" Grid.Row="3" Name="tB_image_id"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Width="120" Height="40">box1.jpg</TextBox>
+
+                <DataGrid Grid.ColumnSpan="2" Grid.Row="4"
+                          Name="dG_camera_time" Foreground="IndianRed" 
+						  FontFamily="宋体" FontWeight="DemiBold" 
+                        
+                          Background="LightGray" RowBackground="LightYellow"
+                          AlternatingRowBackground="LightBlue"
+                          BorderBrush="Gray" BorderThickness="5"
+                          HorizontalScrollBarVisibility="Visible"                          
+                          MouseDoubleClick="dG_camera_time_MouseDoubleClick"
+                          ItemsSource="{Binding}" AutoGenerateColumns="False"
+                          >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID"  Binding="{Binding ID}"/>
+                        <DataGridTextColumn Header="Name"   Binding="{Binding Name}"/>
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
             </GroupBox>
 

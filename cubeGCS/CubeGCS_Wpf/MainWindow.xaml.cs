@@ -65,6 +65,7 @@ namespace CubeGCS_Wpf
         {
             io_func.CloseFile();
             local_time_timer.Stop();
+            camera_frm.SerialPort_Close();
         }
 
 
@@ -192,11 +193,17 @@ namespace CubeGCS_Wpf
 
         }
 
+
+        private void btn_img_trans_Click(object sender, RoutedEventArgs e)
+        {
+            camera_frm.image_trans();
+        }
+
         private void btn_send_cameraCmd_Click(object sender, RoutedEventArgs e)
         {
             camera_frm.send_camera_cmd(up_buf);
 
-            GCS_send_cmd(up_buf, 0, cubeCOMM.ctrl_length, 1);
+            GCS_send_cmd(up_buf, 0, cubeCOMM.para_length, 1);
         }
 
         private void btn_img_proc_Click(object sender, RoutedEventArgs e)
@@ -651,7 +658,7 @@ namespace CubeGCS_Wpf
         {
             down_info_buf[down_info_buf_length++] = Buf;
 
-            if (down_info_buf_length >= down_info_buf[2]+4)
+            if (down_info_buf_length >= down_info_buf[2]+5)
             {
                 rec_down_info_count++;      //接收到的指令数加1
 
@@ -948,6 +955,8 @@ namespace CubeGCS_Wpf
                 }
             }
         }
+
+
 
         #endregion
 

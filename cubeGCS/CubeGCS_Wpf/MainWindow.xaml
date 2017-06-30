@@ -355,6 +355,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="1" Name="btn_down_img" Margin="2" 
 												Click="btn_down_img_Click"
@@ -387,6 +388,17 @@
                                     <GradientStop Color="White" Offset="1"/>
                                 </LinearGradientBrush>
                             </Button.Background> 显示图像
+                        </Button>
+
+                        <Button Grid.Column="3" Name="btn_img_trans" Margin="2" 
+												Click="btn_img_trans_Click"
+												Foreground="Brown" FontWeight="Bold">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF709DEE" Offset="0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background> 图像转换
                         </Button>
 
                     </Grid>
