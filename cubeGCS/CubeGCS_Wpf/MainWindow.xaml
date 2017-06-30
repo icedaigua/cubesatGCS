@@ -213,7 +213,66 @@
 
                     <HouseKeeping_Wpf:commuNicator />
             </TabItem>
-            
+
+
+            <TabItem Header="载荷任务">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <payLoading:Camera Grid.Row="0" Name="camera_frm"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        
+                        <Button Grid.Column="0" Name="btn_send_cameraCmd" Margin="2" 
+												Click="btn_send_cameraCmd_Click"
+												Foreground="Brown" FontWeight="Bold">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF709DEE" Offset="0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background> 发送相机指令
+                        </Button>
+
+                        <Button Grid.Column="2" Name="btn_img_proc" Margin="2" 
+												Click="btn_img_proc_Click"
+												Foreground="Brown" FontWeight="Bold">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF709DEE" Offset="0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background> 显示图像
+                        </Button>
+
+                        <Button Grid.Column="3" Name="btn_img_trans" Margin="2" 
+												Click="btn_img_trans_Click"
+												Foreground="Brown" FontWeight="Bold">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF709DEE" Offset="0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background> 功能测试
+                        </Button>
+
+                    </Grid>
+
+                </Grid>
+
+
+
+            </TabItem>
             
             <TabItem Header="监控设置">
 
@@ -341,75 +400,9 @@
 
             </TabItem>
 
-            <TabItem Header="载荷任务">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    
-                    <payLoading:Camera Grid.Row="0" Name="camera_frm"/>
+        
 
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Name="btn_down_img" Margin="2" 
-												Click="btn_down_img_Click"
-												Foreground="Brown" FontWeight="Bold">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF709DEE" Offset="0"/>
-                                    <GradientStop Color="White" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background> 下行图像
-                        </Button>
-
-                        <Button Grid.Column="0" Name="btn_send_cameraCmd" Margin="2" 
-												Click="btn_send_cameraCmd_Click"
-												Foreground="Brown" FontWeight="Bold">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF709DEE" Offset="0"/>
-                                    <GradientStop Color="White" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background> 发送相机指令
-                        </Button>
-
-                        <Button Grid.Column="2" Name="btn_img_proc" Margin="2" 
-												Click="btn_img_proc_Click"
-												Foreground="Brown" FontWeight="Bold">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF709DEE" Offset="0"/>
-                                    <GradientStop Color="White" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background> 显示图像
-                        </Button>
-
-                        <Button Grid.Column="3" Name="btn_img_trans" Margin="2" 
-												Click="btn_img_trans_Click"
-												Foreground="Brown" FontWeight="Bold">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF709DEE" Offset="0"/>
-                                    <GradientStop Color="White" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background> 图像转换
-                        </Button>
-
-                    </Grid>
-
-                </Grid>
-
- 
-
-            </TabItem>
-
-            <TabItem Header="TEST">
+            <TabItem Header="TEST" Visibility="Hidden">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>

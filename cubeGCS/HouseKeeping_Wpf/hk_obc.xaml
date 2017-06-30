@@ -6,12 +6,8 @@
              xmlns:local="clr-namespace:HouseKeeping_Wpf"
              mc:Ignorable="d" >
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -58,12 +54,8 @@
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="UTC时间"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="复位原因"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="星务温度"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="SD文件最新时间"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="SD卡文件操作状态"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="SD卡已存文件数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="12" Text="已存轨道"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="13" Text="已存帧数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="14" Text="电源自动控制"/>
+ 
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="电源自动控制"/>
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
                              Name="tB_sat_id" Width="190" TextAlignment="Center">0</TextBox>
@@ -86,22 +78,82 @@
                              ></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
                              Name="tB_tmep_hk" Width="190" TextAlignment="Center"></TextBox>
+                  
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Foreground="Chocolate" 
-                             Name="tB_file_sd_time" Width="190" TextAlignment="Center"
-                             ></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Foreground="Chocolate" 
-                             Name="tB_sd_status" Width="190" TextAlignment="Center"
-                             ></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Foreground="Chocolate" 
-                             Name="tB_sd_saved_cnt" Width="190" TextAlignment="Center"
-                             ></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="12" Foreground="Chocolate" 
-                             Name="tB_flash_block" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="13" Foreground="Chocolate" 
-                             Name="tB_save_frame_cnt" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="14" Foreground="Chocolate" 
                              Name="tB_obc_control_eps" Width="190" TextAlignment="Center"></TextBox>
 
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Header="文件系统状态">
+                <GroupBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" 
+                        MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC9D8A0" Offset="1"/>
+                        <GradientStop Color="#FFE8E8B2" Offset="0.94"/>
+                        <GradientStop Color="#FFBFE2C0" Offset="0.149"/>
+                    </LinearGradientBrush>
+                </GroupBox.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+ 
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="SD文件最新时间"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="SD卡文件操作状态"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="SD卡已存文件数"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="Flash已存轨道"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="Flash已存帧数"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="SRAM已存轨道"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="SRAM已存帧数"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="相片最新时间"/>
+
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="已存相片数"/>
+                  
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
+                             Name="tB_file_sd_time" Width="190" TextAlignment="Center"
+                             ></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="1" Foreground="Chocolate" 
+                             Name="tB_sd_status" Width="190" TextAlignment="Center"
+                             ></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Foreground="Chocolate" 
+                             Name="tB_sd_saved_cnt" Width="190" TextAlignment="Center"
+                             ></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Foreground="Chocolate" 
+                             Name="tB_flash_block" Width="190" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Foreground="Chocolate" 
+                             Name="tB_flash_index" Width="190" TextAlignment="Center"></TextBox>
+
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
+                             Name="tB_sram_block" Width="190" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
+                             Name="tB_sram_index" Width="190" TextAlignment="Center"></TextBox>
+
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
+                             Name="tB_camera_time" Width="190" TextAlignment="Center"
+                             ></TextBox>
+  
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
+                             Name="tB_camera_saved_cnt" Width="190" TextAlignment="Center"
+                             ></TextBox>
                 </Grid>
             </GroupBox>
         </Grid>

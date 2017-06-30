@@ -100,11 +100,20 @@ namespace HouseKeeping_Wpf
 
 
 
-                tB_save_frame_cnt.Text = down_info.flash_index.ToString();
+                tB_flash_index.Text = down_info.flash_index.ToString();
                 tB_flash_block.Text = down_info.flash_block.ToString();
+
+
+                tB_sram_index.Text = down_info.sram_index.ToString();
+                tB_sram_block.Text = down_info.sram_block.ToString();
+
                 tB_file_sd_time.Text = down_info.file_sd_time_latest.ToString();
                 tB_sd_status.Text = sd_card_error[down_info.sd_card_status];
                 tB_sd_saved_cnt.Text = down_info.sd_saved_cnt.ToString();
+
+
+                tB_camera_time.Text = down_info.camera_time_latest.ToString();
+                tB_camera_saved_cnt.Text = down_info.camera_saved_cnt.ToString();
 
 
                 tB_obc_control_eps.Text = (((down_info.on_off_status & 0x80) > 0) ? "1:开" : "0:关").ToString();

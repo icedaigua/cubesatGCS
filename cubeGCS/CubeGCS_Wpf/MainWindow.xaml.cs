@@ -726,7 +726,7 @@ namespace CubeGCS_Wpf
             }
 
             In_Port.PortName = gcSerial_frm.Port_ID;
-            In_Port.BaudRate = 115200;
+            In_Port.BaudRate = 9600;
 
             In_Port.Parity = Parity.None;
             In_Port.StopBits = StopBits.One;

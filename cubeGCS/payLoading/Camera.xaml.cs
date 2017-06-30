@@ -21,7 +21,11 @@ namespace payLoading
     public partial class Camera : UserControl
     {
 
-        private const byte CAMERA_LENGTH = 200;
+        private const UInt16 CAMERA_LENGTH_UP = 200;
+        private const byte CAMERA_LENGTH_DOWN = 240;
+
+        string PATH = Directory.GetCurrentDirectory();
+        private DirectoryInfo CameraPATH;
         private byte[] img = new byte[1024 * 1024 * 2]; //2M
         UInt16 frameCnt = 0;
         byte length = 0;
@@ -39,22 +43,25 @@ namespace payLoading
 
         public void cB_camera_initz()
         {
-            string[] camera_list = new string[23] { "本机复位","恢复默认参数表","LEOP开", "LEOP关",
-                                                    "CCSDS连续发射开", "CCSDS连续发射关","相机开机", "相机关机",
-                                                    "建立JPG任务", "建立Download任务","设置相机下行延迟", "读FRAM",
-                                                    "设置TX增益", "转发开","转发关", "下传本机工程参数",
-                                                    "建立CAM任务", "重新发送指定相机数据包","AVR复位", "设置分辨率640*480",
-                                                    "设置分辨率800*600", "设置压缩率","设置信标发送周期"};
+            //string[] camera_list = new string[23] { "本机复位","恢复默认参数表","LEOP开", "LEOP关",
+            //                                        "CCSDS连续发射开", "CCSDS连续发射关","相机开机", "相机关机",
+            //                                        "建立JPG任务", "建立Download任务","设置相机下行延迟", "读FRAM",
+            //                                        "设置TX增益", "转发开","转发关", "下传本机工程参数",
+            //                                        "建立CAM任务", "重新发送指定相机数据包","AVR复位", "设置分辨率640*480",
+            //                                        "设置分辨率800*600", "设置压缩率","设置信标发送周期"};
 
+            string[] camera_list = new string[6] {"相机复位","相机开机", "相机关机",
+                                                    "成像指令", "下行图像", "上传图片"};
 
             cB_camera.ItemsSource = camera_list;
-            cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 0 : -1;
+            cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 4 : -1;
         }
 
         #region 上行图像指令
 
         private byte[] imagebuf;
         private byte[] startCmd = { 0x30, 0xAA, 0xBB, 0xCC }, endCmd = { 0x30, 0xDD, 0xEE, 0xFF };
+        private string time_now ="";
 
         private byte imageUp = 0;
 
@@ -63,15 +70,21 @@ namespace payLoading
             UInt32 delay_time = Convert.ToUInt32(tB_delay_time.Text);
             switch (cB_camera.Text)
             {
-                case "建立Download任务":
+                case "下行图像":
                     cubeCOMM.generate_up_para_cmd_cs(cmd, 1,
                                        cubeCOMM.INS_APP_STR_DOWN,
                                        delay_time,
                                        0,Convert.ToUInt32(tB_camera_params.Text)
                                        );
+
+                    time_now = DateTime.Now.ToString("yyyy-MM-dd") +
+                                    '(' + DateTime.Now.ToLongTimeString().ToString().Replace(':', '-') + ')';
+
+                    CameraPATH = new DirectoryInfo(PATH + "\\camera\\" + time_now);
+                    CameraPATH.Create();
                     break;
 
-                case "本机复位":
+                case "上传图片":
 
                     imagebuf = getNewImage();
                     if (imagebuf == null) break;
@@ -141,14 +154,14 @@ namespace payLoading
         #region 定时器
 
         private int sendLength = 0;
-        private byte[] sendbuf = new byte[CAMERA_LENGTH];
+        private byte[] sendbuf = new byte[CAMERA_LENGTH_UP];
         private MmTimer local_time_timer = new MmTimer();
 
 
 
         private void local_timer_start()
         {
-            local_time_timer.Interval = 400;
+            local_time_timer.Interval = 500;
             local_time_timer.Mode = MmTimerMode.Periodic;
             local_time_timer.Tick += new EventHandler(local_timer_handler);
             local_time_timer.Start();
@@ -161,7 +174,7 @@ namespace payLoading
                 case 0:
                     break;
                 case 1:
-                    if (imagebuf.Length - sendLength <= CAMERA_LENGTH)
+                    if (imagebuf.Length - sendLength <= CAMERA_LENGTH_UP)
                     {
                         Array.Copy(imagebuf, sendLength, sendbuf, 0, imagebuf.Length - sendLength);
                         serial_send(sendbuf, imagebuf.Length - sendLength);
@@ -173,9 +186,9 @@ namespace payLoading
                     }
                     else
                     {
-                        Array.Copy(imagebuf, sendLength, sendbuf, 0, CAMERA_LENGTH);
-                        sendLength = sendLength + CAMERA_LENGTH;
-                        serial_send(sendbuf, CAMERA_LENGTH);
+                        Array.Copy(imagebuf, sendLength, sendbuf, 0, CAMERA_LENGTH_UP);
+                        sendLength = sendLength + CAMERA_LENGTH_UP;
+                        serial_send(sendbuf, CAMERA_LENGTH_UP);
                     }
                     break;
 
@@ -257,10 +270,12 @@ namespace payLoading
             frameCnt = (UInt16)((UInt16)(camerabuffer[4]<<8) + camerabuffer[3]);
 
             tB_frameCnt.Text = frameCnt.ToString();
-            for (byte kc = 0;kc<100;kc++)
-            {
-                img[frameCnt*100 + kc] = camerabuffer[5+kc];
-            }
+
+            Array.Copy(camerabuffer, 5, img, frameCnt * CAMERA_LENGTH_DOWN, CAMERA_LENGTH_DOWN);
+
+            if ((frameCnt % 50) == 0)
+                image_proc();
+
         }
 
         public void image_trans()
@@ -285,29 +300,30 @@ namespace payLoading
 
         public void image_proc()
         {
-            string PATH = Directory.GetCurrentDirectory();
+            if (frameCnt < 10) return;
 
-            byte[] img_dst = new byte[((frameCnt - 1) * 100 + length)];
+            byte[] img_dst = new byte[((frameCnt - 1) * CAMERA_LENGTH_DOWN + length)];
 
             Array.Copy(img, img_dst, img_dst.Length);
 
-            StreamWriter camFrame = new StreamWriter(PATH + "\\camera\\" + "\\Cam.jpg");
 
-            string camStr = Encoding.Default.GetString(img_dst);
-
-            camFrame.WriteLine(camStr);
-
-            camFrame.Close();
 
             try
             {
                 BitmapImage myBitmapImage = GetBitmapImage(img_dst);
                 Img_camera.Source = myBitmapImage;
 
-                SavePhoto(PATH + "\\camera\\", myBitmapImage);
+                SavePhoto(CameraPATH+"\\", myBitmapImage);
             }
             catch(Exception e)
             {
+                StreamWriter camFrame = new StreamWriter(CameraPATH + "\\Cam.jpg");
+
+                string camStr = Encoding.Default.GetString(img_dst);
+
+                camFrame.WriteLine(camStr);
+
+                camFrame.Close();
                 System.Windows.MessageBox.Show("图像处理错误："+ e.Message);
                 return;
             }

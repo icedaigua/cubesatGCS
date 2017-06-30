@@ -147,7 +147,7 @@ namespace CubeCOM
                             orbit_length = 79;
 
         public const byte
-                        obc_length = 74,
+                        obc_length = 80,
                         adcs_length = 96
                        ;
 
@@ -181,11 +181,18 @@ namespace CubeCOM
 
             public UInt32 on_off_status;                            //4
 
-            public UInt16 flash_block;                                   //2
-            public UInt16 flash_index;					                //2
+            public byte flash_block;                                //1
+            public byte flash_index;                                //1
+            public byte sram_block;                                 //1
+            public byte sram_index;					                //1
+
+
             public UInt32 file_sd_time_latest;                      //4
             public byte sd_card_status;                             //1
             public UInt16 sd_saved_cnt;                             //2
+
+            public UInt32 camera_time_latest;                      //4
+            public UInt16 camera_saved_cnt;                             //2
 
             //eps 37
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
