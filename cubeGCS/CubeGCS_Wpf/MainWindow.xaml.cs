@@ -70,7 +70,8 @@ namespace CubeGCS_Wpf
         private void LoggingInitz()
         {
             Trace.Listeners.Clear();  //清除系统监听器 (就是输出到Console的那个)
-            Trace.Listeners.Add(new Logging.Logging(Directory.GetCurrentDirectory()  +"\\Logging\\")); //添加MyTraceListener实例
+
+            Trace.Listeners.Add(new Logging.Logging(Directory.GetCurrentDirectory()  + "\\Logging\\")); //添加MyTraceListener实例
         }
         /// <summary>
         /// 主窗口关闭

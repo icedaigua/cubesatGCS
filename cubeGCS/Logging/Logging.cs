@@ -18,17 +18,20 @@ namespace Logging
 
         public Logging(string Path)
         {
-            logFileName = Path;
+            string time_now = DateTime.Now.ToString("yyyy-MM-dd") +
+     '(' + DateTime.Now.ToLongTimeString().ToString().Replace(':', '-') + ')';
+
+            logFileName = Path + time_now;
         }
 
         public override void Write(string message)
         {
-            File.AppendAllText(logFileName + "operator.log", message);
+            File.AppendAllText(logFileName + "--operator.log", message);
         }
 
         public override void WriteLine(string message)
         {
-            File.AppendAllText(logFileName + "operator.log" , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ") + message + Environment.NewLine);
+            File.AppendAllText(logFileName + "--operator.log" , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ") + message + Environment.NewLine);
         }
 
 
