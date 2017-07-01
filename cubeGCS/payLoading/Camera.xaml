@@ -27,6 +27,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -61,23 +62,46 @@
                                      VerticalAlignment="Center"
                                      Width="120" Height="40">box1.jpg</TextBox>
 
-                <DataGrid Grid.ColumnSpan="2" Grid.Row="4"
-                          Name="dG_camera_time" Foreground="IndianRed" 
-						  FontFamily="宋体" FontWeight="DemiBold" 
-                        
+
+                <TextBlock Grid.ColumnSpan="2" Grid.Row="4" Margin="2"
+							HorizontalAlignment="Center" VerticalAlignment="Center"
+							FontSize="24" FontFamily="黑体" Foreground="OrangeRed"
+							>星务存储图片信息</TextBlock>
+                    
+                <DataGrid Grid.ColumnSpan="2" Grid.Row="5"  
+                          Name="dG_camera_time" ItemsSource="{Binding}"
+                          Foreground="IndianRed" FontFamily="宋体" FontWeight="DemiBold"                        
                           Background="LightGray" RowBackground="LightYellow"
                           AlternatingRowBackground="LightBlue"
-                          BorderBrush="Gray" BorderThickness="5"
-                          HorizontalScrollBarVisibility="Visible"                          
+                          
+                          BorderBrush="Tomato" BorderThickness="2"
+                          
+                       
                           MouseDoubleClick="dG_camera_time_MouseDoubleClick"
-                          ItemsSource="{Binding}" AutoGenerateColumns="False"
+                           AutoGenerateColumns="False"
+                                                   
+                          HorizontalAlignment="Center"  VerticalAlignment="Top" 
+                          Width="360" Height="600" EnableRowVirtualization="false" 
+                          EnableColumnVirtualization="false" 
+                          
                           >
+
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID"  Binding="{Binding ID}"/>
-                        <DataGridTextColumn Header="Name"   Binding="{Binding Name}"/>
-                        
+                        <DataGridTextColumn Header="No." Width="50" Binding="{Binding Number}"
+                                            IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Date" Width="*"  Binding="{Binding Date}"
+                                            IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="ImageID" Width="*"  Binding="{Binding ImageID}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
+
             </Grid>
             </GroupBox>
 

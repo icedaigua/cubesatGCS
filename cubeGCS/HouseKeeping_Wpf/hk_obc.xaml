@@ -47,15 +47,19 @@
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="0" Text="卫星ID" />
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="1" Text="卫星重启计数"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="接收指令计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="下行计数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="复位时间"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="工作模式"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="指令ID"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="指令执行状态"/>
 
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="UTC时间"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="复位原因"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="星务温度"/>
+
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="下行计数"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="复位时间"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="工作模式"/>
+
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="UTC时间"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="复位原因"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="10" Text="星务温度"/>
  
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="9" Text="电源自动控制"/>
+                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="11" Text="电源自动控制"/>
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="0" Foreground="Chocolate" 
                              Name="tB_sat_id" Width="190" TextAlignment="Center">0</TextBox>
@@ -64,22 +68,28 @@
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="2" Foreground="Chocolate" 
                              Name="tB_rec_cmd_count" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="3" Foreground="Chocolate" 
-                             Name="tB_down_count" Width="190" TextAlignment="Center"></TextBox>
+                             Name="tB_rec_cmd_ID" Width="190" TextAlignment="Center"></TextBox>
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Foreground="Chocolate" 
+                             Name="tB_rec_cmd_status" Width="190" TextAlignment="Center"></TextBox>
+
+
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
+                             Name="tB_down_count" Width="190" TextAlignment="Center"></TextBox>
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
                              Name="tB_last_reset_time" Width="190" TextAlignment="Left"
                              ></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
                              Name="tB_work_mode" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
                              Name="tB_utc_time" Width="190" TextAlignment="Left"
                             ></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Foreground="Chocolate" 
                              Name="tB_reset_cause" Width="190" TextAlignment="Center"
                              ></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="8" Foreground="Chocolate" 
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="10" Foreground="Chocolate" 
                              Name="tB_tmep_hk" Width="190" TextAlignment="Center"></TextBox>
                   
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="9" Foreground="Chocolate" 
+                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="11" Foreground="Chocolate" 
                              Name="tB_obc_control_eps" Width="190" TextAlignment="Center"></TextBox>
 
                 </Grid>

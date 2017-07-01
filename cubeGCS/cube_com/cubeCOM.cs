@@ -7,13 +7,12 @@ namespace CubeCOM
     {
 
         #region 指令定义
-        public const byte INS_CONN_TST = 0x01,    //
+        public const byte
                      INS_APP_HK_GET = 0x02,//
                      INS_HK_GET = 0x03,//下行星上状态遥测数据
-                     INS_DOWN_PLD = 0x04,//
+             
                      INS_DOWN_CMD_ON = 0x05,  //下行星上指令数据
                      INS_APP_STR_DOWN = 0x06,//
-                     INS_FLASH_RST = 0x07,//FLASH指针还原
 
             INS_OBC_RST = 0x08,//星务计算机重启
             INS_DOWN_CMD_OFF = 0x09,//停止下行星上指令数据
@@ -109,32 +108,33 @@ namespace CubeCOM
             INS_GYRO_FILTER_OFF = 0x58, //关闭陀螺仪滤波
             INS_CNT_CTL_FLAG = 0x59, //
 
-            INS_ORB_TLE_FLAG = 0x5A, //TLE轨道上注 modify by ZYJ 2015.05.06
+            INS_ORB_TLE_FLAG = 0x5A, //TLE轨道上注
 
             INS_MAG_FILTER_ON = 0x5B,    //启动磁强计滤波器
             INS_QR = 0x5C,    //QR参数注入
             INS_MAG_FILTER_OFF = 0x5D,    //关闭磁强计滤波
 
-            INS_ADCS_TIME_IN = 0x5E,    //姿控参数注入
+            INS_TIME_IN = 0x5E,    //姿控参数注入
 
-            INS_EQUP_INPUT = 0x61, //器件健康状态变更指令
-            INS_TEL_ADRS = 0x62, //遥测存储指针变更
-            INS_GPS_ADRS = 0x63, //GPS存储指针变更
-            INS_TIME_IN = 0x64, //时间注入
+            //INS_EQUP_INPUT = 0x61, //器件健康状态变更指令
+            //INS_TEL_ADRS = 0x62, //遥测存储指针变更
+            //INS_GPS_ADRS = 0x63, //GPS存储指针变更
 
-
-            INS_FIPEX_SCRIPT_IN = 0x65, //Fipex指令注入
-
-            INS_FIPEX_ON = 0x66,
-            INS_FIPEX_OFF = 0x67,
-            INS_FIPEX_DOWN = 0x68,
+            //INS_TIME_IN = 0x64, //时间注入
 
 
+            //INS_FIPEX_SCRIPT_IN = 0x65, //Fipex指令注入
 
-            INS_CAMERA = 0x70,
-            INS_DOWN_SAVED_WAV = 0x72,
-            INS_UP_NEW_WAV = 0x73,
-            INS_DOWN_NEW_WAV = 0x74,
+            //INS_FIPEX_ON = 0x66,
+            //INS_FIPEX_OFF = 0x67,
+            //INS_FIPEX_DOWN = 0x68,
+
+
+
+            //INS_CAMERA = 0x70,
+            //INS_DOWN_SAVED_WAV = 0x72,
+            //INS_UP_NEW_WAV = 0x73,
+            //INS_DOWN_NEW_WAV = 0x74,
 
 
 
@@ -147,7 +147,7 @@ namespace CubeCOM
                             orbit_length = 79;
 
         public const byte
-                        obc_length = 80,
+                        obc_length = 82,
                         adcs_length = 96
                        ;
 
@@ -171,7 +171,11 @@ namespace CubeCOM
             public byte soft_id;                            //1
             public UInt16 reboot_count;                     //2
             public byte reset_cause;                        //1
+
             public UInt16 rec_cmd_count;                    //2
+            public byte rec_cmd_ID;
+            public byte cmd_proc_status;
+
             public UInt16 down_count;                       //2
             public UInt32 last_reset_time;                  //4
             public byte work_mode;                          //1

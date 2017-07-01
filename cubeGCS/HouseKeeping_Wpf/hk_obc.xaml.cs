@@ -68,6 +68,10 @@ namespace HouseKeeping_Wpf
 
                 tB_rec_cmd_count.Text = down_info.rec_cmd_count.ToString();
 
+
+                tB_rec_cmd_ID.Text = getCmdID(down_info.rec_cmd_ID);
+                tB_rec_cmd_status.Text = down_info.cmd_proc_status.ToString();
+
                 tB_down_count.Text = down_info.down_count.ToString();
 
 
@@ -121,6 +125,80 @@ namespace HouseKeeping_Wpf
             catch(Exception e)
             {
                 System.Windows.MessageBox.Show("星务显示错误" + e.Message);
+            }
+        }
+
+
+        private string getCmdID(byte ID)
+        {
+            switch (ID)
+            {
+
+                case cubeCOMM.INS_APP_HK_GET:
+                    return "0x" + ID.ToString("X") + ":" + "下行载荷数据";
+                case cubeCOMM.INS_HK_GET:
+                    return "0x" + ID.ToString("X") + ":" + "下行延时遥测";
+
+
+                case cubeCOMM.INS_DOWN_CMD_ON:
+                    return "0x" + ID.ToString("X") + ":" + "实时遥测";
+                case cubeCOMM.INS_APP_STR_DOWN:
+                    return "0x" + ID.ToString("X") + ":" + "下行载荷数据";
+
+
+                case cubeCOMM.INS_OBC_RST:
+                    return "0x" + ID.ToString("X") + ":" + "星务重启";
+                case cubeCOMM.INS_DOWN_CMD_OFF:
+                    return "0x" + ID.ToString("X") + ":" + "空指令";
+
+                case cubeCOMM.INS_OBC_EPS_ON:
+                    return "0x" + ID.ToString("X") + ":" + "EPS自动控制开";
+                case cubeCOMM.INS_OBC_EPS_OFF:
+                    return "0x" + ID.ToString("X") + ":" + "EPS自动控制关";
+                case cubeCOMM.INS_OBC_WORKMODE:
+                    return "0x" + ID.ToString("X") + ":" + "星务模式设置";
+
+
+                //开关指令
+
+                case cubeCOMM.INS_ADCS_ON:
+                    return "0x" + ID.ToString("X") + ":" + "ADCS开机";
+                case cubeCOMM.INS_ADCS_OFF:
+                    return "0x" + ID.ToString("X") + ":" + "ADCS关机";
+
+                case cubeCOMM.INS_SLBRD_ON:
+                    return "0x" + ID.ToString("X") + ":" + "启动展帆板"; 
+                case cubeCOMM.INS_SLBRD_OFF:
+                    return "0x" + ID.ToString("X") + ":" + "关闭展帆板";
+                case cubeCOMM.INS_USB_ON:
+                    return "0x" + ID.ToString("X") + ":" + "启动展天线";
+
+
+
+
+
+                case cubeCOMM.INS_S2_ON:
+                    return "0x" + ID.ToString("X") + ":" + "天线电源开";
+                case cubeCOMM.INS_S2_OFF:
+                    return "0x" + ID.ToString("X") + ":" + "天线电源关";
+
+
+                case cubeCOMM.INS_SW_BATT_WARM_ON:
+                    return "0x" + ID.ToString("X") + ":" + "电源加热开";  //
+                case cubeCOMM.INS_SW_BATT_WARM_OFF:
+                    return "0x" + ID.ToString("X") + ":" + "电源加热关";  //
+
+
+                case cubeCOMM.INS_COM_PERIOD:
+                    return "0x" + ID.ToString("X") + ":" + "下行周期更新";//
+
+
+                case cubeCOMM.INS_TIME_IN:
+                    return "0x"+ID.ToString("X") + ":" + "时间注入"; //
+                default:
+                    return "0x" + ID.ToString("X") + ":" + "无此指令"; //
+
+
             }
         }
 

@@ -1,17 +1,13 @@
-﻿using System;
+﻿using CubeCOM;
+using Dongzr.MidiLite;
+using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Ports;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-
-using CubeCOM;
-using Dongzr.MidiLite;
-
 using System.Text;
 using System.Windows;
-using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace payLoading
 {
@@ -24,24 +20,33 @@ namespace payLoading
         private const UInt16 CAMERA_LENGTH_UP = 200;
         private const byte CAMERA_LENGTH_DOWN = 240;
 
-        string PATH = Directory.GetCurrentDirectory();
+        string PATH ="";
         private DirectoryInfo CameraPATH;
+
+
         private byte[] img = new byte[1024 * 1024 * 2]; //2M
         UInt16 frameCnt = 0;
         byte length = 0;
+
+
+        #region 初始化
+
 
         public Camera()
         {
             InitializeComponent();
             cB_camera_initz();
 
+        }
+
+        public void CameraModulesInitz()
+        {
+            CameraListInitz();
             local_timer_start();
-            //CameraListInitz();
-            //dG_camera_time.ItemsSource = LoadCollectionData();
         }
 
 
-        public void cB_camera_initz()
+        private void cB_camera_initz()
         {
             //string[] camera_list = new string[23] { "本机复位","恢复默认参数表","LEOP开", "LEOP关",
             //                                        "CCSDS连续发射开", "CCSDS连续发射关","相机开机", "相机关机",
@@ -56,6 +61,9 @@ namespace payLoading
             cB_camera.ItemsSource = camera_list;
             cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 4 : -1;
         }
+
+        #endregion
+
 
         #region 上行图像指令
 
@@ -88,11 +96,16 @@ namespace payLoading
 
                     imagebuf = getNewImage();
                     if (imagebuf == null) break;
-                    if (CameraPort.IsOpen)
-                        CameraPort.Close();
-                    serial_create("COM5");
-                    serial_send(startCmd, 4);
-                    imageUp = 1;
+
+                    UInt32 imageID = (UInt32)(xDateSeconds() + Convert.ToUInt32(tB_delay_time.Text));
+
+                    addCameraItem(imageID );
+
+                    //if (CameraPort.IsOpen)
+                    //    CameraPort.Close();
+                    //serial_create("COM5");
+                    //serial_send(startCmd, 4);
+                    //imageUp = 1;
 
                     break;
                 default:
@@ -106,47 +119,98 @@ namespace payLoading
         #endregion
 
         #region 图像数据绑定
-        List<CameraLIst> camList = new List<CameraLIst>();
+        private UInt32 LatestCameraNo = 0;
+
+        ObservableCollection<CameraLIst> memberData = new ObservableCollection<CameraLIst>();
 
         public class CameraLIst
         {
-            public string ID { get; set; }
-            public string Name { get; set; }
-           // public string time { get; set; }
+            public string Number { get; set; }
+            public string Date { get; set; }
+            public string ImageID { get; set; }
         }
 
         private void CameraListInitz()
         {
-            ObservableCollection<CameraLIst> memberData = new ObservableCollection<CameraLIst>();
-            memberData.Add(new CameraLIst()
+            PATH = Directory.GetCurrentDirectory();
+            StreamReader allImage = null;
+            try
             {
-                ID = 101.ToString(),
-                Name = 12324244.ToString(),
-            });
+                allImage = new StreamReader(PATH + "\\camera\\allImage.txt");
+                
+                while (!allImage.EndOfStream)
+                {
+                    string str = allImage.ReadLine();
+
+                    string[] xxsplit;
+                    xxsplit = str.Split(new Char[] { ',', ' ', '，', '\n', '\t' });
+
+                    if(xxsplit.Length<2)
+                        continue;
+
+                    LatestCameraNo = Convert.ToUInt32(xxsplit[0]);
+                    memberData.Add(new CameraLIst()
+                    {
+                        Number = Convert.ToUInt32(xxsplit[0]).ToString(),
+                        Date = ConvertTimer(Convert.ToUInt32(xxsplit[1])),
+                        ImageID = Convert.ToUInt32(xxsplit[1]).ToString(),
+                    });
+                }
+                allImage.Close();
+            }
+            catch (Exception e)
+            {
+                if(allImage != null)
+                    allImage.Close();
+                System.Windows.MessageBox.Show("cameraList initz Error:" + e.Message);
+            }
+
+            dG_camera_time.DataContext = memberData;
+
+        }
+
+        private void addCameraItem(UInt32 utc)
+        {
+            StreamWriter allImage = null;
+            try
+            {
+                FileStream allImageF = new FileStream(PATH + "\\camera\\allImage.txt", FileMode.Append, FileAccess.Write);
+                allImage = new StreamWriter(allImageF);
+
+                LatestCameraNo += 1;
+
+                memberData.Add(new CameraLIst()
+                {
+                    Number = LatestCameraNo.ToString(),
+                    Date = ConvertTimer(utc),
+                    ImageID = utc.ToString(),
+                });
+
+                allImage.WriteLine(LatestCameraNo.ToString() + '\t' + utc.ToString());
+
+                allImage.Close();
+            }
+            catch (Exception e)
+            {
+                if (allImage != null)
+                    allImage.Close();
+                System.Windows.MessageBox.Show("cameraList initz Error:" + e.Message);
+            }
 
             dG_camera_time.DataContext = memberData;
         }
 
-        private List<CameraLIst> LoadCollectionData()
-        {
-           
-            camList.Add(new CameraLIst()
-            {
-                ID = 101.ToString(),
-                Name = 12324244.ToString(),
-            });
-    
-            return camList;
-        }
-
-
         private void dG_camera_time_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            camList.Add(new CameraLIst()
+
+            memberData.Add(new CameraLIst()
             {
-                ID = 112.ToString(),
-                Name = 12324244.ToString(),
+                Number = 103.ToString(),
+                Date = ConvertTimer(12345678),
+                ImageID = 1222222.ToString(),
             });
+
+           dG_camera_time.DataContext = memberData;
         }
 
         #endregion
@@ -396,6 +460,58 @@ namespace payLoading
             //BitmapImage myBitmapImage_tmp = GetBitmapImage(img_byte);
 
             //SavePhoto(PATH + "\\camera\\", myBitmapImage_tmp);
+        }
+        #endregion
+
+
+        #region 通用函数
+
+        private string ConvertTimer(UInt32 utc)
+        {
+            DateTime dt = new DateTime(                 //显示为本地时间
+                            1970, 1, 1, 0, 0, 0, DateTimeKind.Local).
+                            AddSeconds(Convert.ToDouble(utc));
+
+            return (dt.ToString("yyyy年MM月dd日hh:mm:ss"));
+        }
+
+        private long xDateSeconds()
+        {
+            long xdateseconds = 0;
+            DateTime xdatenow = DateTime.UtcNow;     //当前UTC时间
+
+            long xminute = 60;      //一分种60秒
+            long xhour = 3600;
+            long xday = 86400;
+            long byear = 1970;//从1970-1-1 0：00：00开始到现在所过的秒
+            long[] xmonth = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
+            long[] xyear = { 365, 366 };
+            long num = 0;
+
+            xdateseconds += xdatenow.Second;    //算秒
+            xdateseconds += xdatenow.Minute * xminute;      //算分
+            xdateseconds += xdatenow.Hour * xhour;      //算时
+            xdateseconds += (xdatenow.Day - 1) * xday;        //算天
+            //算月(月换成天算)
+            if (DateTime.IsLeapYear(xdatenow.Year))
+            {
+                xdateseconds += (xmonth[xdatenow.Month - 1] + 1) * xday;
+            }
+            else
+            {
+                xdateseconds += (xmonth[xdatenow.Month - 1]) * xday;
+            }
+            //算年（年换成天算）
+            long lyear = xdatenow.Year - byear;
+            for (int i = 0; i < lyear; i++)
+            {
+                if (DateTime.IsLeapYear((int)byear + i))
+                {
+                    num++;
+                }
+            }
+            xdateseconds += ((lyear - num) * xyear[0] + num * xyear[1]) * xday;
+            return xdateseconds;
         }
         #endregion
     }

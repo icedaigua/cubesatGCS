@@ -249,7 +249,7 @@ namespace HouseKeeping_Wpf
 
             if (para_time_checked) //星上时间注入
             {
-                cubeCOMM.generate_up_para_cmd_cs(up_buf, selectIndex, cubeCOMM.INS_ADCS_TIME_IN,
+                cubeCOMM.generate_up_para_cmd_cs(up_buf, selectIndex, cubeCOMM.INS_TIME_IN,
                      delay_time,
                      para_time, 0);
                 cmd_cnt++;

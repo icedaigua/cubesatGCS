@@ -55,6 +55,8 @@ namespace CubeGCS_Wpf
             get_local_time();   //本机时间初始化
 
             cB_pid_intiz();
+
+            camera_frm.CameraModulesInitz();
         }
         /// <summary>
         /// 主窗口关闭
@@ -664,25 +666,21 @@ namespace CubeGCS_Wpf
 
                 camera_frm.CameraProcess(down_info_buf);
                 rec_state = 0;
-                //obc_displayAndsave();
             }
         }
 
         private void obc_displayAndsave()
         {
 
-                //double seconds = obc_info.utc_time;
-
-                //double secs = Convert.ToDouble(seconds);
 
             DateTime dt = new DateTime(                 //显示为本地时间
             1970, 1, 1, 0, 0, 0, DateTimeKind.Local).
             AddSeconds(Convert.ToDouble(obc_info.utc_time));
 
+            timerCnt_frm.setCubetime(dt.ToString("yyyy年MM月dd日hh:mm:ss"));
 
             timerCnt_frm.setCounter(rec_down_info_count, obc_info.down_count);
 
-            timerCnt_frm.setCubetime(dt.ToString("yyyy年MM月dd日hh:mm:ss"));
 
             Temp_frm.displayTemperature(obc_info);
 
