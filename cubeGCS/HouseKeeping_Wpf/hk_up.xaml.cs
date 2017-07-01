@@ -726,7 +726,16 @@ namespace HouseKeeping_Wpf
 
             string PATH = Directory.GetCurrentDirectory();
             StreamReader Orbit_File;                       ///实时数据存储文件  
-            Orbit_File = new StreamReader(PATH + "\\orbit.txt");
+
+            try
+            {
+                Orbit_File = new StreamReader(PATH + "\\resource\\orbit.txt");
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show("轨道数据文件错误:" + ex.Message);
+                return;
+            }
 
             tB_TLEJdsatepoch.Text = Orbit_File.ReadLine();
             tB_TLEBstar.Text = Orbit_File.ReadLine();

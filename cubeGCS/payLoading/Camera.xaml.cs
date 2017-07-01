@@ -2,6 +2,7 @@
 using Dongzr.MidiLite;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
@@ -101,11 +102,11 @@ namespace payLoading
 
                     addCameraItem(imageID );
 
-                    //if (CameraPort.IsOpen)
-                    //    CameraPort.Close();
-                    //serial_create("COM5");
-                    //serial_send(startCmd, 4);
-                    //imageUp = 1;
+                    if (CameraPort.IsOpen)
+                        CameraPort.Close();
+                    serial_create("COM5");
+                    serial_send(startCmd, 4);
+                    imageUp = 1;
 
                     break;
                 default:
@@ -162,7 +163,8 @@ namespace payLoading
             {
                 if(allImage != null)
                     allImage.Close();
-                System.Windows.MessageBox.Show("cameraList initz Error:" + e.Message);
+                Trace.TraceError("图像链表初始化错误:" + e.Message + e.StackTrace);
+                //System.Windows.MessageBox.Show("图像链表初始化错误:" + e.Message);
             }
 
             dG_camera_time.DataContext = memberData;
@@ -194,24 +196,13 @@ namespace payLoading
             {
                 if (allImage != null)
                     allImage.Close();
-                System.Windows.MessageBox.Show("cameraList initz Error:" + e.Message);
+                Trace.TraceError("向链表中增加新图像错误:" + e.Message + e.StackTrace);
+                //System.Windows.MessageBox.Show("向链表中增加新图像错误:" + e.Message);
             }
 
             dG_camera_time.DataContext = memberData;
         }
 
-        private void dG_camera_time_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-            memberData.Add(new CameraLIst()
-            {
-                Number = 103.ToString(),
-                Date = ConvertTimer(12345678),
-                ImageID = 1222222.ToString(),
-            });
-
-           dG_camera_time.DataContext = memberData;
-        }
 
         #endregion
 
@@ -238,22 +229,30 @@ namespace payLoading
                 case 0:
                     break;
                 case 1:
-                    if (imagebuf.Length - sendLength <= CAMERA_LENGTH_UP)
+                    try
                     {
-                        Array.Copy(imagebuf, sendLength, sendbuf, 0, imagebuf.Length - sendLength);
-                        serial_send(sendbuf, imagebuf.Length - sendLength);
-    
-                        sendLength = 0;
+                        if (imagebuf.Length - sendLength <= CAMERA_LENGTH_UP)
+                        {
+                            Array.Copy(imagebuf, sendLength, sendbuf, 0, imagebuf.Length - sendLength);
+                            serial_send(sendbuf, imagebuf.Length - sendLength);
 
-                        imageUp = 2;
+                            sendLength = 0;
 
+                            imageUp = 2;
+
+                        }
+                        else
+                        {
+                            Array.Copy(imagebuf, sendLength, sendbuf, 0, CAMERA_LENGTH_UP);
+                            sendLength = sendLength + CAMERA_LENGTH_UP;
+                            serial_send(sendbuf, CAMERA_LENGTH_UP);
+                        }
                     }
-                    else
+                    catch(Exception ex)
                     {
-                        Array.Copy(imagebuf, sendLength, sendbuf, 0, CAMERA_LENGTH_UP);
-                        sendLength = sendLength + CAMERA_LENGTH_UP;
-                        serial_send(sendbuf, CAMERA_LENGTH_UP);
+                        Trace.TraceError("上行图像过程错误:" + ex.Message + ex.StackTrace);
                     }
+   
                     break;
 
                 case 2:
@@ -296,8 +295,16 @@ namespace payLoading
             //In_Port.WriteTimeout = 50;
 
             CameraPort.ReadBufferSize = 4096;
-     
-            CameraPort.Open();
+
+            try
+            {
+                CameraPort.Open();
+            }
+            catch(Exception e)
+            {
+                Trace.TraceError("图像串口打开错误:" + e.Message + e.StackTrace);
+            }
+
         }
 
         /// <summary>
@@ -317,7 +324,8 @@ namespace payLoading
             }
             catch(Exception e)
             {
-                System.Windows.MessageBox.Show("串口发送错误:" + e.Message);
+                Trace.TraceError("图像串口数据发送错误:" + e.Message + e.StackTrace);
+                //System.Windows.MessageBox.Show("串口发送错误:" + e.Message);
                 CameraPort.Close();
             }
             
@@ -335,7 +343,15 @@ namespace payLoading
 
             tB_frameCnt.Text = frameCnt.ToString();
 
-            Array.Copy(camerabuffer, 5, img, frameCnt * CAMERA_LENGTH_DOWN, CAMERA_LENGTH_DOWN);
+            try
+            {
+                Array.Copy(camerabuffer, 5, img, frameCnt * CAMERA_LENGTH_DOWN, CAMERA_LENGTH_DOWN);
+            }
+            catch(Exception e)
+            {
+                Trace.TraceError("下行图像处理错误:" + e.Message + e.StackTrace);
+                return;
+            }
 
             if ((frameCnt % 50) == 0)
                 image_proc();
@@ -344,22 +360,22 @@ namespace payLoading
 
         public void image_trans()
         {
-            string PATH = Directory.GetCurrentDirectory();
-            try
-            {
-                StreamReader camFrame = new StreamReader(PATH + "\\camera\\" + "\\2085979490.txt");
-                string ss = camFrame.ReadToEnd();
-                byte[] img_dst = Encoding.Default.GetBytes(ss);
-                BitmapImage myBitmapImage = GetBitmapImage(img_dst);
-                Img_camera.Source = myBitmapImage;
+            //string PATH = Directory.GetCurrentDirectory();
+            //try
+            //{
+            //    StreamReader camFrame = new StreamReader(PATH + "\\camera\\" + "\\2085979490.txt");
+            //    string ss = camFrame.ReadToEnd();
+            //    byte[] img_dst = Encoding.Default.GetBytes(ss);
+            //    BitmapImage myBitmapImage = GetBitmapImage(img_dst);
+            //    Img_camera.Source = myBitmapImage;
 
-                SavePhoto(PATH + "\\camera\\", myBitmapImage);
-            }
-            catch (Exception e)
-            {
-                System.Windows.MessageBox.Show("图像处理错误：" + e.Message);
-                return;
-            }
+            //    SavePhoto(PATH + "\\camera\\", myBitmapImage);
+            //}
+            //catch (Exception e)
+            //{
+            //    System.Windows.MessageBox.Show("图像处理错误：" + e.Message);
+            //    return;
+            //}
         }
 
         public void image_proc()
@@ -369,7 +385,6 @@ namespace payLoading
             byte[] img_dst = new byte[((frameCnt - 1) * CAMERA_LENGTH_DOWN + length)];
 
             Array.Copy(img, img_dst, img_dst.Length);
-
 
 
             try
@@ -388,6 +403,7 @@ namespace payLoading
                 camFrame.WriteLine(camStr);
 
                 camFrame.Close();
+                Trace.TraceError("图像显示处理错误:" + e.Message + e.StackTrace);
                 System.Windows.MessageBox.Show("图像处理错误："+ e.Message);
                 return;
             }
@@ -451,6 +467,7 @@ namespace payLoading
             }
             catch(Exception e)
             {
+                Trace.TraceError("Get New Image Error:" + e.Message + e.StackTrace);
                 System.Windows.MessageBox.Show("Get Image Error:" + e.Message);
                 return null;
             }

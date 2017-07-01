@@ -3,6 +3,7 @@ using System.Windows.Controls;
 
 using CubeCOM;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace HouseKeeping_Wpf
 {
@@ -59,11 +60,10 @@ namespace HouseKeeping_Wpf
         public void display_obc_info(cubeCOMM.down_obc_ST down_info)
         {
 
-            #region CPU   
-            tB_sat_id.Text = "NJUST";
-
             try
             {
+                #region CPU   
+                tB_sat_id.Text = "NJUST";
                 tB_reboot_count.Text = down_info.reboot_count.ToString();
 
                 tB_rec_cmd_count.Text = down_info.rec_cmd_count.ToString();
@@ -98,11 +98,10 @@ namespace HouseKeeping_Wpf
                 tB_reset_cause.Text = reset_cause[down_info.reset_cause];
 
                 tB_tmep_hk.Text = ((down_info.temp_hk * 2030 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2");
-                //System.Diagnostics.Trace.WriteLine("ADCS" + down_info.temp_hk.ToString());
-
                 #endregion
 
 
+                #region 文件系统
 
                 tB_flash_index.Text = down_info.flash_index.ToString();
                 tB_flash_block.Text = down_info.flash_block.ToString();
@@ -119,12 +118,15 @@ namespace HouseKeeping_Wpf
                 tB_camera_time.Text = down_info.camera_time_latest.ToString();
                 tB_camera_saved_cnt.Text = down_info.camera_saved_cnt.ToString();
 
-
+                #endregion
                 tB_obc_control_eps.Text = (((down_info.on_off_status & 0x80) > 0) ? "1:开" : "0:关").ToString();
+
+         
             }
             catch(Exception e)
             {
-                System.Windows.MessageBox.Show("星务显示错误" + e.Message);
+                Trace.TraceError("星务下行数据处理错误:" + e.Message + e.StackTrace);
+                //System.Windows.MessageBox.Show("星务显示错误" + e.Message);
             }
         }
 

@@ -37,19 +37,19 @@
 												   >电源温度</TextBlock>
 
             <TextBlock Grid.Row="0" Grid.Column="1"
-												   Name="tBk_tempe_hk"
+												   Name="tBk_temp_hk"
 												   Margin="20,20,20,20"
 												   HorizontalAlignment="Center" VerticalAlignment="Center"
 												   FontSize="60" FontFamily="黑体" Foreground="OrangeRed"
 												   >0.0</TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1"
-												   Name="tBk_tempe_ax100"
+												   Name="tBk_temp_uv"
 													Margin="20,20,20,20"
 												   HorizontalAlignment="Center" VerticalAlignment="Center"
 												   FontSize="60" FontFamily="黑体" Foreground="OrangeRed"
 												   >0.0</TextBlock>
             <TextBlock Grid.Row="2" Grid.Column="1"
-												   Name="tBk_tempe_battery"
+												   Name="tBk_temp_eps"
 													Margin="20,20,20,20"
 												   HorizontalAlignment="Center" VerticalAlignment="Center"
 												   FontSize="60" FontFamily="黑体" Foreground="OrangeRed"

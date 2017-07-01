@@ -9,8 +9,12 @@ using System.IO.Ports;
 
 using CubeCOM;
 using Dongzr.MidiLite;  //for MMtimers
+using Logging;
+
 using System.Text;
 using System.Windows.Threading;
+using System.Diagnostics;
+using System.IO;
 
 namespace CubeGCS_Wpf
 {
@@ -52,11 +56,21 @@ namespace CubeGCS_Wpf
         {
             InitializeComponent();
 
+            LoggingInitz();
+
             get_local_time();   //本机时间初始化
 
             cB_pid_intiz();
 
             camera_frm.CameraModulesInitz();
+
+   
+        }
+
+        private void LoggingInitz()
+        {
+            Trace.Listeners.Clear();  //清除系统监听器 (就是输出到Console的那个)
+            Trace.Listeners.Add(new Logging.Logging(Directory.GetCurrentDirectory()  +"\\Logging\\")); //添加MyTraceListener实例
         }
         /// <summary>
         /// 主窗口关闭
@@ -735,8 +749,16 @@ namespace CubeGCS_Wpf
             In_Port.ReadBufferSize = 4096;
             In_Port.DataReceived += new SerialDataReceivedEventHandler(In_Port_DataReceived);
 
-            In_Port.Open();
-
+            try
+            {
+                In_Port.Open();
+                Trace.TraceInformation("串口已启动:");//记录日志
+            }
+            catch(Exception e)
+            {
+                Trace.TraceError("出现异常:" + e.Message);//记录日志
+            }
+           
 
         }
 
@@ -812,7 +834,7 @@ namespace CubeGCS_Wpf
 
         private void serial_send()
         {
-            //In_Port.Write("\r\n");
+          
             string str = "";
             byte[] sendbuf= new byte[11];
 

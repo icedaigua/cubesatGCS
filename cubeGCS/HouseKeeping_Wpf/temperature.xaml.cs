@@ -31,9 +31,9 @@ namespace HouseKeeping_Wpf
         public void displayTemperature(cubeCOMM.down_obc_ST obcInfo)
         {
 
-            //tBk_tempe_ax100.Text = obcInfo.temp_batt_board_2.ToString("F2");
-            //tBk_tempe_battery.Text = obcInfo.temp_batt_board_1.ToString("F2");
-            tBk_tempe_hk.Text = ((obcInfo.temp_hk * 2370 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2");
+            tBk_temp_uv.Text = obcInfo.temp_batt_board[0].ToString("F2");
+            tBk_temp_eps.Text = obcInfo.temp_eps[0].ToString("F2");
+            tBk_temp_hk.Text = ((obcInfo.temp_hk * 2030 / 4096.0 - 760.0) / 2.5 + 25).ToString("F2");
 
         }
     }

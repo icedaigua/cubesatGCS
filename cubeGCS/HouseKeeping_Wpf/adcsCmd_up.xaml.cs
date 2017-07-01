@@ -338,7 +338,7 @@ namespace HouseKeeping_Wpf
 
             string PATH = Directory.GetCurrentDirectory();
             StreamReader Orbit_File;                       ///实时数据存储文件  
-            Orbit_File = new StreamReader(PATH + "\\orbit.txt");
+            Orbit_File = new StreamReader(PATH + "\\resource\\orbit.txt");
 
             tB_TLEJdsatepoch.Text = Orbit_File.ReadLine();
             tB_TLEBstar.Text = Orbit_File.ReadLine();

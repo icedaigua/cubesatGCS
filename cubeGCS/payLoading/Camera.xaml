@@ -76,8 +76,7 @@
                           
                           BorderBrush="Tomato" BorderThickness="2"
                           
-                       
-                          MouseDoubleClick="dG_camera_time_MouseDoubleClick"
+
                            AutoGenerateColumns="False"
                                                    
                           HorizontalAlignment="Center"  VerticalAlignment="Top" 
