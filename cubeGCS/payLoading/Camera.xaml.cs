@@ -18,7 +18,7 @@ namespace payLoading
     public partial class Camera : UserControl
     {
 
-        private const UInt16 CAMERA_LENGTH_UP = 200;
+        private const UInt16 CAMERA_LENGTH_UP = 800;
         private const byte CAMERA_LENGTH_DOWN = 240;
 
         string PATH ="";
@@ -61,6 +61,11 @@ namespace payLoading
 
             cB_camera.ItemsSource = camera_list;
             cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 4 : -1;
+
+
+            string[] hk_list = new string[2] { "SD", "SRAM" };
+            cB_delay_select.ItemsSource = hk_list;
+            cB_delay_select.SelectedIndex = cB_delay_select.Items.Count > 0 ? 1 : -1;
         }
 
         #endregion
@@ -80,21 +85,34 @@ namespace payLoading
             switch (cB_camera.Text)
             {
                 case "下行图像":
-                    cubeCOMM.generate_up_para_cmd_cs(cmd, 1,
-                                       cubeCOMM.INS_APP_STR_DOWN,
-                                       delay_time,
-                                       0,Convert.ToUInt32(tB_camera_params.Text)
-                                       );
 
                     time_now = DateTime.Now.ToString("yyyy-MM-dd") +
-                                    '(' + DateTime.Now.ToLongTimeString().ToString().Replace(':', '-') + ')';
+                 '(' + DateTime.Now.ToLongTimeString().ToString().Replace(':', '-') + ')';
 
                     CameraPATH = new DirectoryInfo(PATH + "\\camera\\" + time_now);
                     CameraPATH.Create();
+
+                    UInt32 para1 = (UInt32)cB_delay_select.SelectedIndex;
+
+                    UInt32 para2 = Convert.ToUInt32(tB_camera_params.Text);
+
+
+                    cubeCOMM.generate_up_para_cmd_cs(cmd, 1,
+                                       cubeCOMM.INS_APP_STR_DOWN,
+                                       delay_time,
+                                       para1, para2
+                                       );
+
+ 
                     break;
 
                 case "上传图片":
 
+                    if (imageUp > 0)
+                    {
+                        System.Windows.MessageBox.Show("已有上行中的任务,等待结束");
+                        return;
+                    }
                     imagebuf = getNewImage();
                     if (imagebuf == null) break;
 
@@ -216,7 +234,7 @@ namespace payLoading
 
         private void local_timer_start()
         {
-            local_time_timer.Interval = 500;
+            local_time_timer.Interval = 100;
             local_time_timer.Mode = MmTimerMode.Periodic;
             local_time_timer.Tick += new EventHandler(local_timer_handler);
             local_time_timer.Start();
@@ -345,7 +363,7 @@ namespace payLoading
 
             try
             {
-                Array.Copy(camerabuffer, 5, img, frameCnt * CAMERA_LENGTH_DOWN, CAMERA_LENGTH_DOWN);
+                Array.Copy(camerabuffer, 5, img, frameCnt * CAMERA_LENGTH_DOWN, length);
             }
             catch(Exception e)
             {

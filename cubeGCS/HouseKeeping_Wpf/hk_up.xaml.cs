@@ -86,7 +86,7 @@ namespace HouseKeeping_Wpf
          public UInt32 para_D { get { return Convert.ToUInt32(tB_D_para.Text); } }
          public UInt32 para_Z { get { return Convert.ToUInt32(tB_Z_para.Text); } }
          public UInt32 para_down_period     { get { return Convert.ToUInt32(tB_down_period.Text); } }
-         public UInt32 delay_hk_orbit_cnt   { get { return Convert.ToUInt32(tB_delay_hk.Text); } }
+         public UInt32 delay_hk_delay   { get { return Convert.ToUInt32(tB_delay_hk.Text); } }
          public UInt32 delay_hk_select      { get { return Convert.ToUInt32(cB_delay_select.SelectedIndex); } }
          public UInt32 delay_hk_index       { get { return Convert.ToUInt32(tB_delay_index.Text); } }
 
@@ -372,7 +372,7 @@ namespace HouseKeeping_Wpf
 
                 para1 = delay_hk_index * Convert.ToUInt32(Math.Pow(2, 16)) + delay_hk_select;
 
-                para2 = delay_hk_orbit_cnt;
+                para2 = delay_hk_delay;
 
                 cubeCOMM.generate_up_para_cmd_cs( up_buf, selectIndex, cubeCOMM.INS_HK_GET,
                      delay_time,
@@ -707,7 +707,7 @@ namespace HouseKeeping_Wpf
 
          
 
-                MessageBox.Show(delay_hk_orbit_cnt.ToString());
+                MessageBox.Show(delay_hk_delay.ToString());
 
 
             }

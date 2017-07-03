@@ -228,7 +228,7 @@ namespace CubeGCS_Wpf
             catch (Exception e)
             {
                 Trace.TraceError("OBC文件IO错误:" + e.Message + e.StackTrace);
-                System.Windows.MessageBox.Show("OBC文件IO错误:" + e.Message);
+                //System.Windows.MessageBox.Show("OBC文件IO错误:" + e.Message);
                 File_obcFrame.Close();
             }
     
@@ -410,7 +410,7 @@ namespace CubeGCS_Wpf
             catch (Exception e)
             {
                 Trace.TraceError("ADCS文件IO错误:" + e.Message + e.StackTrace);
-                System.Windows.MessageBox.Show("ADCS文件IO错误:" + e.Message);
+                //System.Windows.MessageBox.Show("ADCS文件IO错误:" + e.Message);
                 File_adcsFrame.Close();
             }
 
