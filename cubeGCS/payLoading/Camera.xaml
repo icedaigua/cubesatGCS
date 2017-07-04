@@ -126,7 +126,8 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image Margin="2" Grid.Row="0" Name="Img_camera" Height="640" Width="480"></Image>
+                <Image Margin="2" Grid.Row="0" Name="Img_camera" Height="640" Width="480"
+                       MouseRightButtonDown="Img_camera_MouseRightButtonDown"></Image>
 
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>

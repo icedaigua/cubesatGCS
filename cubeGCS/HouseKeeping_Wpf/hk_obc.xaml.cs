@@ -107,8 +107,8 @@ namespace HouseKeeping_Wpf
                 tB_flash_block.Text = down_info.flash_block.ToString();
 
 
-                tB_sram_index.Text = down_info.sram_index.ToString();
-                tB_sram_block.Text = down_info.sram_block.ToString();
+                //tB_sram_index.Text = down_info.sram_index.ToString();
+                //tB_sram_block.Text = down_info.sram_block.ToString();
 
                 tB_file_sd_time.Text = down_info.file_sd_time_latest.ToString();
                 tB_sd_status.Text = sd_card_error[down_info.sd_card_status];

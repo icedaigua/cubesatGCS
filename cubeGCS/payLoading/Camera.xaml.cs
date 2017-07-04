@@ -49,15 +49,9 @@ namespace payLoading
 
         private void cB_camera_initz()
         {
-            //string[] camera_list = new string[23] { "本机复位","恢复默认参数表","LEOP开", "LEOP关",
-            //                                        "CCSDS连续发射开", "CCSDS连续发射关","相机开机", "相机关机",
-            //                                        "建立JPG任务", "建立Download任务","设置相机下行延迟", "读FRAM",
-            //                                        "设置TX增益", "转发开","转发关", "下传本机工程参数",
-            //                                        "建立CAM任务", "重新发送指定相机数据包","AVR复位", "设置分辨率640*480",
-            //                                        "设置分辨率800*600", "设置压缩率","设置信标发送周期"};
-
-            string[] camera_list = new string[6] {"相机复位","相机开机", "相机关机",
-                                                    "成像指令", "下行图像", "上传图片"};
+  
+            string[] camera_list = new string[5] {"相机复位","相机开机", "相机关机",
+                                                    "成像指令", "下行图像"};
 
             cB_camera.ItemsSource = camera_list;
             cB_camera.SelectedIndex = cB_camera.Items.Count > 0 ? 4 : -1;
@@ -103,30 +97,9 @@ namespace payLoading
                                        para1, para2
                                        );
 
- 
                     break;
 
-                case "上传图片":
-
-                    if (imageUp > 0)
-                    {
-                        System.Windows.MessageBox.Show("已有上行中的任务,等待结束");
-                        return;
-                    }
-                    imagebuf = getNewImage();
-                    if (imagebuf == null) break;
-
-                    UInt32 imageID = (UInt32)(xDateSeconds() + Convert.ToUInt32(tB_delay_time.Text));
-
-                    addCameraItem(imageID );
-
-                    if (CameraPort.IsOpen)
-                        CameraPort.Close();
-                    serial_create("COM5");
-                    serial_send(startCmd, 4);
-                    imageUp = 1;
-
-                    break;
+          
                 default:
                     break;
             }
@@ -135,6 +108,32 @@ namespace payLoading
 
         }
 
+
+        public void upImage()
+        {     
+
+            if (imageUp > 0)
+            {
+                System.Windows.MessageBox.Show("已有上行中的任务,等待结束");
+                return;
+            }
+            imagebuf = getNewImage();
+            if (imagebuf == null)
+            {
+                System.Windows.MessageBox.Show("未能获取图像");
+                return;
+            }
+            UInt32 imageID = (UInt32)(xDateSeconds() + Convert.ToUInt32(tB_delay_time.Text));
+
+            addCameraItem(imageID);
+
+            if (CameraPort.IsOpen)
+                CameraPort.Close();
+            serial_create("COM5");
+            serial_send(startCmd, 4);
+            imageUp = 1;
+
+        }
         #endregion
 
         #region 图像数据绑定
@@ -422,7 +421,7 @@ namespace payLoading
 
                 camFrame.Close();
                 Trace.TraceError("图像显示处理错误:" + e.Message + e.StackTrace);
-                System.Windows.MessageBox.Show("图像处理错误："+ e.Message);
+                //System.Windows.MessageBox.Show("图像处理错误："+ e.Message);
                 return;
             }
 
@@ -496,6 +495,11 @@ namespace payLoading
 
             //SavePhoto(PATH + "\\camera\\", myBitmapImage_tmp);
         }
+
+        private void Img_camera_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Img_camera.Source = null;
+        }
         #endregion
 
 
@@ -509,6 +513,8 @@ namespace payLoading
 
             return (dt.ToString("yyyy年MM月dd日hh:mm:ss"));
         }
+
+
 
         private long xDateSeconds()
         {

@@ -132,8 +132,7 @@
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="2" Text="SD卡已存文件数"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="3" Text="Flash已存轨道"/>
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="4" Text="Flash已存帧数"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="5" Text="SRAM已存轨道"/>
-                    <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="6" Text="SRAM已存帧数"/>
+
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="7" Text="相片最新时间"/>
 
                     <TextBlock Margin="0,0,4,2"  Foreground="Chocolate" Grid.Column="0" Grid.Row="8" Text="已存相片数"/>
@@ -152,10 +151,7 @@
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="4" Foreground="Chocolate" 
                              Name="tB_flash_index" Width="190" TextAlignment="Center"></TextBox>
 
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="5" Foreground="Chocolate" 
-                             Name="tB_sram_block" Width="190" TextAlignment="Center"></TextBox>
-                    <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="6" Foreground="Chocolate" 
-                             Name="tB_sram_index" Width="190" TextAlignment="Center"></TextBox>
+
 
                     <TextBox Margin="0,0,4,2" Grid.Column="1" Grid.Row="7" Foreground="Chocolate" 
                              Name="tB_camera_time" Width="190" TextAlignment="Center"

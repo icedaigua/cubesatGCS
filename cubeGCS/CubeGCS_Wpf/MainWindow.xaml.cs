@@ -204,16 +204,9 @@ namespace CubeGCS_Wpf
         }
 
 
-
-        private void btn_down_img_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
         private void btn_img_trans_Click(object sender, RoutedEventArgs e)
         {
-            camera_frm.image_trans();
+            camera_frm.upImage();
         }
 
         private void btn_send_cameraCmd_Click(object sender, RoutedEventArgs e)
