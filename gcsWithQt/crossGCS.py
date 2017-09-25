@@ -3,6 +3,8 @@ from iNet.iClient import TcpClient
 from iSerial.iSerial import iSerial
 from comProtocol.cubesat import obc_decode
 from ui.uiCreate import uiCreate
+from iLogging.iLogging import iLogging
+import logging
 
 import threading
 import sys
@@ -73,6 +75,10 @@ class crossGCS(uiCreate):
 
 
 if __name__ == '__main__':
+    iLogging(sys.path[0]+'/')
+    logging.warning("Warning")
+    logging.debug("Debug")
+    logging.info("info")
     gcs = crossGCS()
 
 
