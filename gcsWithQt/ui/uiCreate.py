@@ -21,7 +21,7 @@ class uiCreate:
         sys.exit(self.app.exec_())
 
     def ui_initz(self):
-        pass
+        self.ui.comboBox_2.addItems(["COM1","COM2","COM3","COM4","COM5","COM6"])
     
     def ui_btn_click_conn(self):
         self.ui.pBtn_test.clicked.connect(self.pBtn_test_click)
@@ -32,13 +32,13 @@ class uiCreate:
         # try:   
         self.ui.lE_sat_id.setText(str(obc[2]))
         self.ui.lE_reboot_cnt.setText(str(obc[4]))
-        self.ui.lE_rec_cmd_cnt.setText(str(obc[5]))
-        self.ui.lE_down_cnt.setText(str(obc[6]))
-        self.ui.lE_reboot_time.setText(str(obc[7]))
-        self.ui.lE_obc_workmode.setText(str(obc[8]))
-        self.ui.lE_obc_switch_status.setText(str(obc[9]))
-        self.ui.lE_obc_utc_time.setText(str(obc[10]))
-        self.ui.lE_obc_temp.setText(str(obc[11]))
+        self.ui.lE_rec_cmd_cnt.setText(str(obc[6]))
+        self.ui.lE_down_cnt.setText(str(obc[9]))
+        self.ui.lE_reboot_time.setText(str(obc[10]))
+        self.ui.lE_obc_workmode.setText(str(obc[11]))
+        # self.ui.lE_obc_switch_status.setText(str(obc[9]))
+        self.ui.lE_obc_utc_time.setText(str(obc[12]))
+        # self.ui.lE_obc_temp.setText(str(obc[11]))
         
         self.ui.lE_obc_flash_index.setText(str(obc[45]))
         self.ui.lE_obc_flash_cnt.setText(str(obc[46]))
@@ -85,8 +85,6 @@ class uiCreate:
         self.ui.lE_adcs_adc_10.setText(str(adcs[89]))
       
 
-        pass
-
     def pBtn_test_click(self):
         QtWidgets.QMessageBox.information(self.ui.pBtn_test,"str","str")
     
@@ -105,7 +103,7 @@ class uiCreate:
 
 if __name__=='__main__':
     
-    ui = ui_control()
+    ui = uiCreate()
  
 # import sys  
 # from PyQt5 import QtWidgets  

@@ -7,4 +7,4 @@ def up_ctrl_decode(str):
     return unpack("=4B1f1B",str)
 
 def obc_decode(str):
-    return unpack("=4B 3H 1I 2B 1I 1h 6h 12H 14H 1I 2H 2B 3H 1I 1H 1I 1h 1B 3H 3h 1f 6h 1H 3h 3f 3h 10h 1B",str)
+    return unpack("=4B 1H 1B 1H 2B 1H 1I 1B 1I 1h 1I 4B 1I 1B 1H 1I 1H 6b 12B 3H 11b 1H",str)
