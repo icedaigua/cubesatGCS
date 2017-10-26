@@ -329,8 +329,8 @@ namespace CubeCOM
         {
 
               public  UInt32 id;
-                public byte len;
-                public  byte pid;
+              public byte len;
+              public  byte pid;
               public  byte func;
               public  UInt32 delay_time;
               [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]

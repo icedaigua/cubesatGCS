@@ -10,15 +10,10 @@ import threading
 import sys
 import time
 
-# from collections import deque
-# import queue
-
 
 class crossGCS(uiCreate):
 
     def __init__(self):
-        # self.recbuf=deque(maxlen=10240)
-        # self._recbuf = queue.Queue(maxsize=10240)
         self._recbuf = []
         super(crossGCS,self).__init__()
         

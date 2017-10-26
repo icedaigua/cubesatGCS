@@ -36,15 +36,14 @@ class uiCreate:
         self.ui.lE_down_cnt.setText(str(obc[9]))
         self.ui.lE_reboot_time.setText(str(obc[10]))
         self.ui.lE_obc_workmode.setText(str(obc[11]))
-        # self.ui.lE_obc_switch_status.setText(str(obc[9]))
         self.ui.lE_obc_utc_time.setText(str(obc[12]))
-        # self.ui.lE_obc_temp.setText(str(obc[11]))
-        
+     
         self.ui.lE_obc_flash_index.setText(str(obc[45]))
         self.ui.lE_obc_flash_cnt.setText(str(obc[46]))
 
         # except :
         #     sys.exit()
+        
     def displayEPS(self,eps):
         
         self.ui.lE_sun_c_1.setText(str(eps[18]))

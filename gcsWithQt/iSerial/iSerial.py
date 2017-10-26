@@ -11,7 +11,7 @@ class iSerial:
                     baudRateChanged()"""
 
     def __init__(self):
-        self.ser = serial.Serial()
+        self._ser = serial.Serial()
 
     # def checkPorts(self):
     #     list = list_ports.comports()
@@ -22,42 +22,50 @@ class iSerial:
     #     return ports
 
     def openSerialPort(self, serialName, serialBaudRate):
-        self.ser.baudrate = serialBaudRate
-        self.ser.port = serialName
-        self.ser.bytesize = serial.EIGHTBITS #number of bits per bytes
-        self.ser.parity = serial.PARITY_NONE #set parity check: no parity
-        self.ser.stopbits = serial.STOPBITS_ONE #number of stop bits
-        self.ser.timeout = 1          #block read
+        self._ser.baudrate = serialBaudRate
+        self._ser.port = serialName
+        self._ser.bytesize = serial.EIGHTBITS #number of bits per bytes
+        self._ser.parity = serial.PARITY_NONE #set parity check: no parity
+        self._ser.stopbits = serial.STOPBITS_ONE #number of stop bits
+        self._ser.timeout = 1          #block read
         # xonxoff = False,     #disable software flow control
-        self.ser.rtscts = False     #disable hardware (RTS/CTS) flow control
+        self._ser.rtscts = False     #disable hardware (RTS/CTS) flow control
         # # ser.dsrdtr = False       #disable hardware (DSR/DTR) flow control
         # # ser.writeTimeout = 2     #timeout for write
         # interCharTimeout=None
-        self.ser.open()
+        self._ser.open()
         # self.protocol.write_line('Serial opened !')
 
     def closeSerialPort(self):
         # self.ReadThread.stop()
-        self.ser.close()
+        self._ser.close()
         # print(b'Serialport closed!')
 
     def baudRatechanged(self, baudRate):
-        serialconfdict = self.ser.get_settings()
+        serialconfdict = self._ser.get_settings()
         serialconfdict['baudrate'] = baudRate
-        self.ser.apply_settings(serialconfdict)
+        self._ser.apply_settings(serialconfdict)
         print("serial baudrate changed !")
     def write(self, send_buf):
-        self.ser.write(send_buf)
+        self._ser.write(send_buf)
     def read(self,len):
-        response = self.ser.read(len)
+        response = self._ser.read(len)
         # print("read data: " + str(response))
         return response
     def clear(self):
-        self.ser.flushInput()
-        self.ser.flushOutput()
+        self._ser.flushInput()
+        self._ser.flushOutput()
 
 
-# def iSerial():
+#
+
+if __name__ == '__main__':
+    print("OK")
+    # iSerial()
+
+
+
+#  def iSerial():
 #     ser = serial.Serial()
    
 #     ser.port = "COM8"  #"/dev/ttyUSB7"
@@ -112,12 +120,6 @@ class iSerial:
 
 #     # else:
 #     #     print("cannot open serial port")
-
-if __name__ == '__main__':
-    # print("OK")
-    iSerial()
-
-
 
 # from serial import threaded
 # from serial.tools import list_ports
@@ -185,5 +187,3 @@ if __name__ == '__main__':
 #         serialconfdict['baudrate'] = baudRate
 #         self.ser.apply_settings(serialconfdict)
 #         print("serial baudrate changed !")
-
-
