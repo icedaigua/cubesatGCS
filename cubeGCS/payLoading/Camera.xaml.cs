@@ -503,6 +503,44 @@ namespace payLoading
         #endregion
 
 
+        private byte[] getNewImageUseBinary()
+        {
+            string PATH = Directory.GetCurrentDirectory();
+            try
+            {
+                int kc = 0;
+                BinaryReader br = new BinaryReader(new FileStream(PATH + "\\resource\\lena.png", FileMode.Open));
+                BinaryWriter bw = new BinaryWriter(new FileStream(PATH + "\\resource\\lena2.jpg", FileMode.Create));
+                //BitmapImage myBitmapImage = new BitmapImage(new Uri(PATH + "\\resource\\lena.png"));
+
+                //int length = (int)br.BaseStream.Length;
+
+                byte[] imgBuf = new byte[(int)br.BaseStream.Length];
+
+                //while (br.PeekChar() > -1)                            //判断二进制文件是否结尾
+                while (br.BaseStream.Position < br.BaseStream.Length)
+                {
+                    imgBuf[kc++] = br.ReadByte();
+
+                }
+
+                bw.Write(imgBuf, 0, 5000);
+                BitmapImage myBitmapImage_tmp = GetBitmapImage(imgBuf);
+                Img_camera.Source = myBitmapImage_tmp;
+
+                br.Close();
+                bw.Close();
+                return imgBuf;
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError("Get New Image Error:" + e.Message + e.StackTrace);
+                System.Windows.MessageBox.Show("Get Image Error:" + e.Message);
+                return null;
+            }
+        }
+
         #region 通用函数
 
         private string ConvertTimer(UInt32 utc)
