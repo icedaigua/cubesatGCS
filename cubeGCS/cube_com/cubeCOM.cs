@@ -148,7 +148,7 @@ namespace CubeCOM
 
         public const byte
                         obc_length = 82,
-                        adcs_length = 96
+                        adcs_length = 221
                        ;
 
         #region 下行帧定义
@@ -233,28 +233,69 @@ namespace CubeCOM
             public UInt16 rcv_cnt;                      //2
             public UInt16 ack_cnt;                      //2
             public UInt32 rst_time;                     //4
-            public UInt16 sw_status;                    //2
             public UInt32 utc_time;                     //4
             public Int16 temp_cpu;                      //2
             public byte adcs_ctrl_mode;                 //1  //downAdcsmagDotDmpFlg downAdcspitFltComFlg downAdcsattStaFlg
             public UInt16 downAdcscntDmp;               //2
             public UInt16 downAdcscntPitcom;            //2
             public UInt16 downAdcscntAttSta;            //2
+            public byte error;                          //1
+
+
+            public UInt16 sw_status;                    //2
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //6
+            public Int16[] downAdcsMagnetometer;    //double to int16_t  原始值个位不要 除以10取整
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //6
+            public Int16[] downAdcsGyro_Meas;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]    //8
+            public UInt16[] downAdcsSun1_Meas;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]    //8
+            public UInt16[] downAdcsSun2_Meas;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]    //8
+            public UInt16[] downAdcsSun3_Meas;
+            public byte downAdcsSunSensorFlag;                      //1
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //12
+            public float[] downAdcsSun_Meas;
+            public UInt16 downAdcsWheelSpeed_Meas;//取整          //2             
+            
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]     //6
+            public Int16[] downAdcsMTQOut;          // *1000
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //6
+            public Int16[] downAdcsMagInO;          //double to int16_t  原始值个位不要 除以10取整
 
             public Int16 downAdcsPitAngle;              //2
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]    //4
             public Int16[] downAdcsPitFltState;
             public float downAdcsPitFltNormP;                       //4
 
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //6
-            public Int16[] downAdcsMagnetometer;    //double to int16_t  原始值个位不要 除以10取整
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //6
-            public Int16[] downAdcsMagInO;          //double to int16_t  原始值个位不要 除以10取整
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //12
+            public float[] downAdcsTwoVector_euler;
 
-            public UInt16 downAdcsWheelSpeed_Meas;   //取整          //2
+            public UInt16 downAdcsTwoVectorCnt;                      //2
+            public UInt16 downAdcsMagSunFltCnt;                      //2
+            public UInt16 downAdcsMagGyroFltCnt;                      //2
 
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]     //6
-            public Int16[] downAdcsMTQOut;          // *1000
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]    //16
+            public float[] downAdcsMagSunFltQ;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //12
+            public float[] downAdcsMagSunFltW;
+            public float downAdcsMagSunFltNormP;                       //4
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]    //16
+            public float[] downAdcsMagGyroFltQ;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //12
+            public float[] downAdcsMagGyroFltW;
+            public float downAdcsMagGyroFltNormP;                       //4
+
+
 
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]    //12
             public float[] downAdcsOrbPos;            // 位置downAdcsOrb[0-2]  速度downAdcsOrb[3-5]
@@ -264,7 +305,7 @@ namespace CubeCOM
 
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]   //20
             public Int16[] adc;
-            public byte error;                                      //1
+
 
         }
 
