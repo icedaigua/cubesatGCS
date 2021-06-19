@@ -1,0 +1,464 @@
+﻿<Page x:Class="TSFCS.DMDS.Client.View.TtcView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	  Title="TtcView">
+    <Page.DataContext>
+        <Binding Path="Ttc" Source="{StaticResource Locator}"/>
+    </Page.DataContext>
+    <Grid>
+        <metro:MetroTabControl Style="{DynamicResource TabControlWithUnderLineStyle}">
+            <metro:MetroTabItem Header="电源" Style="{DynamicResource TabItemWithUnderLineStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <!--<TextBlock Text="PCM:A通道"/>-->
+                                <TextBlock Text="{Binding Pcm}"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="+14V母线电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Content="+12V供电电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Content="-12V供电电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Content="+5V供电电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineVolt14}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineVolt12P}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineVolt12N}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineVolt5}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <Label Grid.Column="2" Content="+14V母线电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Grid.Column="2" Content="+12V供电电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Grid.Column="2" Content="-12V供电电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Grid.Column="2" Content="+5V供电电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineCurr14}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineCurr12P}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineCurr12N}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding LineCurr5}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <Label Grid.Column="4" Content="OBC电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Grid.Column="4" Content="PCM电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Grid.Column="4" Content="TX电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Grid.Column="4" Content="BD2电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding SubCurrObc}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding SubCurrPcm}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding SubCurrTx}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding SubVoltBd2}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <!--<TextBlock Text="BCR:B通道"/>-->
+                                <TextBlock Text="{Binding Bcr}"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="+X帆板电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Content="-X帆板电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Content="+Y帆板电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Content="-Y帆板电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelCurrXP}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelCurrXN}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelCurrYP}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelCurrYN}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <Label Grid.Column="2" Content="+X帆板温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Grid.Column="2" Content="-X帆板温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Grid.Column="2" Content="+Y帆板温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Grid.Column="2" Content="-Y帆板温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelTempXP}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelTempXN}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelTempYP}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelTempYN}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <Label Grid.Column="4" Content="帆板电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Grid.Column="4" Content="电池电压:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Grid.Column="4" Content="电池电流:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Grid.Column="4" Content="电池温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding PanelVolt}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding BatteryVolt}"/>
+                                    <Label Content="V" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding BatteryCurr}"/>
+                                    <Label Content="mA" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="5" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding BatteryTemp}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </metro:MetroTabItem>
+            <metro:MetroTabItem Header="温度" Style="{DynamicResource TabItemWithUnderLineStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <TextBlock Text="RF"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="RF温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="1" Content="RX AGC电平:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="2" Content="RX AFC电平:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <Label Grid.Row="3" Content="TX 功放输出:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding TempRf}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding RxAgc}"/>
+                                    <Label Content="dBm" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding RxAfc}"/>
+                                    <Label Content="MHz" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding TxPower}"/>
+                                    <Label Content="mW" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <TextBlock Text="OBC"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="OBC工作温度:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBox HorizontalAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding TempObc}"/>
+                                    <Label Content="℃" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </metro:MetroTabItem>
+            <metro:MetroTabItem Header="状态量" Style="{DynamicResource TabItemWithUnderLineStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,1,0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <TextBlock Text="指令状态第1路"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="8*"/>
+                                </Grid.RowDefinitions>
+                                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding Status0}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="遥测系统复位信号:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="1" Content="TLM1遥测串口选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="2" Content="TLM0遥测串口选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="3" Content="遥测地址选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="4" Content="译码器输入选择字3:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="5" Content="译码器输入选择字2:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="6" Content="译码器输入选择字1:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="7" Content="基本/普通模式切换:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <TextBox Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status07}"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status06}"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status05}"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status04}"/>
+                                    <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status03}"/>
+                                    <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status02}"/>
+                                    <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status01}"/>
+                                    <TextBox Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status00}"/>
+                                </Grid>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <TextBlock Text="指令状态第2路"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="8*"/>
+                                </Grid.RowDefinitions>
+                                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding Status1}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="GPS电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="1" Content="OBC电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="2" Content="动量轮电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="3" Content="TX电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="4" Content="OBC通道选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <TextBox Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status14}"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status13}"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status12}"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status11}"/>
+                                    <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status10}"/>
+                                </Grid>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <TextBlock Text="指令状态第3路"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="8*"/>
+                                </Grid.RowDefinitions>
+                                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding Status2}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="星敏电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="1" Content="ADCS电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="2" Content="BCR1/BCR2选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="3" Content="MEMS陀螺电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="4" Content="星间RF电源开关:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="5" Content="PCM切换命令:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <TextBox Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status25}"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status24}"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status23}"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status22}"/>
+                                    <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status21}"/>
+                                    <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status20}"/>
+                                </Grid>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                                <TextBlock Text="指令状态第4路"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="8*"/>
+                                </Grid.RowDefinitions>
+                                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding Status3}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="OBC测出命令选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="1" Content="TX异步/同步:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="2" Content="TX输入通道选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="3" Content="双引导选择:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Row="4" Content="OBC复位信号:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                                    <TextBox Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status34}"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status33}"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status32}"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status31}"/>
+                                    <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Status30}"/>
+                                </Grid>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </metro:MetroTabItem>
+            <metro:MetroTabItem Header="数字量" Style="{DynamicResource TabItemWithUnderLineStyle}">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Margin="10,5,0,0">
+                        <TextBlock Text="数字量"/>
+                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="60" Height="20" IsReadOnly="True" Text="{Binding Digit}"/>
+                        <Label Grid.Row="1" Content="RX锁定指示:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        <Label Grid.Row="2" Content="TX锁定指示:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        <Label Grid.Row="3" Content="星星分离状态:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        <Label Grid.Row="4" Content="PCM状态:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        <Label Grid.Row="5" Content="BCR状态:" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Digit4}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Digit3}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Digit2}"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Digit1}"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="30" Height="20" IsReadOnly="True" Text="{Binding Digit0}"/>
+                    </Grid>
+                </DockPanel>
+            </metro:MetroTabItem>
+        </metro:MetroTabControl>
+    </Grid>
+</Page>

@@ -1,0 +1,99 @@
+﻿<Window xmlns:Pages="clr-namespace:Pages;assembly=Pages"  
+         xmlns:iNet="clr-namespace:iNet;assembly=iNet" 
+         xmlns:satCompent="clr-namespace:satCompent;assembly=satCompent" 
+        x:Class="satClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:local="clr-namespace:satClient"
+        mc:Ignorable="d"
+		Title="地面站客户端" FontSize="20"
+		WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+
+        <Grid Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Menu Grid.Row="0"  Margin="0,0,0,2" Height="35" FontSize="20"
+			Background="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Grid.ColumnSpan="3">
+
+                <MenuItem Header="工作模式" Margin="3">
+                    <MenuItem Header="实时模式" />
+                    <MenuItem Header="复现模式" Click="FileMode_Click"></MenuItem>
+                    <Separator/>
+                    <MenuItem Header="退出" />
+                </MenuItem>
+
+                <MenuItem Header="关于" VerticalAlignment="Center"/>
+
+            </Menu>
+
+            <TabControl Grid.Row="1" Margin="2"
+					x:Name="Mainctrl" HorizontalAlignment="Left" >
+           
+
+                <TabItem Header="上行注入">
+                   
+                </TabItem>
+
+            <TabItem Header="遥测信息">
+                <Pages:hkInfo Name="hk_view"></Pages:hkInfo>
+            </TabItem>
+
+            <TabItem Header="数据显示">
+
+                <satCompent:MainView></satCompent:MainView>
+            </TabItem>
+
+            <TabItem Header="南理工测控站">
+                <Grid>
+ 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <iNet:iNetJLG Name="iNet_local_frm"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+
+                        <iNet:iNetClient Name="iClientTCP_frm"></iNet:iNetClient>
+                    </Grid>
+
+
+                </Grid>
+
+                </TabItem>
+
+            <TabItem Header="TEST">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <iNet:iNetClient Name="iClientUDP_frm"></iNet:iNetClient>
+                </Grid>
+
+                <Grid Grid.Row="1">
+
+                    
+                </Grid>
+                </Grid>
+            </TabItem>
+       
+            </TabControl>
+
+
+        </Grid>
+ 
+</Window>

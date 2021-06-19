@@ -1,0 +1,50 @@
+﻿<Page x:Class="TSFCS.DMDS.Client.View.CodeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	  Title="CodeView">
+    <Page.DataContext>
+        <Binding Path="Code" Source="{StaticResource Locator}"/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Margin="0,10,0,10" Width="90" Style="{DynamicResource ListBoxStyle}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}">
+            <ListBoxItem Height="75"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="0"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="1"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="2"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="3"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="4"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="5"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="6"/>
+            <ListBoxItem Height="75" FontWeight="Bold" FontSize="16" Content="7"/>
+        </ListBox>
+        <DataGrid Grid.Column="1" Margin="0,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" RowHeaderWidth="0" IsReadOnly="True"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="True" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Code}" Style="{DynamicResource DataGridStyle}">
+            <DataGrid.ColumnHeaderHeight>75</DataGrid.ColumnHeaderHeight>
+            <DataGrid.RowHeight>75</DataGrid.RowHeight>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="0" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex0}"/>
+                <DataGridTextColumn Header="1" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex1}"/>
+                <DataGridTextColumn Header="2" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex2}"/>
+                <DataGridTextColumn Header="3" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex3}"/>
+                <DataGridTextColumn Header="4" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex4}"/>
+                <DataGridTextColumn Header="5" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex5}"/>
+                <DataGridTextColumn Header="6" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex6}"/>
+                <DataGridTextColumn Header="7" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex7}"/>
+                <DataGridTextColumn Header="8" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex8}"/>
+                <DataGridTextColumn Header="9" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex9}"/>
+                <DataGridTextColumn Header="10" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex10}"/>
+                <DataGridTextColumn Header="11" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex11}"/>
+                <DataGridTextColumn Header="12" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex12}"/>
+                <DataGridTextColumn Header="13" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Hex13}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

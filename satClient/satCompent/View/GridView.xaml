@@ -1,0 +1,43 @@
+﻿<Page x:Class="TSFCS.DMDS.Client.View.GridView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:light="http://www.galasoft.ch/mvvmlight"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	  Title="GridView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock VerticalAlignment="Center" TextBlock.FontWeight="Bold" TextBlock.FontSize="16" Text="遥测参数"/>
+                <ComboBox VerticalAlignment="Center" Margin="20,0,0,0" Width="150" Height="25" IsEditable="True" ItemsSource="{Binding Results}" SelectedItem="{Binding Result}" SelectedValuePath="No" DisplayMemberPath="Name"/>
+            </StackPanel>
+            <DockPanel Grid.Column="1" LastChildFill="False" Margin="10">
+                <Button DockPanel.Dock="Left" Content="添加" FontSize="16" Width="100" Height="32" VerticalAlignment="Center" Command="{Binding AddCommand}"/>
+                <Button DockPanel.Dock="Right" Content="删除" FontSize="16" Width="100" Height="32" VerticalAlignment="Center" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem, ElementName=cal}"/>
+            </DockPanel>
+        </Grid>
+        <DataGrid x:Name="cal" Grid.Row="1" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" RowHeaderWidth="0" IsReadOnly="True"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="True" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Cal}" Style="{DynamicResource DataGridStyle}">
+            <DataGrid.ColumnHeaderHeight>50</DataGrid.ColumnHeaderHeight>
+            <DataGrid.RowHeight>50</DataGrid.RowHeight>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="序号" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding No}"/>
+                <DataGridTextColumn Header="名称" Width="3*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="值" Width="2*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Val}"/>
+                <DataGridTextColumn Header="单位" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Unit}"/>
+                <DataGridTextColumn Header="超限" Width="1*" CanUserSort="False" TextBlock.FontSize="16" Binding="{Binding Exceed}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

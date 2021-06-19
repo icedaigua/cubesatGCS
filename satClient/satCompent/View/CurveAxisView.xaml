@@ -1,0 +1,69 @@
+﻿<metro:MetroWindow x:Class="TSFCS.DMDS.Client.View.CurveAxisView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:light="http://www.galasoft.ch/mvvmlight"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="坐标设置" Height="320" Width="480"
+        WindowStartupLocation="CenterScreen"  
+        WindowTransitionsEnabled="False" 
+        ShowMinButton="False" 
+        ShowMaxRestoreButton="False"
+        ShowInTaskbar="False">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <light:EventToCommand Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="10,0,10,0" Width="100" Text="Title(X轴):"/>
+                <TextBox VerticalAlignment="Center" Width="80" Text="{Binding XTitle}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="10,0,10,0" Width="100" Text="Format(X轴):"/>
+                <TextBox VerticalAlignment="Center" Width="80" Text="{Binding XStringFormat}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="10,0,10,0" Width="100" Text="Title(Y轴):"/>
+                <TextBox VerticalAlignment="Center" Width="80" Text="{Binding YTitle}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="10,0,10,0" Width="100" Text="MajorStep(Y轴):"/>
+                <TextBox VerticalAlignment="Center" Width="80" Text="{Binding YMajorStep}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="10,0,10,0" Width="100" Text="Minimum(Y轴):"/>
+                <TextBox VerticalAlignment="Center" Width="80" Text="{Binding YMinimum}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="10,0,10,0" Width="100" Text="Maximum(Y轴):"/>
+                <TextBox VerticalAlignment="Center" Width="80" Text="{Binding YMaximum}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Content="确定" Width="60" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding OkCommand}"/>
+            <Button Grid.Column="2" Content="取消" Width="60" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding CancelCommand}"/>
+        </Grid>
+    </Grid>
+</metro:MetroWindow>
