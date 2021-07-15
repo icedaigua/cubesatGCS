@@ -50,6 +50,12 @@
     <Compile Include="hkInfo.xaml.cs">
       <DependentUpon>hkInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="iNetClient.xaml.cs">
+      <DependentUpon>iNetClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="iNetJLG.xaml.cs">
+      <DependentUpon>iNetJLG.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +66,14 @@
     <Page Include="hkInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="iNetClient.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="iNetJLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

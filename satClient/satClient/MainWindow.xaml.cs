@@ -1,12 +1,18 @@
-﻿using DataIO;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UniHelper;
+using System.Text.RegularExpressions;
+using System.Net;
+
+using GalaSoft.MvvmLight.Messaging;
+using System.Text;
+
+using Dongzr.MidiLite;
+using DataIO;
 
 namespace satClient
 {
@@ -15,36 +21,35 @@ namespace satClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+        #region 参数
+        iNet.TCPClient satTcpClient;  //连接调制解调器服务器端的TCPclient
+        private BlockingQueue<byte[]> RecvQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
+        private ExcelHelper excelApp = new ExcelHelper();
+        //private string appCurrPath = Directory.GetCurrentDirectory() ;  //当前程序运行路径
+        private string appCurrPath;
+        private string satName = "田园一号";
+        #endregion
 
-        #region 初始化
+
         public MainWindow()
         {
             InitializeComponent();
-
             LoggingInitz();
             UI_Initz();
-
-            localClient_frm_init();     //本地网络设置初始化
-            iNetClientInitz();
-
-
-            hkView_Initz();
-            myTimer_Initz();
+            Messenger.Default.Register<string>(this, "MainNet", HandleMainNet);
+            //hkView_Initz();
+            createIOFolder();
+           // satTimerInitz();
         }
 
-        /// <summary>
-        /// 主窗口关闭
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        #region Window相关
         private void Window_Closed(object sender, EventArgs e)
         {
-            localClient_Close();
-            iNetClient_frm_close(sender,null);
-
-            myTimer_close();
-
-
+            //localClient_Close();
+            // iNetClient_frm_close(sender,null);
+            excelApp.closeExcel();
+            satTimerClose();
         }
 
         /// <summary>
@@ -53,38 +58,144 @@ namespace satClient
         private void LoggingInitz()
         {
             Trace.Listeners.Clear();  //清除系统监听器 (就是输出到Console的那个)
-
             Trace.Listeners.Add(new Logging.Logging(Directory.GetCurrentDirectory() + "\\Logging\\"));
         }
 
         private void UI_Initz()
         {
-
             double workHeight = SystemParameters.WorkArea.Height;
             double workWidth = SystemParameters.WorkArea.Width;
 
             this.Width = workWidth;
             this.Height = workHeight;
-
         }
 
-        #endregion
-
-        #region 按键响应
-        private void FileMode_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 创建保存数据文件
+        /// </summary>
+        public void createIOFolder()
         {
+            appCurrPath = Directory.GetCurrentDirectory()+ "\\遥测数据存储\\"+satName;
+            if (!System.IO.Directory.Exists(appCurrPath))
+            {
+                Directory.CreateDirectory(appCurrPath);//不存在就创建目录
+            }
+        }
 
+        #endregion
+
+        #region MVVM Method
+
+        public void HandleMainNet(string msg)
+        {
+            string[] info = msg.Split(',');
+            switch(info[0])
+            {
+                case "Open":
+                    //Messenger.Default.Send<string>(info[1] + info[2], "INET");
+                    tcpConnect(info);
+                    break;
+                case "Close":
+                    satTcpClient.Dispose();
+                    break;
+                case "Send":
+                    tcpSendData(info[1]);
+                    break;
+                default:
+                    break;
+            }
+            
         }
 
 
+        private void tcpSendData(string msg)
+        {
+            try
+            {
+                //byte[] bytes = Encoding.ASCII.GetBytes(msg);
+                satTcpClient.SendAsync(Encoding.ASCII.GetBytes(msg));
+            }
+            catch (Exception ex)
+            {
+                Messenger.Default.Send<string>("网络连接启动错误:" + ex.Message, "INET");
+                Trace.WriteLine("网络连接启动错误:" + ex.Message);
+                satTcpClient.Dispose();
+                return;
+            }
+        }
+        private void tcpConnect(string[] msg)
+        {
+            IPEndPoint endPoint;
+            //ip地址
+            try
+            {
+                string iNet_IP = msg[1];
+                string iNet_NO = msg[2];
+                string PATTERN_IP = "(\\d*\\.){3}\\d*";
+                IPHostEntry ipHost;
+                IPAddress ip;
+            
+                Match match = Regex.Match(iNet_IP, PATTERN_IP); //判断是否IP地址
+                if (match.Value == "")
+                {
+                    ipHost = Dns.GetHostEntry(iNet_IP);
+                    //端口号
+                    endPoint = new IPEndPoint(ipHost.AddressList[0], int.Parse(iNet_NO)); 
+                }
+                else
+                {
+                    //IP地址
+                    ip = IPAddress.Parse(iNet_IP);
+                    //端口号
+                    endPoint = new IPEndPoint(ip, int.Parse(iNet_NO));
+                }
 
+                satTcpClient = new iNet.TCPClient();
+                satTcpClient.Connect(endPoint);
+
+                if(satTcpClient.IsConnected)
+                {
+                    Messenger.Default.Send<string>("网络连接成功","INET");
+                }
+                else
+                {
+                    Messenger.Default.Send<string>("网络连接失败，服务器不存在", "INET");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Messenger.Default.Send<string>("网络连接启动错误:" + ex.Message, "INET");
+                Trace.WriteLine("网络连接启动错误:" + ex.Message);
+                return;
+            }     
+            satTcpClient.ReceiveCompleted += SatTcpClient_ReceiveCompleted;
+
+        }
+
+        private void SatTcpClient_ReceiveCompleted(object sender, iNet.SocketEventArgs e)
+        {
+            localRecvQueue.Enqueue(e.Data);
+            StringBuilder builder = new StringBuilder(); //格式化接收
+            foreach (byte b in e.Data)
+            {
+                builder.Append(b.ToString() + " ");
+            }
+            builder.Append('\n');
+            //string asciiString = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+            Messenger.Default.Send<string>(builder.ToString(), "INET");
+            //satTcpClient.SendAsync(e.Data);
+
+        }
         #endregion
+
+
 
         #region 本地Socket Client功能函数
 
         #region 参数
 
-        private IOFuctions localClientIO = new IOFuctions();
+        //private IOFuctions localClientIO = new IOFuctions();
 
         private bool localIsRunning = false;
 
@@ -96,13 +207,13 @@ namespace satClient
 
         private void localClient_frm_init()
         {
-            iNet_local_frm.OpenHandler += new iNet.iNetJLG.OpenClickEventHandler(localClient_create);
+            iNet_local_frm.OpenHandler += new Pages.iNetClient.OpenClickEventHandler(localClient_create);
             iNet_local_frm.socketDataArrival = localTaskRecv;
 
 
             iNet_local_frm.setTextWidth(this.Width);
 
-            iNet_local_frm.iNetInitz("本地网络设置", "192.168.1.58", "18001", "9001");
+            iNet_local_frm.iNetInitz("本地网络设置", "192.168.1.114", "9889");
 
         }
         /// <summary>
@@ -113,7 +224,7 @@ namespace satClient
 
             localIsRunning = true;
 
-            localClientIO.CreateFrameFile();
+            //localClientIO.CreateFrameFile();
 
 
             Task.Factory.StartNew(localTaskProc);  //启动处理任务     
@@ -126,7 +237,7 @@ namespace satClient
         {
             localIsRunning = false;
 
-            localClientIO.CloseFile();
+            //localClientIO.CloseFile();
 
         }
 
@@ -145,7 +256,7 @@ namespace satClient
                     localRecvQueue.Enqueue(recBuf);  //遥测接收数据入队
 
                     iNet_local_frm.ShowMsg(recBuf);
-                    localClientIO.WriteFrameFile(recBuf);
+                    //localClientIO.WriteFrameFile(recBuf);
                 }
 
             }
@@ -207,17 +318,16 @@ namespace satClient
 
         private bool remoteIsRunning = false;
 
-        private BlockingQueue<byte[]> remoteRecvQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
         private BlockingQueue<byte[]> remoteSendQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
         private AutoResetEvent remoteWaitHandler = new AutoResetEvent(false);  //事件信号，线程同步：处理线程通知发送线程；发送线程处于阻塞状态；默认非终止，阻塞状态
 
         private void iNetClientInitz()
         {
-            iClientUDP_frm.iNetInitz("本地网络设置", "192.168.1.100", "2012");
-            iClientUDP_frm.setTextWidth(this.Width);
+            //iClientUDP_frm.iNetInitz("本地网络设置", "192.168.1.100", "2012");
+            //iClientUDP_frm.setTextWidth(this.Width);
 
-            iClientTCP_frm.setTextWidth(this.Width);
-            iClientTCP_frm.iNetInitz("远程网络设置", "3s.dkys.org", "10293");
+            //iClientTCP_frm.setTextWidth(this.Width);
+            //iClientTCP_frm.iNetInitz("远程网络设置", "3s.dkys.org", "10293");
 
             iNetClient_frm_init();
         }
@@ -226,14 +336,14 @@ namespace satClient
 
         private void iNetClient_frm_init()
         {
-            iClientTCP_frm.OpenHandler += new iNet.iNetClient.OpenClickEventHandler(iNetClient_frm_create);
-            iClientTCP_frm.CloseHandler += new iNet.iNetClient.CloseClickEventHandler(iNetClient_frm_close);
+            //iClientTCP_frm.OpenHandler += new Pages.iNetClient.OpenClickEventHandler(iNetClient_frm_create);
+            //iClientTCP_frm.CloseHandler += new Pages.iNetClient.CloseClickEventHandler(iNetClient_frm_close);
             //iClientTCP_frm.SendHandler += new iNet.iNetSimple.SendClickEventHandler(remoteSendMsgClick);
 
             //iClientTCP_frm.socketDataArrival +=iNetClientTaskRecv;
 
             //iClientUDP_frm..OpenHandler += new iNet.iNetClient.OpenClickEventHandler(iNetClient_frm_create);
-            iClientUDP_frm.socketDataArrival = iNetClientTaskRecv;
+            //iClientUDP_frm.socketDataArrival = iNetClientTaskRecv;
         }
 
         private void iNetClient_frm_close(object sender, RoutedEventArgs e)
@@ -247,11 +357,11 @@ namespace satClient
             remoteIsRunning = true;
 
             Task.Factory.StartNew(iNetClientTaskProc);  //启动处理任务     
-            iClientTCP_frm.ShowMsg("数据处理任务启动成功");
+            //iClientTCP_frm.ShowMsg("数据处理任务启动成功");
             Trace.WriteLine("数据处理任务启动成功");
 
             Task.Factory.StartNew(iNetClientTaskSend);  //启动发送任务
-            iClientTCP_frm.ShowMsg("数据发送任务启动成功");
+           // iClientTCP_frm.ShowMsg("数据发送任务启动成功");
             Trace.WriteLine("数据发送任务启动成功");
 
 
@@ -268,14 +378,14 @@ namespace satClient
                 {
                     byte[] recBuf = new byte[iRecv];  //遥测接收缓冲区
                     Array.Copy(buffer, recBuf, iRecv);  //从非托管内存拷贝到托管内存
-                    remoteRecvQueue.Enqueue(recBuf);  //遥测接收数据入队
-                    iClientTCP_frm.ShowMsg("rec num is " + Encoding.ASCII.GetString(recBuf));
+    //                remoteRecvQueue.Enqueue(recBuf);  //遥测接收数据入队
+                    //iClientTCP_frm.ShowMsg("rec num is " + Encoding.ASCII.GetString(recBuf));
                 }
 
             }
             catch (Exception ex)
             {
-                iClientTCP_frm.ShowMsg("数据接收失败：" + ex.Message);
+                //iClientTCP_frm.ShowMsg("数据接收失败：" + ex.Message);
                 Trace.WriteLine("数据接收失败：" + ex.Message);
             }
 
@@ -288,21 +398,21 @@ namespace satClient
         {
             while (remoteIsRunning)
             {
-                if (!remoteRecvQueue.IsEmpty())  //遥测接收数据队列中存在待处理的数据
-                {
-                    byte[] data = remoteRecvQueue.Dequeue();  //取出遥测接收数据队列中的数据
-                    if (data != null)  //使用BlockingQueue可以不用判定，即此部可省略
-                    {
+                //if (!remoteRecvQueue.IsEmpty())  //遥测接收数据队列中存在待处理的数据
+                //{
+                //    byte[] data = remoteRecvQueue.Dequeue();  //取出遥测接收数据队列中的数据
+                //    if (data != null)  //使用BlockingQueue可以不用判定，即此部可省略
+                //    {
 
-                        //DataProc(data);  //数据解析处理
+                //        //DataProc(data);  //数据解析处理
 
-                        remoteWaitHandler.Set();  //将事件状态设为终止状态，允许等待线程继续执行
-                    }
-                }
-                else
-                {
-                    Thread.Sleep(10);  //休息10ms
-                }
+                //        remoteWaitHandler.Set();  //将事件状态设为终止状态，允许等待线程继续执行
+                //    }
+                //}
+                //else
+                //{
+                //    Thread.Sleep(10);  //休息10ms
+                //}
             }
         }
 
@@ -323,13 +433,13 @@ namespace satClient
                         if (data != null)  //使用BlockingQueue可以不用判定，即此部可省略
                         {
                             //remoteSendMsg(data);
-                            if (!iClientTCP_frm.SendMsg(data))  //发送失败，将数据重新放入发送队列中
-                                localSendQueue.Enqueue(data);
+                            //if (!iClientTCP_frm.SendMsg(data))  //发送失败，将数据重新放入发送队列中
+                            //    localSendQueue.Enqueue(data);
                         }
                     }
                     else
                     {
-                        iClientTCP_frm.SendMsg(iClientTCP_frm.testbuf3);
+                        //iClientTCP_frm.SendMsg(iClientTCP_frm.testbuf3);
                     }
 
                     Thread.Sleep(1000);  //休息10ms
@@ -337,7 +447,7 @@ namespace satClient
             }
             catch (Exception ex)
             {
-                iClientTCP_frm.ShowMsg("数据发送失败：" + ex.Message);
+                //iClientTCP_frm.ShowMsg("数据发送失败：" + ex.Message);
             }
         }
 
@@ -350,18 +460,12 @@ namespace satClient
         }
 
 
-        #region hk_view
-
-        #endregion
-
         #region Timer
-
-
         private byte[] testbuf3 = new byte[184]
-{
+        {
             0x42, 0x01, 0xE1,
             0x05, 0x05, 0x18, 0x00,
-    0x01 , 0x00 , 0x00 , 0x00, 0xC4 , 0x00 , 0x10 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xD9 , 0x84 , 0x55 , 0x7C , 0xF1 ,
+            0x01 , 0x00 , 0x00 , 0x00, 0xC4 , 0x00 , 0x10 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xD9 , 0x84 , 0x55 , 0x7C , 0xF1 ,
             0x11 , 0x00 , 0x00 , 0x60 , 0x01 , 0x04 , 0x00 , 0x10 , 0x10 , 0x1C , 0x00 , 0x1D , 0x00,
             0x23, 0x00, 0x21, 0x00, 0x22, 0x00, 0x22, 0x00 , 0x00 , 0x00 , 0x00, 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xC5 , 0x09 , 0xCC , 0x09 , 0xC8 , 0x09 , 0x45 , 0x01 , 0xD0 , 0x09 , 0xC5 ,
             0x09 , 0xFD , 0x01 , 0xB2 , 0x1C , 0x50 , 0x01 , 0x02 , 0x00 , 0x01 , 0x00 , 0x02 , 0x00,
@@ -370,38 +474,87 @@ namespace satClient
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00 , 0x00 , 0x00, 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xB8 , 0x06 , 0x00 , 0x00 , 0x00 , 0x80 , 0x02 , 0xE0 , 0x61 , 0x00 ,
             0xC2 , 0x00 , 0xC0 , 0x49 , 0x02 , 0x00 , 0x0C , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+        };
 
 
-        private System.Timers.Timer myTimer = new System.Timers.Timer();
-        private void myTimer_Initz()
+        private System.Timers.Timer satTimer = new System.Timers.Timer();
+        uint cnt = 0;
+        private void satTimerInitz()
         {
             //设置Timer，开始执行 
-            myTimer.Interval = 1000;  //周期 毫秒
+            satTimer.Interval = 100;  //周期 毫秒
 
-            myTimer.Elapsed += new System.Timers.ElapsedEventHandler(myTimer_Elapsed);
+            satTimer.Elapsed += new System.Timers.ElapsedEventHandler(satTimer_Elapsed);
 
-            myTimer.Enabled = true;
+            satTimer.Enabled = true;
         }
-        private void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void satTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
 
-            new Thread(() =>
-            {
-                this.Dispatcher.Invoke(new Action(() =>
-                {
-                    hk_view.hkInfo_AddNewView(testbuf3);
-                }));
-            }).Start();
-            //Thread.Sleep(3000);
-           
+            //Messenger.Default.Send<string>(cnt++.ToString(), "INET");
+            if (localRecvQueue.IsEmpty()) return;
+
+            localRecvQueue.Dequeue();
 
         }
 
-        private void myTimer_close()
+        private void satTimerClose()
         {
-            myTimer.Enabled = false;
+            satTimer.Enabled = false;
         }
         #endregion
+        
+        
+        private void btn_test_Click(object sender, RoutedEventArgs e)
+        {
+            //excelApp.closeExcel();
+            excelApp.openExcel(appCurrPath);
+
+
+        }
+
+        private void btn_test2_Click(object sender, RoutedEventArgs e)
+        {
+            //excelApp.closeExcel();
+            excelApp.closeExcel();
+
+
+        }
+
+        //string local_time_now;//本机时间
+        //MmTimer satTimer = new MmTimer();
+
+
+        //private UInt32 down_auto_cnt = 0;
+
+        //private void satTimerInitz()
+        //{
+        //    satTimer.Interval = 100;
+        //    satTimer.Mode = MmTimerMode.Periodic;
+        //    satTimer.Tick += new EventHandler(satTimerHandler);
+        //    satTimer.Start();
+        //}
+
+        //private void satTimerHandler(object sender, EventArgs e)
+        //{
+        //    local_time_now = DateTime.Now.ToString("yyyy年MM月dd日") +
+        //           DateTime.Now.ToLongTimeString().ToString();
+
+        //    down_auto_cnt += 1;
+        //    Messenger.Default.Send<string>(down_auto_cnt.ToString(), "INET");
+        //    //new Thread(() => {
+        //    //    this.Dispatcher.Invoke(new Action(() => {
+        //    //        tBk_local_time.Text = local_time_now;
+        //    //    }));
+        //    //}).Start();
+        //}
+        //private void satTimerClose()
+        //{
+        //    satTimer.Stop();
+        //    satTimer.Dispose();
+        //}
+        //#endregion
+
+
     }
 }

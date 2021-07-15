@@ -10,7 +10,7 @@ using System.Windows.Controls;
 //using UniHelper;
 
 
-namespace iNet
+namespace Pages
 {
     /// <summary>
     /// iNetClient.xaml 的交互逻辑
@@ -93,7 +93,7 @@ namespace iNet
         }
 
 
-        public void iNetInitz(string header = "网络设置", string ip = "192.168.1.1", string port = "8001")
+        public void iNetInitz(string header = "网络设置", string ip = "192.168.1.114", string port = "9889")
         {
             gB_iNet.Header = header;
             tB_IP.Text = ip;

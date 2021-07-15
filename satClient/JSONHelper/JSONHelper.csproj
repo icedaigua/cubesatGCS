@@ -68,7 +68,6 @@
     <Compile Include="ipyProc.cs" />
     <Compile Include="JsonProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIJson.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

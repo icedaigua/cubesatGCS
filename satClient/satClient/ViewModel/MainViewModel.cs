@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight;
 
-namespace satCompent.ViewModel
+namespace satClient.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

@@ -7,7 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace iNet
+namespace Pages
 {
     /// <summary>
     /// iNetJLG.xaml 的交互逻辑
