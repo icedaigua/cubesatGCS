@@ -7,9 +7,6 @@ namespace Logging
 {
     public class Logging: TraceListener
     {
-
-        //private string logFileName = Directory.GetCurrentDirectory();
-
         public string logFileName { get; private set; }
 
         public Logging(string Path)
@@ -27,7 +24,11 @@ namespace Logging
 
         public override void WriteLine(string message)
         {
-            File.AppendAllText(logFileName + "--operator.log" , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ") + message + Environment.NewLine);
+            StackTrace st = new StackTrace(new StackFrame(true));        
+            StackFrame sf = st.GetFrame(0);
+            File.AppendAllText(logFileName + "--operator.log" , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ") 
+                + sf.GetFileName() +"\t" + sf.GetMethod().Name + "\t" + sf.GetFileLineNumber() + "\t"
+                + message + Environment.NewLine);
         }
 
 

@@ -1,18 +1,16 @@
-﻿using System;
+﻿using DataIO;
+using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UniHelper;
-using System.Text.RegularExpressions;
-using System.Net;
-
-using GalaSoft.MvvmLight.Messaging;
-using System.Text;
-
-using Dongzr.MidiLite;
-using DataIO;
 
 namespace satClient
 {
@@ -25,10 +23,12 @@ namespace satClient
         #region 参数
         iNet.TCPClient satTcpClient;  //连接调制解调器服务器端的TCPclient
         private BlockingQueue<byte[]> RecvQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
-        private ExcelHelper excelApp = new ExcelHelper();
-        //private string appCurrPath = Directory.GetCurrentDirectory() ;  //当前程序运行路径
+        private ExcelHelper excelApp;
         private string appCurrPath;
         private string satName = "田园一号";
+
+        Task t1;
+        private bool isCanRun = true;
         #endregion
 
 
@@ -40,7 +40,10 @@ namespace satClient
             Messenger.Default.Register<string>(this, "MainNet", HandleMainNet);
             //hkView_Initz();
             createIOFolder();
-           // satTimerInitz();
+            //satTimerInitz();
+
+            t1 = new Task(() => TaskProc());
+
         }
 
         #region Window相关
@@ -48,8 +51,9 @@ namespace satClient
         {
             //localClient_Close();
             // iNetClient_frm_close(sender,null);
-            excelApp.closeExcel();
-            satTimerClose();
+            //excelApp.closeExcel();
+            excelApp.Dispose();
+            
         }
 
         /// <summary>
@@ -80,6 +84,8 @@ namespace satClient
             {
                 Directory.CreateDirectory(appCurrPath);//不存在就创建目录
             }
+
+           excelApp = new ExcelHelper(appCurrPath);
         }
 
         #endregion
@@ -445,7 +451,7 @@ namespace satClient
                     Thread.Sleep(1000);  //休息10ms
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //iClientTCP_frm.ShowMsg("数据发送失败：" + ex.Message);
             }
@@ -454,11 +460,7 @@ namespace satClient
 
         #endregion
 
-        private void hkView_Initz()
-        {
-            hk_view.hkInfo_Initz();
-        }
-
+     
 
         #region Timer
         private byte[] testbuf3 = new byte[184]
@@ -477,83 +479,73 @@ namespace satClient
         };
 
 
-        private System.Timers.Timer satTimer = new System.Timers.Timer();
-        uint cnt = 0;
-        private void satTimerInitz()
+        /// <summary>
+        /// 执行处理任务，解析数据
+        /// </summary>
+        private void TaskProc()
         {
-            //设置Timer，开始执行 
-            satTimer.Interval = 100;  //周期 毫秒
-
-            satTimer.Elapsed += new System.Timers.ElapsedEventHandler(satTimer_Elapsed);
-
-            satTimer.Enabled = true;
+            while(isCanRun)
+            {
+                //if (localRecvQueue.IsEmpty()) return;
+                //localRecvQueue.Dequeue();
+                excelTest();
+            }
         }
-        private void satTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-
-            //Messenger.Default.Send<string>(cnt++.ToString(), "INET");
-            if (localRecvQueue.IsEmpty()) return;
-
-            localRecvQueue.Dequeue();
-
-        }
-
-        private void satTimerClose()
-        {
-            satTimer.Enabled = false;
-        }
+   
         #endregion
         
         
         private void btn_test_Click(object sender, RoutedEventArgs e)
         {
-            //excelApp.closeExcel();
-            excelApp.openExcel(appCurrPath);
-
-
+            t1.Start();
         }
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-            //excelApp.closeExcel();
-            excelApp.closeExcel();
-
-
+            DataTable dt = excelApp.ExcelToDataTable("姿控");
         }
 
-        //string local_time_now;//本机时间
-        //MmTimer satTimer = new MmTimer();
+        private void btn_test3_Click(object sender, RoutedEventArgs e)
+        {
+            //excelTest();
+            //t1.Wait();
+            isCanRun = false;
+        }
 
+        private void excelTest()
+        {
+            //创建一个表
+            System.Data.DataTable dt = new System.Data.DataTable("Product");
+            System.Data.DataColumn dc = null;
 
-        //private UInt32 down_auto_cnt = 0;
+            //添加列，赋值
+            dc = dt.Columns.Add("id", Type.GetType("System.Int32"));
+            dc.AutoIncrement = true;
+            dc.AutoIncrementSeed = 1;
+            dc.AutoIncrementStep = 1;
+            dc.AllowDBNull = false;
+            dt.Columns.Add("pname", Type.GetType("System.String"));
+            dt.Columns.Add("price", Type.GetType("System.Double"));
 
-        //private void satTimerInitz()
-        //{
-        //    satTimer.Interval = 100;
-        //    satTimer.Mode = MmTimerMode.Periodic;
-        //    satTimer.Tick += new EventHandler(satTimerHandler);
-        //    satTimer.Start();
-        //}
+            System.Data.DataRow dr = dt.NewRow();
+            dr["pname"] = "red apple";
+            dr["price"] = 9.9;
 
-        //private void satTimerHandler(object sender, EventArgs e)
-        //{
-        //    local_time_now = DateTime.Now.ToString("yyyy年MM月dd日") +
-        //           DateTime.Now.ToLongTimeString().ToString();
+            dt.Rows.Add(dr);
 
-        //    down_auto_cnt += 1;
-        //    Messenger.Default.Send<string>(down_auto_cnt.ToString(), "INET");
-        //    //new Thread(() => {
-        //    //    this.Dispatcher.Invoke(new Action(() => {
-        //    //        tBk_local_time.Text = local_time_now;
-        //    //    }));
-        //    //}).Start();
-        //}
-        //private void satTimerClose()
-        //{
-        //    satTimer.Stop();
-        //    satTimer.Dispose();
-        //}
-        //#endregion
+            dr = dt.NewRow();
+            dr["pname"] = "black apple";
+            dr["price"] = 19.9;  
+            dt.Rows.Add(dr);
+
+            dr = dt.NewRow();
+            dr["pname"] = "gold apple";
+            dr["price"] = 29.9;
+            dt.Rows.Add(dr);
+
+            excelApp.DataTableToExcel(dt, "姿控");
+        }
+
 
 
     }

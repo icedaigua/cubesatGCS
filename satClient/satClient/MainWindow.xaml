@@ -42,10 +42,12 @@
             <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Name="btn_test" Click="btn_test_Click">Test</Button>
                     <Button Grid.Row="1" Name="btn_test2" Click="btn_test2_Click" >Test2</Button>
+                    <Button Grid.Row="2" Name="btn_test3" Click="btn_test3_Click" >Test3</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="遥测信息">
