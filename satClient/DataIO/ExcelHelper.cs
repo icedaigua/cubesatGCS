@@ -14,7 +14,6 @@ namespace DataIO
         #region 参数
         private const int MaxRow = 1000000, MaxColumn = 1000;
         private string excelName;
-
         #endregion
 
         public ExcelHelper(string excelinfo)
@@ -43,36 +42,45 @@ namespace DataIO
                 createNewExcel();
             }
 
-            FileStream fs = new FileStream(excelName, FileMode.Open);
+            try
+            {
+
+                FileStream fs = new FileStream(excelName, FileMode.Open);
  
-            IWorkbook workbook = new XSSFWorkbook(fs);
-            ISheet sheet1 = workbook.GetSheet(sheetName);
+                IWorkbook workbook = new XSSFWorkbook(fs);
+                ISheet sheet1 = workbook.GetSheet(sheetName);
 
-            if (sheet1 == null)
-            {
-                throw new ArgumentException("写入的sheet不存在");
-            }
-
-            int num = sheet1.LastRowNum + 1;//获取最大行数
-            //写入数据
-            for (int row = 0; row < sourceData.Rows.Count; row++)
-            {
-                //sheet表创建新的一行
-                IRow newRow = sheet1.CreateRow(num + row);
-                for (int column = 0; column < sourceData.Columns.Count; column++)
+                if (sheet1 == null)
                 {
-
-                    newRow.CreateCell(column).SetCellValue(sourceData.Rows[row][column].ToString());
-
+                    throw new ArgumentException("写入的sheet不存在");
                 }
+
+                int num = sheet1.LastRowNum + 1;//获取最大行数
+                //写入数据
+                for (int row = 0; row < sourceData.Rows.Count; row++)
+                {
+                    //sheet表创建新的一行
+                    IRow newRow = sheet1.CreateRow(num + row);
+                    for (int column = 0; column < sourceData.Columns.Count; column++)
+                    {
+
+                        newRow.CreateCell(column).SetCellValue(sourceData.Rows[row][column].ToString());
+
+                    }
+                }
+
+                FileStream fout = new FileStream(excelName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);//写入流
+
+                workbook.Write(fout);
+                fs.Close();
+                fout.Close();
+                return sheet1.LastRowNum + 1;
             }
-
-            FileStream fout = new FileStream(excelName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);//写入流
-
-            workbook.Write(fout);
-            fs.Close();
-            fout.Close();
-            return sheet1.LastRowNum + 1;
+            catch(Exception ex)
+            {
+                Trace.WriteLine("写入excel错误:" + ex.Message);
+                return -1;
+            }
 
         }
 
@@ -125,12 +133,9 @@ namespace DataIO
             //获取不到，直接返回
             if (sheet == null) return null;
 
-
-
             //开始读取的行号
             int StartReadRow = 0;
             DataTable targetTable = new DataTable();
-
 
             //为DataTable添加列名 
             {
@@ -157,8 +162,6 @@ namespace DataIO
 
                 StartReadRow++;
             }
-
-
 
             ///开始读取sheet表中的数据
 

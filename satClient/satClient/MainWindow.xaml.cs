@@ -19,16 +19,18 @@ namespace satClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         #region 参数
         iNet.TCPClient satTcpClient;  //连接调制解调器服务器端的TCPclient
         private BlockingQueue<byte[]> RecvQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
-        private ExcelHelper excelApp;
-        private string appCurrPath;
+        private ExcelHelper excelApp;   //保存数据至excel
+        private string appCurrPath;     //当前运行路径
         private string satName = "田园一号";
 
-        Task t1;
-        private bool isCanRun = true;
+
+        private Task mainTask;
+        private CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private ManualResetEvent resetEvent = new ManualResetEvent(true); //用于Task暂停和恢复
         #endregion
 
 
@@ -41,17 +43,13 @@ namespace satClient
             //hkView_Initz();
             createIOFolder();
             //satTimerInitz();
-
-            t1 = new Task(() => TaskProc());
-
+            TaskInitz();
         }
 
         #region Window相关
         private void Window_Closed(object sender, EventArgs e)
         {
-            //localClient_Close();
-            // iNetClient_frm_close(sender,null);
-            //excelApp.closeExcel();
+
             excelApp.Dispose();
             
         }
@@ -80,11 +78,10 @@ namespace satClient
         public void createIOFolder()
         {
             appCurrPath = Directory.GetCurrentDirectory()+ "\\遥测数据存储\\"+satName;
-            if (!System.IO.Directory.Exists(appCurrPath))
+            if (!System.IO.Directory.Exists(appCurrPath))//不存在就创建目录
             {
-                Directory.CreateDirectory(appCurrPath);//不存在就创建目录
+                Directory.CreateDirectory(appCurrPath);
             }
-
            excelApp = new ExcelHelper(appCurrPath);
         }
 
@@ -460,11 +457,9 @@ namespace satClient
 
         #endregion
 
-     
 
-        #region Timer
         private byte[] testbuf3 = new byte[184]
-        {
+      {
             0x42, 0x01, 0xE1,
             0x05, 0x05, 0x18, 0x00,
             0x01 , 0x00 , 0x00 , 0x00, 0xC4 , 0x00 , 0x10 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xD9 , 0x84 , 0x55 , 0x7C , 0xF1 ,
@@ -476,16 +471,29 @@ namespace satClient
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00 , 0x00 , 0x00, 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xB8 , 0x06 , 0x00 , 0x00 , 0x00 , 0x80 , 0x02 , 0xE0 , 0x61 , 0x00 ,
             0xC2 , 0x00 , 0xC0 , 0x49 , 0x02 , 0x00 , 0x0C , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        };
+      };
+
+        #region Task相关
 
 
+        private void TaskInitz()
+        {
+           
+        }
         /// <summary>
         /// 执行处理任务，解析数据
         /// </summary>
-        private void TaskProc()
+        private int TaskProc(CancellationToken token)
         {
-            while(isCanRun)
+            while(true)
             {
+                if (token.IsCancellationRequested)
+                {
+                    return -1;
+                }
+
+                // 初始化为true时执行WaitOne不阻塞
+                resetEvent.WaitOne();
                 //if (localRecvQueue.IsEmpty()) return;
                 //localRecvQueue.Dequeue();
                 excelTest();
@@ -497,19 +505,22 @@ namespace satClient
         
         private void btn_test_Click(object sender, RoutedEventArgs e)
         {
-            t1.Start();
+            mainTask = new Task<int>(() => TaskProc(tokenSource.Token), tokenSource.Token);
+            mainTask.Start();
         }
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
             DataTable dt = excelApp.ExcelToDataTable("姿控");
+            //resetEvent.Reset();
         }
 
         private void btn_test3_Click(object sender, RoutedEventArgs e)
         {
+            resetEvent.Set();
             //excelTest();
-            //t1.Wait();
-            isCanRun = false;
+ 
+            //tokenSource.Cancel();
         }
 
         private void excelTest()
