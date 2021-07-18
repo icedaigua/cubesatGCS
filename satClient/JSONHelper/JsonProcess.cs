@@ -8,33 +8,46 @@ using System.Diagnostics;
 
 namespace JSONHelper
 {
-    public class JSONProc
+    public class JSONProcess
     {
-        public Dictionary<string, string> dicForShow { get; private set; }
+        //public Dictionary<string, string> dicForShow { get; private set; }
         public Dictionary<string, string> dicForSave { get; private set; }
-        //public Dictionary<string, string> dicForOrigin { get; private set; }
-
+ 
         public JArray ja { get; private set; }
 
-        public JSONProc()
+        public JSONProcess(string path)
         {
-
-        }
-
-        public void JP_Initz(string path = "test.json")
-        {
-            using (StreamReader sr = File.OpenText(path))
+            try
             {
+                StreamReader sr = File.OpenText(path);
                 string json = sr.ReadToEnd();
                 ja = (JArray)JsonConvert.DeserializeObject(json);
+                sr.Close();
+            }
+            catch
+            {
+                throw  new ArgumentException("读入json文件错误");
+            }
+        }
 
+        public void ReloadJSONFile(string path)
+        {
+            try
+            {
+                StreamReader sr = File.OpenText(path);
+                string json = sr.ReadToEnd();
+                ja = (JArray)JsonConvert.DeserializeObject(json);
+                sr.Close();
+            }
+            catch
+            {
+                throw new ArgumentException("重新载入json文件错误");
             }
         }
 
         public Dictionary<string, string> getJsonChinese()
         {
             Dictionary<string, string> dicChinese = new Dictionary<string, string>();
-
 
             for (var i = 0; i < ja.Count; i++)
             {
@@ -57,10 +70,10 @@ namespace JSONHelper
             return dicChinese;
         }
 
-        public void decodeBuf(byte[] buf)
+        public void DecodePackage(byte[] buf)
         {
             dicForSave = new Dictionary<string, string>();
-            dicForShow = new Dictionary<string, string>();
+            //dicForShow = new Dictionary<string, string>();
 
             try
             {
@@ -77,17 +90,17 @@ namespace JSONHelper
                         byte leng = (byte)js["leng"];
                         byte index = (byte)js["index"];
                         string type = js["type"].ToString();
-                        byte bit_index = (byte)js["bit-index"];
-                        byte showenable = (byte)js["visible"];
+                        //byte bit_index = (byte)js["bit-index"];
+                        //byte showenable = (byte)js["visible"];
                         string coeff = js["coeff"].ToString();
                         string valueRange = js["range"].ToString();
 
 
                         //System.Diagnostics.Debug.WriteLine("id = " + id);
-                        string value = getValueByReflection(buf, type, index, bit_index, leng, coeff, valueRange);
+                        string value = getValueByReflection(buf, type, index, leng, coeff, valueRange);
                         dicForSave.Add(id, value);
-                        if (showenable == 1)
-                            dicForShow.Add(id, value);
+                        //if (showenable == 1)
+                        //    dicForShow.Add(id, value);
 
                     }
                 }
@@ -104,27 +117,26 @@ namespace JSONHelper
         private JArray getJsonByHeader(byte[] header)
         {
 
-            for (var i = 0; i < ja.Count; i++)
-            {
-                JToken js = JToken.Parse(ja[i].ToString());
+            //for (var i = 0; i < ja.Count; i++)
+            //{
+            //    JToken js = JToken.Parse(ja[i].ToString());
 
-                byte header0 = (byte)js["header0"];
-                byte header1 = (byte)js["header1"];
-                byte header_index = (byte)js["header_index"];
+            //    byte header0 = (byte)js["header"];
 
-                if ((header0 == header[header_index + 0]) && (header1 == header[header_index + 1]))
-                    return (JArray)js["content"];
-                else
-                    continue;
-            }
+            //    if ((header0 == header[header_index + 0]) && (header1 == header[header_index + 1]))
+            //        return (JArray)js["content"];
+            //    else
+            //        continue;
+            //}
 
-            return null;
-
-
+            //return null;
+            JToken js = JToken.Parse(ja[0].ToString());
+            string header0 = (string)js["header"];
+            return (JArray)js["content"];
         }
 
 
-        private string getValueByReflection(byte[] buf, string type, byte index, byte bit_index, byte length, string coeff, string vRange)
+        private string getValueByReflection(byte[] buf, string type, byte index, byte length, string coeff, string vRange)
         {
             //dicForOrigin = new Dictionary<string, string>();
             string value = "", hex_value = "";
@@ -227,16 +239,16 @@ namespace JSONHelper
                     break;
 
                 case "bit":
-                    byte bitVal = 0;
+                    //byte bitVal = 0;
 
-                    byte aa = (byte)(buf[index] >> bit_index);
-                    byte bb = (byte)(Math.Pow(2, length - 1));
-                    byte cc = (byte)(aa & bb);
+                    //byte aa = (byte)(buf[index] >> bit_index);
+                    //byte bb = (byte)(Math.Pow(2, length - 1));
+                    //byte cc = (byte)(aa & bb);
 
-                    bitVal = (byte)((byte)(buf[index] >> bit_index) & (byte)(Math.Pow(2, length) - 1));
-                    //value =
-                    hex_value = buf[index].ToString("X");
-                    value = hex_value + ',' + bitVal.ToString() + ',' + computeRealValue(bitVal, coeff); ;
+                    //bitVal = (byte)((byte)(buf[index] >> bit_index) & (byte)(Math.Pow(2, length) - 1));
+                    ////value =
+                    //hex_value = buf[index].ToString("X");
+                    //value = hex_value + ',' + bitVal.ToString() + ',' + computeRealValue(bitVal, coeff); ;
                     break;
                 case "int64":
                     value = BitConverter.ToInt64(buf, index).ToString();
@@ -397,7 +409,7 @@ namespace JSONHelper
                 return 0;
         }
 
-
+        #region 参数解析计算
         private string computeRealValue<T>(T para, string coeff) where T:IConvertible
         {
             string value = "";
@@ -581,5 +593,7 @@ namespace JSONHelper
 
             return value;
         }
+        #endregion
     }
+
 }

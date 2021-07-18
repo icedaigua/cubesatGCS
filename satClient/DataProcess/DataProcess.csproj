@@ -50,10 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="satDataProcess.cs" />
-    <Compile Include="SeqToServer.cs" />
+    <Compile Include="RecvMsgParse.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\cube_com\satMsg.csproj">
+      <Project>{3708b12a-e693-43de-9795-30a688135bef}</Project>
+      <Name>satMsg</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JSONHelper\JSONHelper.csproj">
       <Project>{f7891499-4720-4b63-b998-a62dbe0f2d4d}</Project>
       <Name>JSONHelper</Name>

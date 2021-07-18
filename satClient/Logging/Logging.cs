@@ -24,11 +24,14 @@ namespace Logging
 
         public override void WriteLine(string message)
         {
-            StackTrace st = new StackTrace(new StackFrame(true));        
-            StackFrame sf = st.GetFrame(0);
-            File.AppendAllText(logFileName + "--operator.log" , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ") 
-                + sf.GetFileName() +"\t" + sf.GetMethod().Name + "\t" + sf.GetFileLineNumber() + "\t"
-                + message + Environment.NewLine);
+            //StackTrace st = new StackTrace(new StackFrame(true));        
+            //StackFrame sf = st.GetFrame(0);
+            //File.AppendAllText(logFileName + "--operator.log" , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ") 
+            //    + sf.GetFileName() +"\t" + sf.GetMethod().Name + "\t" + sf.GetFileLineNumber() + "\t"
+            //    + message + Environment.NewLine);
+
+            File.AppendAllText(logFileName + "--operator.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss    ")
+                + "\t" + message + Environment.NewLine);
         }
 
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{5D7C3C53-09F3-4C52-B6E0-74138FCCC779}"
 EndProject
@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataIO", "DataIO\DataIO.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pages", "Pages\Pages.csproj", "{1ED60353-685C-44DB-8B57-3625F87C2A56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeCOM", "cube_com\CubeCOM.csproj", "{3708B12A-E693-43DE-9795-30A688135BEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "satMsg", "cube_com\satMsg.csproj", "{3708B12A-E693-43DE-9795-30A688135BEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,8 +7,8 @@
     <ProjectGuid>{3708B12A-E693-43DE-9795-30A688135BEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cube_com</RootNamespace>
-    <AssemblyName>cube_com</AssemblyName>
+    <RootNamespace>satMsag</RootNamespace>
+    <AssemblyName>satMsag</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -34,9 +34,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HgDproTocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="cubeCOM.cs" />
+    <Compile Include="Msg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

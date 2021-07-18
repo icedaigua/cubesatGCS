@@ -121,9 +121,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\cube_com\satMsg.csproj">
+      <Project>{3708b12a-e693-43de-9795-30a688135bef}</Project>
+      <Name>satMsg</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataIO\DataIO.csproj">
       <Project>{36cd7996-878c-4aec-8750-614ce55e66e6}</Project>
       <Name>DataIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProcess\DataProcess.csproj">
+      <Project>{6b5a5ea4-57b7-46a1-a471-3ded32852ffc}</Project>
+      <Name>DataProcess</Name>
     </ProjectReference>
     <ProjectReference Include="..\iNet\iNet.csproj">
       <Project>{FDB8AD70-9CE7-471E-9734-399B9DCC62F6}</Project>
@@ -148,9 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="tubiao.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="mmtimer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

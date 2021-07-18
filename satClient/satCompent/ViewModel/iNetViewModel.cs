@@ -76,6 +76,7 @@ namespace satCompent.ViewModel
         {
             NetIP = "192.168.1.101";
             NetNO = "9889";
+            DefineType = true;
             Messenger.Default.Register<string>(this, "INET", HandleINet);
         }
         #endregion

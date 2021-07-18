@@ -11,7 +11,7 @@ namespace Pages
     public partial class hkInfo : UserControl
     {
 
-        private satDataProcess satProc = new satDataProcess();
+       // private satDataParse satProc = new satDataParse();
         public hkInfo()
         {
             InitializeComponent();
@@ -19,18 +19,18 @@ namespace Pages
 
         public void hkInfo_Initz()
         {
-            satProc.satDataProcess_Initz("enlai.json");
+           // satProc.satDataProcess_Initz("enlai.json");
 
 
-            if(satProc.getSatDataName() != null)
-                sat_View.satView_Initz(satProc.getSatDataName());
+          //  if(satProc.getSatDataName() != null)
+          //      sat_View.satView_Initz(satProc.getSatDataName());
         }
 
         public void hkInfo_AddNewView(byte[] buffer)
         {
-            satProc.DataProcessFunc(buffer);
-            if(satProc.dicForShow!=null)
-                sat_View.AddNewsatView(satProc.dicForShow);
+          //  satProc.DataProcessFunc(buffer);
+            //if(satProc.dicForShow!=null)
+            //    sat_View.AddNewsatView(satProc.dicForShow);
         }
 
 

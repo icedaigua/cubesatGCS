@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CubeCOM
+namespace satMsg
 {
-    public static class cubeCOMM
+    public static class SatCommand
     {
 
         #region 指令定义

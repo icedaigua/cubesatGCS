@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UniHelper;
+using satMsg;
+using DataProcess;
 
 namespace satClient
 {
@@ -182,7 +184,7 @@ namespace satClient
             StringBuilder builder = new StringBuilder(); //格式化接收
             foreach (byte b in e.Data)
             {
-                builder.Append(b.ToString() + " ");
+                builder.Append(b.ToString("X2") + " ");
             }
             builder.Append('\n');
             //string asciiString = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
@@ -496,7 +498,10 @@ namespace satClient
                 resetEvent.WaitOne();
                 //if (localRecvQueue.IsEmpty()) return;
                 //localRecvQueue.Dequeue();
-                excelTest();
+
+
+
+                //excelTest();
             }
         }
    
@@ -557,7 +562,99 @@ namespace satClient
             excelApp.DataTableToExcel(dt, "姿控");
         }
 
+        private void btn_test4_Click(object sender, RoutedEventArgs e)
+        {
+
+            //TTCHeader tth = new TTCHeader();
+
+            //tth.uiData0 = 0x5581;
+
+            //tth.uiData1 = 0x00000080;
+
+            //MessageBox.Show("ver = :"+tth.getVERSION().ToString("X2"));
+            //MessageBox.Show("scid = :" + tth.getSCID().ToString("X2"));
+            //MessageBox.Show("vcid = :" + tth.getVCID().ToString("X2"));
+
+            frameTest();
+
+        }
+        
+
+        SATFRAMEOBC fobc ;
+        SATFRAMEADCS fadcs;
+
+        RecvMsgParse recmsgParse;
+
+        private void frameTest()
+        {
+             ushort obcapid = 0x0000, adcsapid = 0x0C00;
+             byte scid = 0x54;
+             fobc = new SATFRAMEOBC(scid, obcapid);
+             fadcs = new SATFRAMEADCS(scid, adcsapid);
+
+            // TTCHeader tth = new TTCHeader();
+            //tth.uiData0 = 0x5581;
+            //tth.uiData1 = 0x00000080;
+
+            //MessageBox.Show("scid = :" + fobc.tth.getSCID().ToString("X2"));
+            //MessageBox.Show("obcapid = :" + fobc.epdu.getAPID().ToString("X2"));
+            //MessageBox.Show("adcsapid = :" + fadcs.epdu.getAPID().ToString("X2"));
+
+            //MessageBox.Show("length = :" + System.Runtime.InteropServices.Marshal.SizeOf(fobc.tth).ToString(""));
+            //MessageBox.Show("length = :" + System.Runtime.InteropServices.Marshal.SizeOf(fobc.mpdu).ToString(""));
+            //MessageBox.Show("length = :" + System.Runtime.InteropServices.Marshal.SizeOf(fobc.epdu).ToString(""));
+
+            recmsgParse = new RecvMsgParse(Directory.GetCurrentDirectory() + "\\settings\\tianyuan-1.json");
+
+            recmsgParse.getHouseKeepingPackage(createOBCFrame());
+            //createOBCFrame();
+            createADCSFrame();
+
+        }
+        public ushort recCNT = 0;
+        public ushort downCNT = 0;
+        private byte[] createOBCFrame()
+        {
+
+            fobc.pl.soft_id = 0x55;                            //1
+            fobc.pl.reboot_count = 0x01;                     //2
+
+            fobc.pl.rec_cmd_count = recCNT;                    //2
+            fobc.pl.down_count = downCNT;                       //2
+
+            fobc.pl.last_reset_time = 0;                  //4
+            fobc.pl.work_mode = 0x10;                          //1
+
+            fobc.pl.utc_time = UniFunction.xDateSeconds(DateTime.UtcNow);                         //4
+            fobc.pl.temp_hk = -27;                           //2
+
+            fobc.pl.on_off_status = 0xAA55AA55;                            //4
+            fobc.pl.batt_TEMP1 = 27;                               //2
 
 
+            
+            byte[] bval =  UniSerialize.StructToByte((PlatForm)fobc.pl);
+
+            string str = Encoding.ASCII.GetString(bval);
+            //string str = "";
+            //foreach(byte b in bval)
+            //{
+            //    str += "0x" + b.ToString("X2") + "\t";
+            //}
+            //str += "\n";
+            //Trace.WriteLine("", "");
+            //Trace.WriteLine("", str);
+            //Trace.WriteLine("", "");
+            return bval;
+        }
+
+        private byte[] createADCSFrame()
+        {
+
+            fadcs.adcs.velox = (float)1.2;                            //1
+            fadcs.adcs.posix = (float)123.45;                     //2
+
+            return UniSerialize.StructToByte((SATFRAMEADCS)fadcs);
+        }
     }
 }
