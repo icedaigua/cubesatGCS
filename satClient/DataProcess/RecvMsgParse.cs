@@ -1,55 +1,68 @@
 ﻿using JSONHelper;
 using System.Collections.Generic;
 using satMsg;
-
+using UniHelper;
+using System;
+using satMsg;
+using System.Data;
 
 namespace DataProcess
 {
     public class RecvMsgParse
     {
 
-        private bool hasProtocol = false;
-
-        //public Dictionary<string, string> dicForShow { get; private set; }
-        //public Dictionary<string, string> dicForSave { get; private set; }
-        //public Dictionary<string, string> dicChinese { get; private set; }
-
-
         private JSONProcess satJson; //= new JSONProcess();
+        private TianYuanPackage tyPack = new TianYuanPackage();
+
+        private DataTable dt = new DataTable();
         
         public RecvMsgParse(string path)
         {
             satJson = new JSONProcess(path);
         }
 
-        //public void RecvMsgInitz(string path)
-        //{
-        //    satJson = new JSONProcess(path);
-        //    //satJson.jsonProcInitz(path);
-        //    //hasProtocol = true;
-        //}
-
-
-        public TTCHeader getTTCHeader(byte[] bvals)
+        public DataTable ParseMessage(byte[] bvals)
         {
-            return new TTCHeader();
+            byte[] entireBytes = getEntirePackage(bvals);  //获取完整的帧
+
+            if (entireBytes == null) return null;
+
+            tyPack = (TianYuanPackage)UniSerialize.ByteToStruct(entireBytes, tyPack.GetType());
+
+            return getHouseKeepingPackage(getsatFrameBytes());
+
+            //byte[] 
+            //return new DataTable();
         }
 
-        public EPDUHeader getEPDUHeader(byte[] bvals)
+        private byte[] getEntirePackage(byte[] bvals)
         {
-            return new EPDUHeader();
+
+            byte[] copy = new byte[bvals.Length];
+           // Array.Copy(bvals, copy, bvals.Length);
+            Array.Copy(bvals, 0, copy, 0, bvals.Length);
+            return copy;
+            //UniSerialize.
         }
 
-        public byte getMessageType(byte[] bvals)
+        private byte[] getsatFrameBytes()
         {
-            return 0;
+            byte[] satframeBytes = new byte[tyPack.epdu.length];
+            Array.Copy(tyPack.frame, 0, satframeBytes, 0, tyPack.epdu.length);
+            return satframeBytes;
         }
 
-        public byte[] getHouseKeepingPackage(byte[] bvals)
+        public ushort getMessageType()
+        {
+            return tyPack.epdu.getAPID();
+        }
+
+        public DataTable getHouseKeepingPackage(byte[] bvals)
         {
             satJson.DecodePackage(bvals);
 
-            return new byte[4];
+            return new DataTable();
+            //return new byte[4];
         }
 
         //public Dictionary<string,string> getSatDataName()

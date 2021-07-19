@@ -12,8 +12,11 @@ namespace JSONHelper
     {
         //public Dictionary<string, string> dicForShow { get; private set; }
         public Dictionary<string, string> dicForSave { get; private set; }
- 
+        public Dictionary<string, string> paraChineseName { get; private set; }
+
         public JArray ja { get; private set; }
+
+        
 
         public JSONProcess(string path)
         {
@@ -28,6 +31,8 @@ namespace JSONHelper
             {
                 throw  new ArgumentException("读入json文件错误");
             }
+
+
         }
 
         public void ReloadJSONFile(string path)
@@ -45,9 +50,9 @@ namespace JSONHelper
             }
         }
 
-        public Dictionary<string, string> getJsonChinese()
+        private void getJsonChinese()
         {
-            Dictionary<string, string> dicChinese = new Dictionary<string, string>();
+            Dictionary<string, string> paraChineseName = new Dictionary<string, string>();
 
             for (var i = 0; i < ja.Count; i++)
             {
@@ -59,22 +64,20 @@ namespace JSONHelper
                     JToken jss = JToken.Parse(jaa[j].ToString());
                     string id = jss["id"].ToString();
                     string idCN = jss["chinese"].ToString();
-                    byte showenable = (byte)jss["visible"];
-                    if (showenable == 1)
-                    {
-                        dicChinese.Add(id, idCN);
-                    }
+                    //byte showenable = (byte)jss["visible"];
+                    //if (showenable == 1)
+                    //{
+                        paraChineseName.Add(id, idCN);
+                    //}
                 }
             }
-
-            return dicChinese;
+            //return dicChinese;
         }
 
         public void DecodePackage(byte[] buf)
         {
             dicForSave = new Dictionary<string, string>();
-            //dicForShow = new Dictionary<string, string>();
-
+  
             try
             {
                 JArray jaByHeader = getJsonByHeader(buf);
