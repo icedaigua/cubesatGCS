@@ -499,8 +499,10 @@ namespace satClient
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-            DataTable dt = excelApp.ExcelToDataTable("姿控");
+            //DataTable dt = excelApp.ExcelToDataTable("姿控");
             //resetEvent.Reset();
+
+            
         }
 
         private void btn_test3_Click(object sender, RoutedEventArgs e)
@@ -510,44 +512,44 @@ namespace satClient
 
             //tokenSource.Cancel();
 
-            DataTable dt = new DataTable("fffff");
+            //DataTable dt = new DataTable("fffff");
 
-            string str =  dt.TableName;
+            //string str =  dt.TableName;
 
         }
 
         private void excelTest()
         {
             //创建一个表
-            System.Data.DataTable dt = new System.Data.DataTable("Product");
-            System.Data.DataColumn dc = null;
+            //System.Data.DataTable dt = new System.Data.DataTable("Product");
+            //System.Data.DataColumn dc = null;
 
-            //添加列，赋值
-            dc = dt.Columns.Add("id", Type.GetType("System.Int32"));
-            dc.AutoIncrement = true;
-            dc.AutoIncrementSeed = 1;
-            dc.AutoIncrementStep = 1;
-            dc.AllowDBNull = false;
-            dt.Columns.Add("pname", Type.GetType("System.String"));
-            dt.Columns.Add("price", Type.GetType("System.Double"));
+            ////添加列，赋值
+            //dc = dt.Columns.Add("id", Type.GetType("System.Int32"));
+            //dc.AutoIncrement = true;
+            //dc.AutoIncrementSeed = 1;
+            //dc.AutoIncrementStep = 1;
+            //dc.AllowDBNull = false;
+            //dt.Columns.Add("pname", Type.GetType("System.String"));
+            //dt.Columns.Add("price", Type.GetType("System.Double"));
 
-            System.Data.DataRow dr = dt.NewRow();
-            dr["pname"] = "red apple";
-            dr["price"] = 9.9;
+            //System.Data.DataRow dr = dt.NewRow();
+            //dr["pname"] = "red apple";
+            //dr["price"] = 9.9;
 
-            dt.Rows.Add(dr);
+            //dt.Rows.Add(dr);
 
-            dr = dt.NewRow();
-            dr["pname"] = "black apple";
-            dr["price"] = 19.9;  
-            dt.Rows.Add(dr);
+            //dr = dt.NewRow();
+            //dr["pname"] = "black apple";
+            //dr["price"] = 19.9;  
+            //dt.Rows.Add(dr);
 
-            dr = dt.NewRow();
-            dr["pname"] = "gold apple";
-            dr["price"] = 29.9;
-            dt.Rows.Add(dr);
+            //dr = dt.NewRow();
+            //dr["pname"] = "gold apple";
+            //dr["price"] = 29.9;
+            //dt.Rows.Add(dr);
 
-            excelApp.DataTableToExcel(dt, "姿控");
+            //excelApp.DataTableToExcel(dt, "姿控");
         }
 
         private void btn_test4_Click(object sender, RoutedEventArgs e)
@@ -594,7 +596,12 @@ namespace satClient
 
             recmsgParse = new RecvMsgParse(Directory.GetCurrentDirectory() + "\\settings\\tianyuan-1.json");
 
-            recmsgParse.getHouseKeepingPackage(createOBCFrame());
+            excelApp.createNewExcel(recmsgParse.getHouseKeepingPackageHeader());
+
+            excelApp.DataTableToExcel(recmsgParse.getHouseKeepingPackage(createOBCFrame()));
+
+
+
             //createOBCFrame();
             createADCSFrame();
 

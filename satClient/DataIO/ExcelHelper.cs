@@ -29,7 +29,7 @@ namespace DataIO
         /// <param name="sourceData">要写入的数据</param>
         /// <param name="sheetName">excel表中的sheet的名称，可以根据情况自己起</param>
         /// <returns>返回写入的行数</returns>
-        public int DataTableToExcel(DataTable sourceData, string sheetName)
+        public int DataTableToExcel(DataTable sourceData)
         {
 
             if (sourceData == null)
@@ -49,7 +49,7 @@ namespace DataIO
                 FileStream fs = new FileStream(excelName, FileMode.Open);
  
                 IWorkbook workbook = new XSSFWorkbook(fs);
-                ISheet sheet1 = workbook.GetSheet(sheetName);
+                ISheet sheet1 = workbook.GetSheet(sourceData.TableName);
 
                 if (sheet1 == null)
                 {
@@ -200,7 +200,7 @@ namespace DataIO
 
 
 
-        public void createNewExcel()
+        public void createNewExcel(DataTable[] dtArr)
         {
             try
             {
@@ -208,18 +208,18 @@ namespace DataIO
                 {
                     FileStream fs = new FileStream(excelName, FileMode.CreateNew);
                     IWorkbook workbook = new XSSFWorkbook();
-                    ISheet sheet1 = workbook.CreateSheet("姿控");
-                    createExcelHeader(sheet1);
-
-                    ISheet sheet2 = workbook.CreateSheet("星务电源测控");
-                    createExcelHeader(sheet2);
-
-                    ISheet sheet3 = workbook.CreateSheet("载荷");
-                    createExcelHeader(sheet3);
-
+                    
+                    foreach(DataTable dt in dtArr)
+                    {
+                        ISheet sheet1 = workbook.CreateSheet(dt.TableName);                   
+                    }
                     workbook.Write(fs);
                     fs.Close();
-
+                  
+                    foreach (DataTable dt in dtArr)  //写入第一行
+                    {
+                        DataTableToExcel(dt);
+                    }
                 }
             }
             catch(Exception ex)
@@ -227,11 +227,24 @@ namespace DataIO
                 Trace.WriteLine("创建excel错误:" +ex.Message);
                 return;
             }
-
-
-
-           
+         
         }
+
+
+       
+
+
+        #region IDisposable 成员
+
+        public void Dispose()
+        {
+ 
+        }
+
+        #endregion
+
+
+        #region 无用
         private void createExcelHeader(ISheet sheet)
         {
             if (sheet == null)
@@ -248,19 +261,7 @@ namespace DataIO
             cell.SetCellValue("角度");//循环往第二行的单元格中添加数据
 
         }
-
-
-        #region IDisposable 成员
-
-        public void Dispose()
-        {
- 
-        }
-
         #endregion
-
-
-
 
 
     }

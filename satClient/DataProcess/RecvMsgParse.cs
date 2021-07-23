@@ -55,13 +55,18 @@ namespace DataProcess
             return tyPack.epdu.getAPID();
         }
 
+        public DataTable[] getHouseKeepingPackageHeader()
+        {
+            return satJson.dtArray;
+        }
+
+
         public DataTable getHouseKeepingPackage(byte[] bvals)
         {
-            
-            
-            satJson.DecodePackage(bvals,tyPack.epdu.getAPID());
 
-            return new DataTable();
+            return satJson.DecodePackage(bvals,tyPack.epdu.getAPID());
+
+            //return new DataTable();
             //return new byte[4];
         }
 

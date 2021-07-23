@@ -91,10 +91,9 @@ namespace JSONHelper
             }
         }
 
-        public void DecodePackage(byte[] buf,ushort packHeader)
+        public DataTable DecodePackage(byte[] buf,ushort packHeader)
         {
-            //dicForSave = new Dictionary<string, string>();
-  
+ 
             try
             {
                 JArray jaByHeader = (JArray)dicJTHeader[packHeader]["content"];
@@ -110,12 +109,17 @@ namespace JSONHelper
   
                         string value = getValueByReflection(buf, js);
                         //dicForSave.Add(id, value);
+                        DataColumn dc = new DataColumn();
+                        dt.Columns.Add(dc);
+                        dr[i] = value;
                     }
                 }
+                return dt;
             }
             catch(Exception ex)
             {
                 Trace.WriteLine("Json解析错误:" + ex.Message);
+                return null;
             }
         
 
