@@ -39,7 +39,8 @@ namespace DataIO
 
             if (!File.Exists(excelName)) //文件不存在,先创建excel
             {
-                createNewExcel();
+                //createNewExcel();
+                throw new ArgumentException("excel不存在");
             }
 
             try
@@ -83,10 +84,6 @@ namespace DataIO
             }
 
         }
-
-
-
-
 
         /// <summary>
         /// 从Excel中读入数据到DataTable中
@@ -203,23 +200,27 @@ namespace DataIO
 
 
 
-        private void createNewExcel()
+        public void createNewExcel()
         {
             try
             {
-                FileStream fs = new FileStream(excelName, FileMode.CreateNew);
-                IWorkbook workbook = new XSSFWorkbook();
-                ISheet sheet1 = workbook.CreateSheet("姿控");
-                createExcelHeader(sheet1);
+                if (!File.Exists(excelName)) //文件不存在,先创建excel
+                {
+                    FileStream fs = new FileStream(excelName, FileMode.CreateNew);
+                    IWorkbook workbook = new XSSFWorkbook();
+                    ISheet sheet1 = workbook.CreateSheet("姿控");
+                    createExcelHeader(sheet1);
 
-                ISheet sheet2 = workbook.CreateSheet("星务电源测控");
-                createExcelHeader(sheet2);
+                    ISheet sheet2 = workbook.CreateSheet("星务电源测控");
+                    createExcelHeader(sheet2);
 
-                ISheet sheet3 = workbook.CreateSheet("载荷");
-                createExcelHeader(sheet3);
+                    ISheet sheet3 = workbook.CreateSheet("载荷");
+                    createExcelHeader(sheet3);
 
-                workbook.Write(fs);
-                fs.Close();
+                    workbook.Write(fs);
+                    fs.Close();
+
+                }
             }
             catch(Exception ex)
             {

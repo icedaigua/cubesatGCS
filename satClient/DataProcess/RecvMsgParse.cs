@@ -1,10 +1,8 @@
 ﻿using JSONHelper;
-using System.Collections.Generic;
 using satMsg;
-using UniHelper;
 using System;
-using satMsg;
 using System.Data;
+using UniHelper;
 
 namespace DataProcess
 {
@@ -59,7 +57,9 @@ namespace DataProcess
 
         public DataTable getHouseKeepingPackage(byte[] bvals)
         {
-            satJson.DecodePackage(bvals);
+            
+            
+            satJson.DecodePackage(bvals,tyPack.epdu.getAPID());
 
             return new DataTable();
             //return new byte[4];

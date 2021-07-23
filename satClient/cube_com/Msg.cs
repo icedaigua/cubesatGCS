@@ -100,10 +100,14 @@ namespace satMsg
         {
            return (byte)((this.uiData0 & 0x0010) >> 4);
         }
-        public ushort getAPID()  //占用高11位
+        public byte getRealtimeFlag()           //占用apid后面2bit
+        {
+            return (byte)((this.uiData0 & 0x0060));
+        }
+        public ushort getAPID()  //占用高9位
         {
 
-            return (ushort)((this.uiData0 & 0xFFE0));
+            return (ushort)((this.uiData0 & 0xFF80));
         }
 
         public byte getGroupID()                     //占用低两位

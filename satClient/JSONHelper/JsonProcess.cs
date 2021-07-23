@@ -5,18 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Data;
 
 namespace JSONHelper
 {
     public class JSONProcess
     {
-        //public Dictionary<string, string> dicForShow { get; private set; }
-        public Dictionary<string, string> dicForSave { get; private set; }
-        public Dictionary<string, string> paraChineseName { get; private set; }
+        
+
+        public DataTable[] dtArray { private set; get; }
+
 
         public JArray ja { get; private set; }
-
-        
+        private Dictionary<ushort,JToken> dicJTHeader = new Dictionary<ushort,JToken>();
 
         public JSONProcess(string path)
         {
@@ -32,6 +33,15 @@ namespace JSONHelper
                 throw  new ArgumentException("读入json文件错误");
             }
 
+            try
+            {
+                createHeaderDic();
+                getJsonChinese();
+            }
+            catch(Exception ex)
+            {
+                Trace.WriteLine("json解析错误"+ex.Message);
+            }
 
         }
 
@@ -48,63 +58,58 @@ namespace JSONHelper
             {
                 throw new ArgumentException("重新载入json文件错误");
             }
+            createHeaderDic();
+            getJsonChinese();
         }
 
+
+        /// <summary>
+        /// 获取所有遥测帧的字段的中文名称
+        /// </summary>
         private void getJsonChinese()
         {
-            Dictionary<string, string> paraChineseName = new Dictionary<string, string>();
-
+         
+            dtArray = new DataTable[ja.Count];
             for (var i = 0; i < ja.Count; i++)
             {
                 JToken js = JToken.Parse(ja[i].ToString());
-
                 JArray jaa = (JArray)js["content"];
+                
+                DataTable dt = new DataTable((string)js["frametype"]);
+                DataRow dr = dt.NewRow(); 
+                dt.Rows.Add(dr);
+                
                 for (var j = 0; j < jaa.Count; j++)
                 {
                     JToken jss = JToken.Parse(jaa[j].ToString());
-                    string id = jss["id"].ToString();
                     string idCN = jss["chinese"].ToString();
-                    //byte showenable = (byte)jss["visible"];
-                    //if (showenable == 1)
-                    //{
-                        paraChineseName.Add(id, idCN);
-                    //}
+                    DataColumn dc = new DataColumn();
+                    dt.Columns.Add(dc);
+                    dr[j] = idCN;
                 }
+                dtArray[i] = dt.Copy(); 
             }
-            //return dicChinese;
         }
 
-        public void DecodePackage(byte[] buf)
+        public void DecodePackage(byte[] buf,ushort packHeader)
         {
-            dicForSave = new Dictionary<string, string>();
+            //dicForSave = new Dictionary<string, string>();
   
             try
             {
-                JArray jaByHeader = getJsonByHeader(buf);
-
+                JArray jaByHeader = (JArray)dicJTHeader[packHeader]["content"];
+                DataTable dt = new DataTable((string)dicJTHeader[packHeader]["frametype"]);
+                DataRow dr = dt.NewRow();
+                dt.Rows.Add(dr);
                 if (jaByHeader != null)
                 {
                     for (var i = 0; i < jaByHeader.Count; i++)
                     {
-
                         JToken js = JToken.Parse(jaByHeader[i].ToString());
-
                         string id = js["id"].ToString();
-                        byte leng = (byte)js["leng"];
-                        byte index = (byte)js["index"];
-                        string type = js["type"].ToString();
-                        //byte bit_index = (byte)js["bit-index"];
-                        //byte showenable = (byte)js["visible"];
-                        string coeff = js["coeff"].ToString();
-                        string valueRange = js["range"].ToString();
-
-
-                        //System.Diagnostics.Debug.WriteLine("id = " + id);
-                        string value = getValueByReflection(buf, type, index, leng, coeff, valueRange);
-                        dicForSave.Add(id, value);
-                        //if (showenable == 1)
-                        //    dicForShow.Add(id, value);
-
+  
+                        string value = getValueByReflection(buf, js);
+                        //dicForSave.Add(id, value);
                     }
                 }
             }
@@ -117,33 +122,29 @@ namespace JSONHelper
         }
 
 
-        private JArray getJsonByHeader(byte[] header)
-        {
+        //private JArray getJsonByHeader(byte[] header)
+        //{
 
-            //for (var i = 0; i < ja.Count; i++)
-            //{
-            //    JToken js = JToken.Parse(ja[i].ToString());
-
-            //    byte header0 = (byte)js["header"];
-
-            //    if ((header0 == header[header_index + 0]) && (header1 == header[header_index + 1]))
-            //        return (JArray)js["content"];
-            //    else
-            //        continue;
-            //}
-
-            //return null;
-            JToken js = JToken.Parse(ja[0].ToString());
-            string header0 = (string)js["header"];
-            return (JArray)js["content"];
-        }
+        //    JToken js = JToken.Parse(ja[0].ToString());
+        //    string header0 = (string)js["header"];
+        //    return (JArray)js["content"];
+        //}
 
 
-        private string getValueByReflection(byte[] buf, string type, byte index, byte length, string coeff, string vRange)
+        private string getValueByReflection(byte[] buf, JToken js)
         {
             //dicForOrigin = new Dictionary<string, string>();
             string value = "", hex_value = "";
             byte[] covBuf = new byte[4] { 0, 0, 0, 0 };
+
+
+            byte index = (byte)js["index"];
+            string type = js["type"].ToString();
+            //byte bit_index = (byte)js["bit-index"];
+            //byte showenable = (byte)js["visible"];
+            string coeff = js["coeff"].ToString();
+            //string valueRange = js["range"].ToString();
+
             switch (type)
             {
                 case "byte":
@@ -411,6 +412,56 @@ namespace JSONHelper
             else
                 return 0;
         }
+
+        /// <summary>
+        /// 建立json中header字段和该字段content的词典，可以通过header直接查到content
+        /// </summary>
+        private void createHeaderDic()
+        {
+            for (var i = 0; i < ja.Count; i++)
+            {
+                 JToken js = JToken.Parse(ja[i].ToString());
+                 string header = (string)js["header"];
+                try
+                {
+                    dicJTHeader.Add(computeFrameHeader(header),js);
+                }
+                catch
+                {
+                    throw new ArgumentException("Json Header字典错误");
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 将json文件中"header"字段的二进制字符串转换为ushort
+        /// </summary>
+        /// <param name="header"></param>
+        /// <returns></returns>
+        private ushort computeFrameHeader(string header)
+        {
+            string[] str = header.Split(' ');
+
+            string stmp = str[0] + str[1];
+            ushort btmp = (ushort)((Convert.ToUInt16(stmp, 2))<<7); //由于只取了高九位，右移七位
+
+            return btmp;
+
+        }
+
+        /// <summary>
+        /// 字符串反转
+        /// </summary>
+        /// <param name="original"></param>
+        /// <returns></returns>
+        private string Reverse(string original)
+        {
+            char[] arr = original.ToCharArray();
+            Array.Reverse(arr);
+            return new string (arr);
+        }  
+
 
         #region 参数解析计算
         private string computeRealValue<T>(T para, string coeff) where T:IConvertible
