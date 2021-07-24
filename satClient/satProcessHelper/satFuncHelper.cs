@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using UniHelper;
 
 namespace satProcessHelper
@@ -67,8 +68,7 @@ namespace satProcessHelper
 
         public static string ADtoDigi(string arg, string[] para)
         {
-            UInt16 uiVal = UInt16.Parse(arg);
-
+            Int16 uiVal = Int16.Parse(arg);
             float paraK = float.Parse(para[2]);
             float paraD = float.Parse(para[3]);
 
