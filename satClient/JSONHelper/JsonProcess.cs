@@ -15,8 +15,7 @@ namespace JSONHelper
 
         public DataTable[] dtArray { private set; get; }
 
-
-        public JArray ja { get; private set; }
+        private JArray ja;
         private Dictionary<ushort,JToken> dicJTHeader = new Dictionary<ushort,JToken>();
 
         public JSONProcess(string path)
@@ -108,8 +107,7 @@ namespace JSONHelper
                         string id = js["id"].ToString();
   
                         string value = getValueByReflection(buf, js);
-                        //dicForSave.Add(id, value);
-                        DataColumn dc = new DataColumn();
+                        DataColumn dc = new DataColumn(id);
                         dt.Columns.Add(dc);
                         dr[i] = value;
                     }
@@ -126,28 +124,15 @@ namespace JSONHelper
         }
 
 
-        //private JArray getJsonByHeader(byte[] header)
-        //{
-
-        //    JToken js = JToken.Parse(ja[0].ToString());
-        //    string header0 = (string)js["header"];
-        //    return (JArray)js["content"];
-        //}
-
-
         private string getValueByReflection(byte[] buf, JToken js)
         {
-            //dicForOrigin = new Dictionary<string, string>();
+        
             string value = "", hex_value = "";
             byte[] covBuf = new byte[4] { 0, 0, 0, 0 };
 
-
             byte index = (byte)js["index"];
             string type = js["type"].ToString();
-            //byte bit_index = (byte)js["bit-index"];
-            //byte showenable = (byte)js["visible"];
             string coeff = js["coeff"].ToString();
-            //string valueRange = js["range"].ToString();
 
             switch (type)
             {
@@ -274,148 +259,7 @@ namespace JSONHelper
             return value;
         }
 
-        private string getValue(byte[] buf, string type, byte index, byte bit_index, byte length, string coeff, string vRange)
-        {
-            //dicForOrigin = new Dictionary<string, string>();
-            string value = "", hex_value = "";
-            byte[] covBuf = new byte[4] { 0, 0, 0, 0 };
-            switch (type)
-            {
-                case "byte":
-                    byte bvalue = buf[index];
-                    hex_value = bvalue.ToString("X");
-                    value = hex_value + ',' + bvalue.ToString() + ',' + computeRealValue_Byte(bvalue, coeff);
-                    break;
-                case "uint16":    //高位在前,低位在后
-                    UInt16 uival = 0;
-                    covBuf[0] = buf[index + 1];
-                    covBuf[1] = buf[index + 0];
-                    uival = BitConverter.ToUInt16(covBuf, 0);
-                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X");
-                    value = hex_value + ',' + uival.ToString() + ',' + computeRealValue_UInt16(uival, coeff);
-                    break;
-                case "-uint16": //低位在前,高位在后
-                    UInt16 uival_M = 0;
-                    uival_M = BitConverter.ToUInt16(buf, index);
-                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X");
-                    value = hex_value + ',' + uival_M.ToString() + ',' + computeRealValue_UInt16(uival_M, coeff);
-                    break;
-                case "int16":  //高位在前,低位在后
-                    Int16 ival = 0;
-                    covBuf[0] = buf[index + 1];
-                    covBuf[1] = buf[index + 0];
-                    ival = BitConverter.ToInt16(covBuf, 0);
-                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X");
-                    value = hex_value + ',' + ival.ToString() + ',' + computeRealValue_Int16(ival, coeff);
-                    break;
-                case "-int16": //低位在前,高位在后
-                    Int16 ival_M = 0;
-                    ival_M = BitConverter.ToInt16(buf, index);
-                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X");
-                    value = hex_value + ',' + ival_M.ToString() + ',' + computeRealValue_Int16(ival_M, coeff);
-                    break;
-          
-                case "float":      //高位在前,低位在后
-                    float fval;
-                    covBuf[0] = buf[index + 3];
-                    covBuf[1] = buf[index + 2];
-                    covBuf[2] = buf[index + 1];
-                    covBuf[3] = buf[index + 0];
-                    fval = BitConverter.ToSingle(covBuf, 0);
-
-                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X")
-                        + "  " + covBuf[2].ToString("X") + "  " + covBuf[3].ToString("X");
-
-                    value = hex_value + ',' + fval.ToString() + ',' + computeRealValue_Float(fval, coeff);
-                    break;
-                case "-float":    //低位在前,高位在后
-                    float fval_M;
-                    fval_M = BitConverter.ToSingle(buf, index);
-                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X")
-                        + "  " + buf[index + 1].ToString("X") + "  " + buf[index + 1].ToString("X");
-                    value = hex_value + ',' + fval_M.ToString() + ',' + computeRealValue_Float(fval_M, coeff);
-                    break;
-             
-                case "uint32":     //高位在前,低位在后
-                    UInt32 ui32val = 0;
-                    covBuf[0] = buf[index + 3];
-                    covBuf[1] = buf[index + 2];
-                    covBuf[2] = buf[index + 1];
-                    covBuf[3] = buf[index + 0];
-                    ui32val = BitConverter.ToUInt32(covBuf, 0);
-                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X")
-                       + "  " + covBuf[2].ToString("X") + "  " + covBuf[3].ToString("X");
-                    value = hex_value + ',' + ui32val.ToString() + ',' + computeRealValue_UInt32(ui32val, coeff);
-                    break;
-
-                case "-uint32": //低位在前,高位在后
-                    UInt32 ui32val_M = 0;
-                    ui32val_M = BitConverter.ToUInt32(buf, index);
-                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X")
-                         + "  " + buf[index + 2].ToString("X") + "  " + buf[index + 3].ToString("X");
-                    value = hex_value + ',' + ui32val_M.ToString() + ',' + computeRealValue_UInt32(ui32val_M, coeff);
-                    break;
-              
-                case "int32":      //高位在前,低位在后
-                    Int32 i32val_M = 0;
-                    covBuf[0] = buf[index + 3];
-                    covBuf[1] = buf[index + 2];
-                    covBuf[2] = buf[index + 1];
-                    covBuf[3] = buf[index + 0];
-                    i32val_M = BitConverter.ToInt32(covBuf, 0);
-                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X")
-                  + "  " + covBuf[2].ToString("X") + "  " + covBuf[3].ToString("X");
-                    value = hex_value + ',' + i32val_M.ToString() + ',' + computeRealValue_Int32(i32val_M, coeff);
-                    break;
-
-                case "-int32": //低位在前,高位在后
-                    Int32 i32val = 0;
-                    i32val = BitConverter.ToInt32(buf, index);
-                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X")
-                       + "  " + buf[index + 2].ToString("X") + "  " + buf[index + 3].ToString("X");
-                    value = hex_value + ',' + i32val.ToString() + ',' + computeRealValue_Int32(i32val, coeff);
-                    break;
-
-                case "bit":
-                    byte bitVal = 0;
-
-                    byte aa = (byte)(buf[index] >> bit_index);
-                    byte bb = (byte)(Math.Pow(2, length - 1));
-                    byte cc = (byte)(aa & bb);
-
-                    bitVal = (byte)((byte)(buf[index] >> bit_index) & (byte)(Math.Pow(2, length) - 1));
-                    //value =
-                    hex_value = buf[index].ToString("X");
-                    value = hex_value + ',' + bitVal.ToString() + ',' + computeRealValue_Byte(bitVal, coeff); ;
-                    break;
-                case "int64":
-                    value = BitConverter.ToInt64(buf, index).ToString();
-                    break;
-                case "uint64":
-                    value = BitConverter.ToUInt64(buf, index).ToString();
-                    break;
-                case "double":
-                    value = BitConverter.ToDouble(buf, index).ToString();
-                    break;
-
-                default:
-                    break;
-            }
-            return value;
-        }
-
-
-        private byte checkDataValid(float fval, string vRange)
-        {
-            string[] range_para = vRange.Split(',');
-
-            if (range_para[0] == "none") return 1;
-
-            if ((fval >= float.Parse(range_para[0])) && (fval <= float.Parse(range_para[1])))
-                return 1;
-            else
-                return 0;
-        }
+      
 
         /// <summary>
         /// 建立json中header字段和该字段content的词典，可以通过header直接查到content
@@ -454,17 +298,7 @@ namespace JSONHelper
 
         }
 
-        /// <summary>
-        /// 字符串反转
-        /// </summary>
-        /// <param name="original"></param>
-        /// <returns></returns>
-        private string Reverse(string original)
-        {
-            char[] arr = original.ToCharArray();
-            Array.Reverse(arr);
-            return new string (arr);
-        }  
+     
 
 
         #region 参数解析计算
@@ -651,6 +485,177 @@ namespace JSONHelper
 
             return value;
         }
+        #endregion
+
+
+
+
+        #region  unused
+
+        /// <summary>
+        /// 字符串反转
+        /// </summary>
+        /// <param name="original"></param>
+        /// <returns></returns>
+        private string Reverse(string original)
+        {
+            char[] arr = original.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
+        }
+
+        private byte checkDataValid(float fval, string vRange)
+        {
+            string[] range_para = vRange.Split(',');
+
+            if (range_para[0] == "none") return 1;
+
+            if ((fval >= float.Parse(range_para[0])) && (fval <= float.Parse(range_para[1])))
+                return 1;
+            else
+                return 0;
+        }
+
+        //private JArray getJsonByHeader(byte[] header)
+        //{
+
+        //    JToken js = JToken.Parse(ja[0].ToString());
+        //    string header0 = (string)js["header"];
+        //    return (JArray)js["content"];
+        //}
+
+        private string getValue(byte[] buf, string type, byte index, byte bit_index, byte length, string coeff, string vRange)
+        {
+            //dicForOrigin = new Dictionary<string, string>();
+            string value = "", hex_value = "";
+            byte[] covBuf = new byte[4] { 0, 0, 0, 0 };
+            switch (type)
+            {
+                case "byte":
+                    byte bvalue = buf[index];
+                    hex_value = bvalue.ToString("X");
+                    value = hex_value + ',' + bvalue.ToString() + ',' + computeRealValue_Byte(bvalue, coeff);
+                    break;
+                case "uint16":    //高位在前,低位在后
+                    UInt16 uival = 0;
+                    covBuf[0] = buf[index + 1];
+                    covBuf[1] = buf[index + 0];
+                    uival = BitConverter.ToUInt16(covBuf, 0);
+                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X");
+                    value = hex_value + ',' + uival.ToString() + ',' + computeRealValue_UInt16(uival, coeff);
+                    break;
+                case "-uint16": //低位在前,高位在后
+                    UInt16 uival_M = 0;
+                    uival_M = BitConverter.ToUInt16(buf, index);
+                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X");
+                    value = hex_value + ',' + uival_M.ToString() + ',' + computeRealValue_UInt16(uival_M, coeff);
+                    break;
+                case "int16":  //高位在前,低位在后
+                    Int16 ival = 0;
+                    covBuf[0] = buf[index + 1];
+                    covBuf[1] = buf[index + 0];
+                    ival = BitConverter.ToInt16(covBuf, 0);
+                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X");
+                    value = hex_value + ',' + ival.ToString() + ',' + computeRealValue_Int16(ival, coeff);
+                    break;
+                case "-int16": //低位在前,高位在后
+                    Int16 ival_M = 0;
+                    ival_M = BitConverter.ToInt16(buf, index);
+                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X");
+                    value = hex_value + ',' + ival_M.ToString() + ',' + computeRealValue_Int16(ival_M, coeff);
+                    break;
+
+                case "float":      //高位在前,低位在后
+                    float fval;
+                    covBuf[0] = buf[index + 3];
+                    covBuf[1] = buf[index + 2];
+                    covBuf[2] = buf[index + 1];
+                    covBuf[3] = buf[index + 0];
+                    fval = BitConverter.ToSingle(covBuf, 0);
+
+                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X")
+                        + "  " + covBuf[2].ToString("X") + "  " + covBuf[3].ToString("X");
+
+                    value = hex_value + ',' + fval.ToString() + ',' + computeRealValue_Float(fval, coeff);
+                    break;
+                case "-float":    //低位在前,高位在后
+                    float fval_M;
+                    fval_M = BitConverter.ToSingle(buf, index);
+                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X")
+                        + "  " + buf[index + 1].ToString("X") + "  " + buf[index + 1].ToString("X");
+                    value = hex_value + ',' + fval_M.ToString() + ',' + computeRealValue_Float(fval_M, coeff);
+                    break;
+
+                case "uint32":     //高位在前,低位在后
+                    UInt32 ui32val = 0;
+                    covBuf[0] = buf[index + 3];
+                    covBuf[1] = buf[index + 2];
+                    covBuf[2] = buf[index + 1];
+                    covBuf[3] = buf[index + 0];
+                    ui32val = BitConverter.ToUInt32(covBuf, 0);
+                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X")
+                       + "  " + covBuf[2].ToString("X") + "  " + covBuf[3].ToString("X");
+                    value = hex_value + ',' + ui32val.ToString() + ',' + computeRealValue_UInt32(ui32val, coeff);
+                    break;
+
+                case "-uint32": //低位在前,高位在后
+                    UInt32 ui32val_M = 0;
+                    ui32val_M = BitConverter.ToUInt32(buf, index);
+                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X")
+                         + "  " + buf[index + 2].ToString("X") + "  " + buf[index + 3].ToString("X");
+                    value = hex_value + ',' + ui32val_M.ToString() + ',' + computeRealValue_UInt32(ui32val_M, coeff);
+                    break;
+
+                case "int32":      //高位在前,低位在后
+                    Int32 i32val_M = 0;
+                    covBuf[0] = buf[index + 3];
+                    covBuf[1] = buf[index + 2];
+                    covBuf[2] = buf[index + 1];
+                    covBuf[3] = buf[index + 0];
+                    i32val_M = BitConverter.ToInt32(covBuf, 0);
+                    hex_value = covBuf[0].ToString("X") + "  " + covBuf[1].ToString("X")
+                  + "  " + covBuf[2].ToString("X") + "  " + covBuf[3].ToString("X");
+                    value = hex_value + ',' + i32val_M.ToString() + ',' + computeRealValue_Int32(i32val_M, coeff);
+                    break;
+
+                case "-int32": //低位在前,高位在后
+                    Int32 i32val = 0;
+                    i32val = BitConverter.ToInt32(buf, index);
+                    hex_value = buf[index].ToString("X") + "  " + buf[index + 1].ToString("X")
+                       + "  " + buf[index + 2].ToString("X") + "  " + buf[index + 3].ToString("X");
+                    value = hex_value + ',' + i32val.ToString() + ',' + computeRealValue_Int32(i32val, coeff);
+                    break;
+
+                case "bit":
+                    byte bitVal = 0;
+
+                    byte aa = (byte)(buf[index] >> bit_index);
+                    byte bb = (byte)(Math.Pow(2, length - 1));
+                    byte cc = (byte)(aa & bb);
+
+                    bitVal = (byte)((byte)(buf[index] >> bit_index) & (byte)(Math.Pow(2, length) - 1));
+                    //value =
+                    hex_value = buf[index].ToString("X");
+                    value = hex_value + ',' + bitVal.ToString() + ',' + computeRealValue_Byte(bitVal, coeff); ;
+                    break;
+                case "int64":
+                    value = BitConverter.ToInt64(buf, index).ToString();
+                    break;
+                case "uint64":
+                    value = BitConverter.ToUInt64(buf, index).ToString();
+                    break;
+                case "double":
+                    value = BitConverter.ToDouble(buf, index).ToString();
+                    break;
+
+                default:
+                    break;
+            }
+            return value;
+        }
+
+
+
         #endregion
     }
 

@@ -26,8 +26,6 @@ namespace satProcessHelper
             double secs = Convert.ToDouble(seconds);
 
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(secs);
-
-            //tB_last_reset_time.Text = dt.ToString();
             return dt.ToString();
         }
 

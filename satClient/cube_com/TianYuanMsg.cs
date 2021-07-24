@@ -12,5 +12,14 @@ namespace satMsg
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 196)]//6
         public byte[] frame;
         public ushort crc;
+
+        public TianYuanPackage(byte scid, ushort apid)
+        {
+            ttc = new TTCHeader(scid);
+            epdu = new EPDUHeader(apid);
+            mpdu = new MPDUHeader();
+            frame = new byte[196];
+            crc = 0;
+        }
     };
 }

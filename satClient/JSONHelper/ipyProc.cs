@@ -44,8 +44,6 @@ namespace JSONHelper
         /// <returns></returns>
         public static string ReflectionRun(string coeff, string value)
         {
-            //"coeff":"func,functionName,a,b"
-
             try
             {
                 string[] str = coeff.Split(',');
@@ -76,7 +74,7 @@ namespace JSONHelper
             }
             catch (Exception ex)
             {
-                Trace.WriteLine("调用函数错误:" + ex.Message + ex.StackTrace);
+                Trace.WriteLine("调用函数错误:" + ex.Message);
                 return null;
             }
         }

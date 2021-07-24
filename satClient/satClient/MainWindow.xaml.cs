@@ -572,6 +572,7 @@ namespace satClient
 
         SATFRAMEOBC fobc ;
         SATFRAMEADCS fadcs;
+        TianYuanPackage typk;
 
         RecvMsgParse recmsgParse;
 
@@ -581,6 +582,8 @@ namespace satClient
              byte scid = 0x54;
              fobc = new SATFRAMEOBC(scid, obcapid);
              fadcs = new SATFRAMEADCS(scid, adcsapid);
+
+            typk = new TianYuanPackage(scid, obcapid);
 
             // TTCHeader tth = new TTCHeader();
             //tth.uiData0 = 0x5581;
@@ -598,7 +601,10 @@ namespace satClient
 
             excelApp.createNewExcel(recmsgParse.getHouseKeepingPackageHeader());
 
-            excelApp.DataTableToExcel(recmsgParse.getHouseKeepingPackage(createOBCFrame()));
+
+            //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
+            excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
+            excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
 
 
 
@@ -630,7 +636,13 @@ namespace satClient
             
             byte[] bval =  UniSerialize.StructToByte((PlatForm)fobc.pl);
 
-            string str = Encoding.ASCII.GetString(bval);
+            bval.CopyTo(typk.frame, 0);
+
+            typk.epdu.length = (ushort)bval.Length;
+
+            byte[] bval2 = UniSerialize.StructToByte((TianYuanPackage)typk);
+
+            //string str = Encoding.ASCII.GetString(bval);
             //string str = "";
             //foreach(byte b in bval)
             //{
@@ -640,7 +652,7 @@ namespace satClient
             //Trace.WriteLine("", "");
             //Trace.WriteLine("", str);
             //Trace.WriteLine("", "");
-            return bval;
+            return bval2;
         }
 
         private byte[] createADCSFrame()

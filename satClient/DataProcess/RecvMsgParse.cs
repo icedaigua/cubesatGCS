@@ -8,6 +8,7 @@ namespace DataProcess
 {
     public class RecvMsgParse
     {
+        private byte[] entireBytes;
 
         private JSONProcess satJson; //= new JSONProcess();
         private TianYuanPackage tyPack = new TianYuanPackage();
@@ -21,7 +22,7 @@ namespace DataProcess
 
         public DataTable ParseMessage(byte[] bvals)
         {
-            byte[] entireBytes = getEntirePackage(bvals);  //获取完整的帧
+            entireBytes = getEntirePackage(bvals);  //获取完整的帧
 
             if (entireBytes == null) return null;
 
@@ -61,13 +62,38 @@ namespace DataProcess
         }
 
 
-        public DataTable getHouseKeepingPackage(byte[] bvals)
+        private DataTable getHouseKeepingPackage(byte[] bvals)
         {
 
             return satJson.DecodePackage(bvals,tyPack.epdu.getAPID());
+        }
 
-            //return new DataTable();
-            //return new byte[4];
+        /// <summary>
+        /// 原始数据生成DateTable
+        /// </summary>
+        /// <param name="bvals"></param>
+        /// <returns></returns>
+        public DataTable originDataToDataTable()
+        {
+            if (entireBytes == null)
+                throw new ArgumentException("origin数据为空");
+            DataTable dt = new DataTable("origin");
+
+            DataRow dr = dt.NewRow();
+            dt.Rows.Add(dr);
+
+            //第一列为当前系统时间
+            DataColumn dc = new DataColumn();
+            dt.Columns.Add(dc);
+            dr[0] = DateTime.UtcNow;
+            ushort kc = 1;
+            foreach (byte b in entireBytes)
+            {
+                DataColumn dc1 = new DataColumn();
+                dt.Columns.Add(dc1);
+                dr[kc++] = b.ToString("X2");
+            }
+            return dt;
         }
 
         //public Dictionary<string,string> getSatDataName()

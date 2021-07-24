@@ -56,7 +56,7 @@ namespace DataIO
                     throw new ArgumentException("写入的sheet不存在");
                 }
 
-                int num = sheet1.LastRowNum + 1;//获取最大行数
+                int num = sheet1.LastRowNum+1;//获取最大行数
                 //写入数据
                 for (int row = 0; row < sourceData.Rows.Count; row++)
                 {
@@ -75,7 +75,7 @@ namespace DataIO
                 workbook.Write(fout);
                 fs.Close();
                 fout.Close();
-                return sheet1.LastRowNum + 1;
+                return sheet1.LastRowNum+1;
             }
             catch(Exception ex)
             {
@@ -198,8 +198,6 @@ namespace DataIO
         }
 
 
-
-
         public void createNewExcel(DataTable[] dtArr)
         {
             try
@@ -208,15 +206,18 @@ namespace DataIO
                 {
                     FileStream fs = new FileStream(excelName, FileMode.CreateNew);
                     IWorkbook workbook = new XSSFWorkbook();
-                    
-                    foreach(DataTable dt in dtArr)
+
+                    ISheet sheet0 = workbook.CreateSheet("origin");
+                    foreach (DataTable dt in dtArr)
                     {
                         ISheet sheet1 = workbook.CreateSheet(dt.TableName);                   
                     }
+                  
                     workbook.Write(fs);
                     fs.Close();
-                  
-                    foreach (DataTable dt in dtArr)  //写入第一行
+
+                    createOriginTableFirstLine(); //写入第一行
+                    foreach (DataTable dt in dtArr)  
                     {
                         DataTableToExcel(dt);
                     }
@@ -230,8 +231,29 @@ namespace DataIO
          
         }
 
-
+        private void createOriginTableFirstLine()
+        {
        
+            DataTable dt = new DataTable("origin");
+
+            DataRow dr = dt.NewRow();
+            dt.Rows.Add(dr);
+
+            //第一列为当前系统时间
+            DataColumn dc = new DataColumn();
+            dt.Columns.Add(dc);
+            dr[0] = DateTime.UtcNow;         
+            for (ushort kc=1;kc<256;kc++)
+            {
+                DataColumn dc1 = new DataColumn();
+                dt.Columns.Add(dc1);
+                dr[kc] = "第"+ kc.ToString("")+"列";
+            }
+            DataTableToExcel(dt);
+        }
+
+
+
 
 
         #region IDisposable 成员
