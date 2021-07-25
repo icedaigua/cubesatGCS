@@ -1,6 +1,5 @@
 ﻿<Window xmlns:Pages="clr-namespace:Pages;assembly=Pages"  
          xmlns:iNet="clr-namespace:iNet;assembly=iNet" 
-         xmlns:satCompent="clr-namespace:satCompent;assembly=satCompent"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -61,7 +60,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <materialDesign:ColorZone  Mode="PrimaryLight">
+                <materialDesign:ColorZone  Mode="Light">
                     <DockPanel>
                         <TextBlock
                             HorizontalAlignment="Center"
@@ -71,8 +70,17 @@
                             Text="田园一号"/>
 
                         <StackPanel Orientation="Horizontal" Margin="400,0,0,0">
-                            <Button
+
+                            <Button   
                                 Margin="16,0,0,0"
+                                Style="{StaticResource MaterialDesignIconButton}"
+                                ToolTip="启动"
+                                Click="btn_test_Click" >
+                                <materialDesign:PackIcon Kind="Play" />
+                            </Button>
+                            
+                            <Button
+                                Margin="24,0,0,0"
                                 ToolTip="Home"                            
                                 Content="{materialDesign:PackIcon Kind=Home, Size=24}"
                                 Style="{DynamicResource MaterialDesignToolButton}"/>
@@ -80,8 +88,8 @@
                                 Margin="24,0,0,0"
                                 ToolTip="网络设置"   
                                 Content="{materialDesign:PackIcon Kind=Web, Size=24}"
-                                Style="{DynamicResource MaterialDesignToolButton}"/>
-
+                                Style="{DynamicResource MaterialDesignToolButton}"
+                                Click="btn_iNet_setting"/>
                             <Button 
                                 Margin="16,0,0,0"
                                 ToolTip="设置"                              
@@ -89,57 +97,39 @@
                                 Style="{DynamicResource MaterialDesignToolButton}"/>
             
                     </StackPanel>
-                </DockPanel>
+
+                        <materialDesign:PopupBox
+                            DockPanel.Dock="Right"
+                            PlacementMode="BottomAndAlignRightEdges"
+                            StaysOpen="False">
+                            <StackPanel>
+                              
+                                <Button
+                                    Content="Hello World"
+                                    Click="btn_test_Click"/>
+
+                                <Button
+                                    Content="Nice Popup"
+                                    Click="btn_test2_Click"/>
+
+                                <Button
+                                    Content="Test3"
+                                    Click="btn_test3_Click"/>
+                                <Separator/>
+
+                                <Button
+                                    Content="Goodbye"
+                                    Click="btn_test4_Click"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </DockPanel>
             </materialDesign:ColorZone>
 
         
         </Grid>
-        <TabControl Grid.Row="1" Margin="2"
-					x:Name="Mainctrl" HorizontalAlignment="Left" >
 
-
-            <TabItem Header="上行注入">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="225*"/>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="19*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Name="btn_test" Click="btn_test_Click" 
-                             Style="{DynamicResource MaterialDesignToolButton}">启动任务</Button>
-                    <Button Grid.Row="1" Name="btn_test2" Click="btn_test2_Click" 
-                             Style="{DynamicResource MaterialDesignToolButton}">Test2</Button>
-                    <Button Grid.Row="2" Name="btn_test3" Click="btn_test3_Click"  
-                             Style="{DynamicResource MaterialDesignToolButton}">Test3</Button>
-                    <Button Grid.Row="3" Name="btn_test4" Click="btn_test4_Click"  
-                             Style="{DynamicResource MaterialDesignToolButton}">Test4</Button>
-                </Grid>
-            </TabItem>
-            <TabItem Header="遥测信息">
-                    <ContentControl x:Name="content"></ContentControl>
-            </TabItem>
-
-            <TabItem Header="数据显示"/>
-
-
-            <TabItem Header="网络设置">
-                <Grid>
-                    <View:iNetView  HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="0"/>
-                </Grid>
-            </TabItem>
-
-
-        </TabControl>
-
-
-
-
+            <ContentControl x:Name="content" Grid.Row="1" Margin="2"></ContentControl>
+       
 
     </Grid>
     </Grid>

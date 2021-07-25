@@ -100,12 +100,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModel\DataGridViewModel.cs" />
+    <Compile Include="View\DataGridView.xaml.cs">
+      <DependentUpon>DataGridView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\ByteHelper.cs" />
     <Compile Include="Helper\Configuration.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
     <Compile Include="ViewModel\iNetViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\iNetView.xaml.cs">
       <DependentUpon>iNetView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\DataGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\iNetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

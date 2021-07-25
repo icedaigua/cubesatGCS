@@ -16,6 +16,7 @@ using UniHelper;
 
 using satCompent.View;
 using System.Windows.Controls;
+using System.Data;
 
 namespace satClient
 {
@@ -39,7 +40,7 @@ namespace satClient
 
         private iNetView pgCode = null;  //源码
         private OrbitView pgResult = null;  //参数
-
+        private DataGridView pggrid = null;  //参数
         #endregion
 
 
@@ -128,6 +129,7 @@ namespace satClient
             {
                 pgCode = new iNetView();
                 pgResult = new OrbitView();
+                pggrid = new DataGridView();
                 //Messenger.Default.Send<string>("Loaded", "INET");
             }
             else if ("Closed".Equals(info))
@@ -156,10 +158,13 @@ namespace satClient
                 switch (navigation.Id)
                 {
                     case 11:
-                        this.content.Content = new Frame() { Content = pgCode };
+                        //this.content.Content = new Frame() { Content = pgCode };
                         break;
                     case 12:
                         this.content.Content = new Frame() { Content = pgResult };
+                        break;
+                    case 13:
+                        this.content.Content = new Frame() { Content = pggrid };
                         break;
                     default:
                         break;
@@ -547,7 +552,11 @@ namespace satClient
             frameTest();
 
         }
-        
+        private void btn_iNet_setting(object sender, RoutedEventArgs e)
+        {
+            this.content.Content = new Frame() { Content = pgCode };
+        }
+
         RecvMsgParse recmsgParse;
 
         TianYuanMsg tymsg = new TianYuanMsg();
@@ -563,7 +572,11 @@ namespace satClient
             {
                 excelApp.DataTableToExcel(recmsgParse.ParseMessage(tymsg.createOBCFrame()));
                 excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
-              //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
+
+                DataTable dt = recmsgParse.originDataToDataTable();
+
+                Messenger.Default.Send<DataTable>(recmsgParse.originDataToDataTable(), "DataGrid");
+                //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
 
             }
             catch(Exception ex)
@@ -572,6 +585,7 @@ namespace satClient
             }
 
         }
-     
+
+       
     }
 }
