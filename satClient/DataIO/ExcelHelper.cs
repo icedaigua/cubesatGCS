@@ -283,6 +283,40 @@ namespace DataIO
             cell.SetCellValue("角度");//循环往第二行的单元格中添加数据
 
         }
+
+        private void excelTest()
+        {
+            //创建一个表
+            //System.Data.DataTable dt = new System.Data.DataTable("Product");
+            //System.Data.DataColumn dc = null;
+
+            ////添加列，赋值
+            //dc = dt.Columns.Add("id", Type.GetType("System.Int32"));
+            //dc.AutoIncrement = true;
+            //dc.AutoIncrementSeed = 1;
+            //dc.AutoIncrementStep = 1;
+            //dc.AllowDBNull = false;
+            //dt.Columns.Add("pname", Type.GetType("System.String"));
+            //dt.Columns.Add("price", Type.GetType("System.Double"));
+
+            //System.Data.DataRow dr = dt.NewRow();
+            //dr["pname"] = "red apple";
+            //dr["price"] = 9.9;
+
+            //dt.Rows.Add(dr);
+
+            //dr = dt.NewRow();
+            //dr["pname"] = "black apple";
+            //dr["price"] = 19.9;  
+            //dt.Rows.Add(dr);
+
+            //dr = dt.NewRow();
+            //dr["pname"] = "gold apple";
+            //dr["price"] = 29.9;
+            //dt.Rows.Add(dr);
+
+            //excelApp.DataTableToExcel(dt, "姿控");
+        }
         #endregion
 
 

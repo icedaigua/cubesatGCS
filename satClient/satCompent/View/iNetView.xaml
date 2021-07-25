@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:satCompent"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" >
     <Grid>
         <GroupBox Name="gB_iNet" Header="Net参数设置" Margin="2">
             <Grid>
@@ -34,69 +33,46 @@
 
                 
                     <TextBlock Grid.Column="0" Grid.Row="0"  Text="IP地址" Margin="0,0,2,4" VerticalAlignment="Center"
-				    Foreground="IndianRed" FontFamily="宋体" FontWeight="DemiBold"></TextBlock>
+				   FontFamily="宋体" FontWeight="DemiBold"></TextBlock>
                     <TextBlock Grid.Column="0" Grid.Row="1"  Text="端口号" Margin="0,0,2,4" VerticalAlignment="Center"
-				    Foreground="IndianRed" FontFamily="宋体" FontWeight="DemiBold"></TextBlock>
+				   FontFamily="宋体" FontWeight="DemiBold"></TextBlock>
 
 
                     <TextBox Grid.Column="1" Grid.Row="0" Name="tB_IP" Margin="2" 
 				     Width="200" Height="40"
-				    Foreground="IndianRed" FontFamily="宋体" FontWeight="DemiBold" 
+				    FontFamily="宋体" FontWeight="DemiBold" 
                      TextAlignment="Center"
                              Text="{Binding NetIP}">
                      
                     </TextBox>
                     <TextBox Grid.Column="1" Grid.Row="1" Name="tB_No" Margin="2" 
 				    Width="200" Height="40" VerticalAlignment="Center"
-				    Foreground="IndianRed" FontFamily="宋体" FontWeight="DemiBold"
+				    FontFamily="宋体" FontWeight="DemiBold"
                      TextAlignment="Center"
                              Text="{Binding NetNO}"></TextBox>
 
                     <Button Grid.ColumnSpan="2" Grid.Row="2" Name="btn_iNet_open" Margin="2" 												
-												Foreground="Brown" FontWeight="Bold"
-                            Command="{Binding OpenNetCommand}">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF709DEE" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background> 打开端口
+												 FontWeight="Bold"  Style="{DynamicResource MaterialDesignToolButton}"
+                            Command="{Binding OpenNetCommand}">打开端口
                     </Button>
                     <Button Grid.ColumnSpan="2" Grid.Row="3" Name="btn_iNet_close" Margin="2" 												
-												Foreground="Brown" FontWeight="Bold"
-                            Command="{Binding CloseNetCommand}">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF709DEE" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background> 关闭端口
+												 FontWeight="Bold"  Style="{DynamicResource MaterialDesignToolButton}"
+                            Command="{Binding CloseNetCommand}">关闭端口
                     </Button>
 
                     <Button Grid.ColumnSpan="2" Grid.Row="4" Name="btn_send" Margin="2" 
-												Foreground="Brown" FontWeight="Bold"
-                            Command="{Binding SendCommand}">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF709DEE" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background> 发送数据
+												 FontWeight="Bold"  Style="{DynamicResource MaterialDesignToolButton}"
+                            Command="{Binding SendCommand}">发送数据
                     </Button>
 
                     <Button Grid.ColumnSpan="2" Grid.Row="5" Name="btn_rec_clear" Margin="2" 
-											Command="{Binding ClearCommand}"
-												Foreground="Brown" FontWeight="Bold">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF709DEE" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background> 清空接收
+											Command="{Binding ClearCommand}"  Style="{DynamicResource MaterialDesignToolButton}"
+												 FontWeight="Bold">
+                      清空接收
                     </Button>
 
                     <CheckBox Grid.ColumnSpan="2" Grid.Row="6" Content="显示接收" 
-                                 Foreground="Brown" FontWeight="Bold"                              
+                                 FontWeight="Bold"                              
                                  VerticalAlignment="Center" HorizontalAlignment="Center" 
                                  IsChecked="{Binding DefineType,Mode=TwoWay}">
                     </CheckBox>
@@ -106,13 +82,13 @@
 
                     <StackPanel>
                         <TextBox Name="tB_sendbuf" Width="400" Height="300" 
-                                     Foreground="BlueViolet" TextWrapping="Wrap"
+                                    TextWrapping="Wrap"
                                 ScrollViewer.CanContentScroll="True" 
 								 VerticalScrollBarVisibility="Auto"
                                  Text="{Binding SendMsg}">
 
                         </TextBox>
-                        <TextBlock Name="tBk_sendCnt"   Foreground="BlueViolet" Width="400">已发送字节数：</TextBlock>
+                        <TextBlock Name="tBk_sendCnt"   Width="400">已发送字节数：</TextBlock>
                     </StackPanel>
 
 
@@ -122,14 +98,14 @@
 
                     <StackPanel>
                         <TextBox Name="tB_recbuf" Width="400" Height="300" 
-                                     Foreground="BlueViolet" FontWeight="Bold"
+                                     FontWeight="Bold"
 									 TextWrapping="Wrap"                
 								 ScrollViewer.CanContentScroll="True"
                                  HorizontalScrollBarVisibility="Visible"
 								 VerticalScrollBarVisibility="Visible"
                                   Text="{Binding RecvMsg}"/>
 
-                        <TextBlock Name="tBk_recCnt"   Foreground="BlueViolet" Width="400">已接收字节数：</TextBlock>
+                        <TextBlock Name="tBk_recCnt"   Width="400">已接收字节数：</TextBlock>
                     </StackPanel>
 
                 </GroupBox>

@@ -1,0 +1,124 @@
+[
+{"frametype":"obc",
+  "header":"0000 00000 00 0 0 000",
+"content" : [
+  {
+    "id": "satID",
+    "length": 1,
+    "type": "byte",
+    "index": 0,
+    "chinese":"卫星代号",
+    "coeff":"none,0.0",
+    "relation":"none",
+    "range":"none,none"
+  },
+  {
+    "id": "rebootCnt",
+    "length": 2,
+    "type": "-uint16",
+    "index": 1,
+    "chinese":"重启计数",
+    "coeff":"none,0.0",
+    "relation":"none",
+    "range":"none,none"
+  },
+  {
+    "id": "upCmdCnt",
+    "length": 2,
+    "type": "-uint16",
+    "index": 3,
+    "chinese":"上行指令计数",
+    "coeff":"none,0.0",
+    "relation":"none",
+    "range":"none,none"
+  }, 
+ 
+  {
+  "id": "DownCnt",
+  "length": 2,
+  "type": "-uint16",
+  "index": 5,
+  "chinese":"下行遥测帧总计数",
+  "coeff":"none,0.0",
+  "relation":"none",
+  "range":"none,none"
+ } , 
+  {
+  "id": "rebootTime",
+  "length": 4,
+  "type": "-uint32",
+  "index": 7,
+  "chinese":"上次复位时间",
+  "coeff":"func,computeUTC",
+  "relation":"none",
+  "range":"none,none"
+ } , 
+  {
+  "id": "workmode",
+  "length": 1,
+  "type": "byte",
+  "index": 11,
+  "chinese":"工作模式",
+  "coeff":"func,workmode",
+  "relation":"none",
+  "range":"none,none"
+ } , 
+ {
+  "id": "UTCTime",
+  "length": 4,
+  "type": "-uint32",
+  "index": 12,
+  "chinese":"UTC时间",
+  "coeff":"func,computeUTC",
+  "relation":"none",
+  "range":"none,none"
+ } , 
+  {
+  "id": "CPU_TEMP",
+  "length": 2,
+  "type": "-int16",
+  "index": 16,
+  "chinese":"CPU片内温度",
+  "coeff":"func,ADtoDigi,0.01,0.0",
+  "relation":"none",
+  "range":"-80.0,80.0"
+ }, 
+ {
+  "id": "switch",
+  "length": 4,
+  "type": "-uint32",
+  "index": 18,
+  "chinese":"开关",
+  "coeff":"none,none",
+  "relation":"none",
+  "range":"-80.0,80.0"
+ }, 
+ {
+ "id": "batt_TEMP",
+ "length": 2,
+ "type": "-uint16",
+ "index": 22,
+ "chinese":"电池温度",
+ "coeff":"func,ADtoDigi,0.01,0.0",
+ "relation":"none",
+ "range":"-80.0,80.0"
+}
+]},
+
+{"frametype":"adcs",
+  "header":"0000 11000 00 0 0 00",
+"content" : [
+    {
+      "id": "resvd",
+      "length": 1,
+      "type": "byte",
+      "index": 0,
+    "chinese":"保留",
+    "coeff":"none,0.0",
+    "relation":"none",
+    "range":"none,none"
+    }
+
+]}
+]
+

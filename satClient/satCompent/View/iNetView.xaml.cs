@@ -12,7 +12,17 @@ namespace satCompent.View
         public iNetView()
         {
             InitializeComponent();
+            //RefreshSize(width, height);
             this.DataContext = new iNetViewModel();
+        }
+
+        private void RefreshSize(uint width,uint height)
+        {
+            tB_sendbuf.Width = width;
+            tB_sendbuf.Height = height;
+
+            tB_recbuf.Width = width;
+            tB_recbuf.Height = height;        
         }
 
 

@@ -68,9 +68,9 @@ namespace satCompent.Model
             //list.Add(new ElementModel() { Name = "近地点幅角ω(º)", Val = string.Empty });
             //list.Add(new ElementModel() { Name = "平近点角M(º)", Val = string.Empty });
 
-            JsonData item = JsonMapper.ToObject(System.IO.File.ReadAllText("settings/orbit.json"));
-            for (int i = 0; i < item[0].Count; i++)
-                list.Add(new ElementModel() { Name = Convert.ToString(item[0][i]["Name"]), Val = string.Empty });
+            //JsonData item = JsonMapper.ToObject(System.IO.File.ReadAllText("settings/orbit.json"));
+            //for (int i = 0; i < item[0].Count; i++)
+            //    list.Add(new ElementModel() { Name = Convert.ToString(item[0][i]["Name"]), Val = string.Empty });
 
             return list;
         }

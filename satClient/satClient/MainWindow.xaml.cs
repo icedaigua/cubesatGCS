@@ -1,7 +1,9 @@
 ﻿using DataIO;
+using DataProcess;
 using GalaSoft.MvvmLight.Messaging;
+using satClient.Model;
+using satMsg;
 using System;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -11,8 +13,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UniHelper;
-using satMsg;
-using DataProcess;
+
+using satCompent.View;
+using System.Windows.Controls;
 
 namespace satClient
 {
@@ -33,6 +36,10 @@ namespace satClient
         private Task mainTask;
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         private ManualResetEvent resetEvent = new ManualResetEvent(true); //用于Task暂停和恢复
+
+        private iNetView pgCode = null;  //源码
+        private OrbitView pgResult = null;  //参数
+
         #endregion
 
 
@@ -42,6 +49,8 @@ namespace satClient
             LoggingInitz();
             UI_Initz();
             Messenger.Default.Register<string>(this, "MainNet", HandleMainNet);
+            Messenger.Default.Register<string>(this, "Main", HandleMain);
+            Messenger.Default.Register<object>(this, "Navi", HandleNavi);
             //hkView_Initz();
             createIOFolder();
             //satTimerInitz();
@@ -113,6 +122,87 @@ namespace satClient
         }
 
 
+        private void HandleMain(string info)
+        {
+            if ("Loaded".Equals(info))
+            {
+                pgCode = new iNetView();
+                pgResult = new OrbitView();
+                //Messenger.Default.Send<string>("Loaded", "INET");
+            }
+            else if ("Closed".Equals(info))
+            {
+            }
+            else if ("Set".Equals(info))
+            {
+               
+            }
+            else
+            {
+            }
+        }
+
+        private void HandleNavi(object obj)
+        {
+            NavigationModel navigation = (NavigationModel)obj;
+
+ 
+            if (navigation.Parent == 0)  //第1级导航菜单
+            {
+
+            }
+            else if (navigation.Parent == 1)  //第2级导航菜单：遥测
+            {
+                switch (navigation.Id)
+                {
+                    case 11:
+                        this.content.Content = new Frame() { Content = pgCode };
+                        break;
+                    case 12:
+                        this.content.Content = new Frame() { Content = pgResult };
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (navigation.Parent == 2)  //第2级导航菜单：外测
+            {
+                switch (navigation.Id)
+                {
+                    case 101:
+                        this.content.Content = new Frame() { Content = pgCode };
+                        break;
+                    case 102:
+                        this.content.Content = new Frame() { Content = pgResult };
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (navigation.Parent == 3)  //第2级导航菜单：遥控
+            {
+                switch (navigation.Id)
+                {
+                    case 121:
+                        //this.content.Content = new Frame() { Content = pgCmd };
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (navigation.Parent == 4)  //第2级导航菜单：自定义
+            {
+                       
+            }
+            else
+            {
+            }
+        }
+
+        #endregion
+
+        #region TCP相关
+
         private void tcpSendData(string msg)
         {
             try
@@ -130,8 +220,7 @@ namespace satClient
         }
         private void tcpConnect(string[] msg)
         {
-            IPEndPoint endPoint;
-            //ip地址
+            IPEndPoint endPoint;  //ip地址       
             try
             {
                 string iNet_IP = msg[1];
@@ -189,8 +278,6 @@ namespace satClient
             builder.Append('\n');
             //string asciiString = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
             Messenger.Default.Send<string>(builder.ToString(), "INET");
-            //satTcpClient.SendAsync(e.Data);
-
         }
         #endregion
 
@@ -210,69 +297,7 @@ namespace satClient
 
         #endregion
 
-        private void localClient_frm_init()
-        {
-            iNet_local_frm.OpenHandler += new Pages.iNetClient.OpenClickEventHandler(localClient_create);
-            iNet_local_frm.socketDataArrival = localTaskRecv;
-
-
-            iNet_local_frm.setTextWidth(this.Width);
-
-            iNet_local_frm.iNetInitz("本地网络设置", "192.168.1.114", "9889");
-
-        }
-        /// <summary>
-        /// 创建TCP Client
-        /// </summary>       
-        private void localClient_create(object sender, RoutedEventArgs e)
-        {
-
-            localIsRunning = true;
-
-            //localClientIO.CreateFrameFile();
-
-
-            Task.Factory.StartNew(localTaskProc);  //启动处理任务     
-            iNet_local_frm.ShowMsg("数据处理任务启动成功");
-            Trace.WriteLine("数据处理任务启动成功");
    
-        }
-
-        private void localClient_Close()
-        {
-            localIsRunning = false;
-
-            //localClientIO.CloseFile();
-
-        }
-
-        private void localTaskRecv(byte[] buffer)
-        {
-            try
-            {
-                Int32 iRecv = buffer.Length;
-
-                if (iRecv > 0)
-                {
-                    iNet_local_frm.ShowMsg("接收线程运行中:" + iRecv.ToString());
-                    byte[] recBuf = new byte[iRecv];    //遥测接收缓冲区
-                    Array.Copy(buffer, recBuf, iRecv);  //从非托管内存拷贝到托管内存
-
-                    localRecvQueue.Enqueue(recBuf);  //遥测接收数据入队
-
-                    iNet_local_frm.ShowMsg(recBuf);
-                    //localClientIO.WriteFrameFile(recBuf);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                iNet_local_frm.ShowMsg("数据接收处理任务失败：" + ex.Message);
-                Trace.WriteLine("数据接收处理任务失败：" + ex.Message);
-            }
-
-        }
-
         /// <summary>
         /// 执行处理任务，解析数据
         /// </summary>
@@ -465,7 +490,18 @@ namespace satClient
 
         private void TaskInitz()
         {
-           
+            //创建和启动任务
+            //mainTask = new Task<int>(() => TaskProc(tokenSource.Token), tokenSource.Token);
+            //mainTask.Start();
+
+            //恢复任务
+            //resetEvent.Reset();   
+
+            //暂停任务
+            //resetEvent.Set();
+
+            //取消任务
+            //tokenSource.Cancel();
         }
         /// <summary>
         /// 执行处理任务，解析数据
@@ -499,114 +535,35 @@ namespace satClient
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-            //DataTable dt = excelApp.ExcelToDataTable("姿控");
-            //resetEvent.Reset();
-
-            
+           
         }
 
         private void btn_test3_Click(object sender, RoutedEventArgs e)
         {
-            //resetEvent.Set();
-            //excelTest();
-
-            //tokenSource.Cancel();
-
-            //DataTable dt = new DataTable("fffff");
-
-            //string str =  dt.TableName;
 
         }
-
-        private void excelTest()
-        {
-            //创建一个表
-            //System.Data.DataTable dt = new System.Data.DataTable("Product");
-            //System.Data.DataColumn dc = null;
-
-            ////添加列，赋值
-            //dc = dt.Columns.Add("id", Type.GetType("System.Int32"));
-            //dc.AutoIncrement = true;
-            //dc.AutoIncrementSeed = 1;
-            //dc.AutoIncrementStep = 1;
-            //dc.AllowDBNull = false;
-            //dt.Columns.Add("pname", Type.GetType("System.String"));
-            //dt.Columns.Add("price", Type.GetType("System.Double"));
-
-            //System.Data.DataRow dr = dt.NewRow();
-            //dr["pname"] = "red apple";
-            //dr["price"] = 9.9;
-
-            //dt.Rows.Add(dr);
-
-            //dr = dt.NewRow();
-            //dr["pname"] = "black apple";
-            //dr["price"] = 19.9;  
-            //dt.Rows.Add(dr);
-
-            //dr = dt.NewRow();
-            //dr["pname"] = "gold apple";
-            //dr["price"] = 29.9;
-            //dt.Rows.Add(dr);
-
-            //excelApp.DataTableToExcel(dt, "姿控");
-        }
-
         private void btn_test4_Click(object sender, RoutedEventArgs e)
         {
-
-            //TTCHeader tth = new TTCHeader();
-
-            //tth.uiData0 = 0x5581;
-
-            //tth.uiData1 = 0x00000080;
-
-            //MessageBox.Show("ver = :"+tth.getVERSION().ToString("X2"));
-            //MessageBox.Show("scid = :" + tth.getSCID().ToString("X2"));
-            //MessageBox.Show("vcid = :" + tth.getVCID().ToString("X2"));
-
             frameTest();
 
         }
         
-
-        SATFRAMEOBC fobc ;
-        SATFRAMEADCS fadcs;
-        TianYuanPackage typk;
-
         RecvMsgParse recmsgParse;
+
+        TianYuanMsg tymsg = new TianYuanMsg();
 
         private void frameTest()
         {
-             ushort obcapid = 0x0000, adcsapid = 0x0C00;
-             byte scid = 0x54;
-             fobc = new SATFRAMEOBC(scid, obcapid);
-             fadcs = new SATFRAMEADCS(scid, adcsapid);
-
-            typk = new TianYuanPackage(scid, obcapid);
-
-            // TTCHeader tth = new TTCHeader();
-            //tth.uiData0 = 0x5581;
-            //tth.uiData1 = 0x00000080;
-
-            //MessageBox.Show("scid = :" + fobc.tth.getSCID().ToString("X2"));
-            //MessageBox.Show("obcapid = :" + fobc.epdu.getAPID().ToString("X2"));
-            //MessageBox.Show("adcsapid = :" + fadcs.epdu.getAPID().ToString("X2"));
-
-            //MessageBox.Show("length = :" + System.Runtime.InteropServices.Marshal.SizeOf(fobc.tth).ToString(""));
-            //MessageBox.Show("length = :" + System.Runtime.InteropServices.Marshal.SizeOf(fobc.mpdu).ToString(""));
-            //MessageBox.Show("length = :" + System.Runtime.InteropServices.Marshal.SizeOf(fobc.epdu).ToString(""));
 
             recmsgParse = new RecvMsgParse(Directory.GetCurrentDirectory() + "\\settings\\tianyuan-1.json");
 
             excelApp.createNewExcel(recmsgParse.getHouseKeepingPackageHeader());
 
-
             try
             {
-                excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
+                excelApp.DataTableToExcel(recmsgParse.ParseMessage(tymsg.createOBCFrame()));
                 excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
-            //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
+              //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
 
             }
             catch(Exception ex)
@@ -614,62 +571,7 @@ namespace satClient
                 Trace.WriteLine("写入excel错误" + ex.Message);
             }
 
-
-
-            //createOBCFrame();
-            createADCSFrame();
-
         }
-        public ushort recCNT = 2;
-        public ushort downCNT = 3;
-        private byte[] createOBCFrame()
-        {
-
-            fobc.pl.soft_id = 0x55;                            //1
-            fobc.pl.reboot_count = 0x01;                     //2
-
-            fobc.pl.rec_cmd_count = recCNT;                    //2
-            fobc.pl.down_count = downCNT;                       //2
-
-            fobc.pl.last_reset_time = 0;                  //4
-            fobc.pl.work_mode = 0x10;                          //1
-
-            fobc.pl.utc_time = UniFunction.xDateSeconds(DateTime.UtcNow);                         //4
-            fobc.pl.temp_hk = -27;                           //2
-
-            fobc.pl.on_off_status = 0xAA55AA55;                            //4
-            fobc.pl.batt_TEMP1 = 27;                               //2
-
-
-            
-            byte[] bval =  UniSerialize.StructToByte((PlatForm)fobc.pl);
-
-            bval.CopyTo(typk.frame, 0);
-
-            typk.epdu.length = (ushort)bval.Length;
-
-            byte[] bval2 = UniSerialize.StructToByte((TianYuanPackage)typk);
-
-            //string str = Encoding.ASCII.GetString(bval);
-            //string str = "";
-            //foreach(byte b in bval)
-            //{
-            //    str += "0x" + b.ToString("X2") + "\t";
-            //}
-            //str += "\n";
-            //Trace.WriteLine("", "");
-            //Trace.WriteLine("", str);
-            //Trace.WriteLine("", "");
-            return bval2;
-        }
-
-        private byte[] createADCSFrame()
-        {
-
-            fadcs.adcs.velox = (float)1.2;                            //1
-            fadcs.adcs.posix = (float)123.45;                     //2
-
-            return UniSerialize.StructToByte((SATFRAMEADCS)fadcs);
-        }
+     
     }
 }

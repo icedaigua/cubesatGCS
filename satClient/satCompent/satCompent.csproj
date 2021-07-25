@@ -109,7 +109,6 @@
     <Compile Include="View\iNetView.xaml.cs">
       <DependentUpon>iNetView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MainView.xaml.cs" />
     <Compile Include="Model\ElementModel.cs" />
     <Compile Include="Model\Msg.cs" />
     <Compile Include="Model\NavigationModel.cs" />
@@ -127,10 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\iNetView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

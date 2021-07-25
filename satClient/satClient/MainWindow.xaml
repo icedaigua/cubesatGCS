@@ -5,65 +5,128 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:satClient"
         xmlns:View="clr-namespace:satCompent.View;assembly=satCompent" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:light="http://www.galasoft.ch/mvvmlight"
         x:Class="satClient.MainWindow"
         mc:Ignorable="d"
-		Title="地面站客户端" FontSize="20"
+		Title="地面测控客户端" FontSize="20"
+        Icon="tubiao.ico"
 		WindowStartupLocation="CenterScreen" Closed="Window_Closed">
 
-    <Grid Margin="2">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+    <Window.DataContext>
+        <Binding Path="Main" Source="{StaticResource Locator}"/>
+    </Window.DataContext>
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <light:EventToCommand Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <light:EventToCommand Command="{Binding ClosedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
-        <Menu Grid.Row="0"  Margin="0,0,0,2" Height="35" FontSize="20"
-			Background="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Grid.ColumnSpan="3">
+    <Grid>
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <MenuItem Header="工作模式" Margin="3">
-                <MenuItem Header="实时模式" />
-                <MenuItem Header="复现模式" />
-                <Separator/>
-                <MenuItem Header="退出" />
-            </MenuItem>
+        <Grid Grid.Column="0" Margin="2">
+     
+            <TreeView x:Name="navi" Margin="10" ItemsSource="{Binding Navigation}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <TextBlock FontSize="16" Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedItemChanged">
+                    <light:EventToCommand Command="{Binding NaviCommand}" CommandParameter="{Binding SelectedItem, ElementName=navi}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseRightButtonDown">
+                    <light:EventToCommand Command="{Binding DefineCommand}" CommandParameter="{Binding SelectedItem, ElementName=navi}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
-            <MenuItem Header="关于" VerticalAlignment="Center"/>
+            </TreeView>
+        </Grid>
+        <Grid Grid.Column="1" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        </Menu>
+            <Grid Grid.Row="0">
+                <materialDesign:ColorZone  Mode="PrimaryLight">
+                    <DockPanel>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="22"
+                            AutomationProperties.Name="田园一号"
+                            Text="田园一号"/>
 
+                        <StackPanel Orientation="Horizontal" Margin="400,0,0,0">
+                            <Button
+                                Margin="16,0,0,0"
+                                ToolTip="Home"                            
+                                Content="{materialDesign:PackIcon Kind=Home, Size=24}"
+                                Style="{DynamicResource MaterialDesignToolButton}"/>
+                            <Button
+                                Margin="24,0,0,0"
+                                ToolTip="网络设置"   
+                                Content="{materialDesign:PackIcon Kind=Web, Size=24}"
+                                Style="{DynamicResource MaterialDesignToolButton}"/>
+
+                            <Button 
+                                Margin="16,0,0,0"
+                                ToolTip="设置"                              
+                                Content="{materialDesign:PackIcon Kind=CogOutline, Size=24}"
+                                Style="{DynamicResource MaterialDesignToolButton}"/>
+            
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:ColorZone>
+
+        
+        </Grid>
         <TabControl Grid.Row="1" Margin="2"
 					x:Name="Mainctrl" HorizontalAlignment="Left" >
 
 
             <TabItem Header="上行注入">
-            <Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="225*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="19*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Name="btn_test" Click="btn_test_Click">Test</Button>
-                    <Button Grid.Row="1" Name="btn_test2" Click="btn_test2_Click" >Test2</Button>
-                    <Button Grid.Row="2" Name="btn_test3" Click="btn_test3_Click" >Test3</Button>
-                    <Button Grid.Row="3" Name="btn_test4" Click="btn_test4_Click" >Test4</Button>
+                    <Button Grid.Row="0" Name="btn_test" Click="btn_test_Click" 
+                             Style="{DynamicResource MaterialDesignToolButton}">启动任务</Button>
+                    <Button Grid.Row="1" Name="btn_test2" Click="btn_test2_Click" 
+                             Style="{DynamicResource MaterialDesignToolButton}">Test2</Button>
+                    <Button Grid.Row="2" Name="btn_test3" Click="btn_test3_Click"  
+                             Style="{DynamicResource MaterialDesignToolButton}">Test3</Button>
+                    <Button Grid.Row="3" Name="btn_test4" Click="btn_test4_Click"  
+                             Style="{DynamicResource MaterialDesignToolButton}">Test4</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="遥测信息">
-                <Pages:hkInfo x:Name="hk_view"/>
+                    <ContentControl x:Name="content"></ContentControl>
             </TabItem>
 
             <TabItem Header="数据显示"/>
 
-            <TabItem Header="南理工测控站">
-                <Grid>
-                    <Pages:iNetClient x:Name="iNet_local_frm"/>
-                </Grid>
-
-            </TabItem>
 
             <TabItem Header="网络设置">
                 <Grid>
@@ -75,9 +138,9 @@
         </TabControl>
 
 
-       
+
 
 
     </Grid>
-
+    </Grid>
 </Window>

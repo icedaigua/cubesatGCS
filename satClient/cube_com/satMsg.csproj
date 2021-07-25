@@ -37,8 +37,14 @@
     <Compile Include="TianYuanMsg.cs" />
     <Compile Include="tianyuanCommander.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="cubeCOM.cs" />
+    <Compile Include="Commander.cs" />
     <Compile Include="Msg.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniHelper\UniHelper.csproj">
+      <Project>{8c862d1d-9faa-4c56-bcbb-b095933a5998}</Project>
+      <Name>UniHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
