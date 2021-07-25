@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Diagnostics;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 
 namespace JSONHelper
 {
@@ -39,7 +39,7 @@ namespace JSONHelper
             }
             catch(Exception ex)
             {
-                Trace.WriteLine("json解析错误"+ex.Message);
+                Trace.WriteLine("json初始化错误"+ex.Message);
             }
 
         }
@@ -57,8 +57,15 @@ namespace JSONHelper
             {
                 throw new ArgumentException("重新载入json文件错误");
             }
-            createHeaderDic();
-            getJsonChinese();
+            try
+            {
+                createHeaderDic();
+                getJsonChinese();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("json reload初始化错误" + ex.Message);
+            }
         }
 
 
@@ -133,6 +140,7 @@ namespace JSONHelper
             byte index = (byte)js["index"];
             string type = js["type"].ToString();
             string coeff = js["coeff"].ToString();
+            uint length = (uint)js["length"];
 
             switch (type)
             {
@@ -252,7 +260,12 @@ namespace JSONHelper
                 case "double":
                     value = BitConverter.ToDouble(buf, index).ToString();
                     break;
-
+                case "string":
+                    for(uint kc = index;kc<index+length;kc++)
+                    {
+                        value += buf[kc].ToString("X2");
+                    }
+                    break;
                 default:
                     break;
             }
@@ -270,13 +283,16 @@ namespace JSONHelper
             {
                  JToken js = JToken.Parse(ja[i].ToString());
                  string header = (string)js["header"];
+                if(header == null)
+                    throw new ArgumentException("Json Header 为空");
                 try
                 {
                     dicJTHeader.Add(computeFrameHeader(header),js);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    throw new ArgumentException("Json Header字典错误");
+                    //throw new ArgumentException("Json Header字典错误");
+                    Trace.WriteLine("json header字段错误" + ex.Message);
                 }
 
             }
@@ -289,12 +305,20 @@ namespace JSONHelper
         /// <returns></returns>
         private ushort computeFrameHeader(string header)
         {
-            string[] str = header.Split(' ');
+            try
+            {
+                string[] str = header.Split(' ');
+                string stmp = str[0] + str[1];
+                ushort btmp = (ushort)((Convert.ToUInt16(stmp, 2))<<7); //由于只取了高九位，右移七位
 
-            string stmp = str[0] + str[1];
-            ushort btmp = (ushort)((Convert.ToUInt16(stmp, 2))<<7); //由于只取了高九位，右移七位
+                return btmp;
+            }
+            catch(Exception ex)
+            {
+                Trace.WriteLine("json header字段错误" + ex.Message);
+                return 0xFFFF;
+            }
 
-            return btmp;
 
         }
 

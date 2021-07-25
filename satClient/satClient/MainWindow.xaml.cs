@@ -602,9 +602,17 @@ namespace satClient
             excelApp.createNewExcel(recmsgParse.getHouseKeepingPackageHeader());
 
 
+            try
+            {
+                excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
+                excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
             //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
-            excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
-            excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
+
+            }
+            catch(Exception ex)
+            {
+                Trace.WriteLine("写入excel错误" + ex.Message);
+            }
 
 
 

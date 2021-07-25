@@ -11,6 +11,12 @@ namespace Logging
 
         public Logging(string Path)
         {
+
+            if (!System.IO.Directory.Exists(Path))//不存在就创建目录
+            {
+                Directory.CreateDirectory(Path);
+            }
+
             string time_now = DateTime.Now.ToString("yyyy-MM-dd") +
      '(' + DateTime.Now.ToLongTimeString().ToString().Replace(':', '-') + ')';
 
