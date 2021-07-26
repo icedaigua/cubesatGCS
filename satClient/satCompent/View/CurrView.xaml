@@ -1,26 +1,16 @@
-﻿<Page x:Class="satCompent.View.CurrView"
+﻿<UserControl x:Class="satCompent.View.CurrView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:oxy="http://oxyplot.org/wpf"
+      xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	  Title="CurrView">
+      Width="800" Height="600">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-      
-        <oxy:PlotView Model="{Binding Curr14Model}" Margin="10" Background="Blue" Foreground="DeepPink"/>
-        <oxy:PlotView Grid.Row="1" Model="{Binding Curr12PModel}"/>
-        <oxy:PlotView Grid.Row="2" Model="{Binding Curr12NModel}"/>
-        <oxy:PlotView Grid.Row="3" Model="{Binding Curr5Model}" />
-        <TextBlock Grid.Row="4" Text="123213213123"></TextBlock>
+     
+
+        <oxy:PlotView Model="{Binding Curr14Model}" Margin="4" />
+
 
     </Grid>
-</Page>
+</UserControl>

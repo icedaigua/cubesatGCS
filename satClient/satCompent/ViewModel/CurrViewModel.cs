@@ -78,10 +78,10 @@ namespace satCompent.ViewModel
             DateTimeAxis xAxisCurr14 = new DateTimeAxis()
             {
                 Position = AxisPosition.Bottom,
-                Title = "xyz",
+                Title = "时间(s)",
                 TitlePosition = 1.0,
                 StringFormat = "HH:mm:ss",
-                IsZoomEnabled = false, //坐标轴缩放关闭
+                IsZoomEnabled = true, //坐标轴缩放关闭
                 IsPanEnabled = false, //图表缩放功能关闭
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
@@ -92,7 +92,7 @@ namespace satCompent.ViewModel
             LinearAxis yAxisCurr14 = new LinearAxis()
             {
                 Position = AxisPosition.Left,
-                Title = "ppp",
+                Title = "母线电流(mA)",
                 TitlePosition = 1.0,
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
@@ -102,30 +102,10 @@ namespace satCompent.ViewModel
                 Minimum = 0.0,
                 Maximum = 1600.0
             };
-            curr14Model = new PlotModel() { Title = "+14V母线电流(mA)" };  //线条
+
+            curr14Model = new PlotModel() { Title = "+12V母线电流(mA)" };  //线条
             curr14Model.Axes.Add(xAxisCurr14);
             curr14Model.Axes.Add(yAxisCurr14);
-
-
-            var series = new LineSeries
-            {
-                Title = "P & L",
-                DataFieldX = "Time",
-                DataFieldY = "Value",
-                Color = OxyColor.Parse("#4CAF50"),
-                MarkerSize = 3,
-                MarkerFill = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStroke = OxyColor.Parse("#4CAF50"),
-                MarkerStrokeThickness = 1.5,
-                MarkerType = MarkerType.Circle,
-                StrokeThickness = 1,
-            };
-            curr14Model.Series.Add(series);
-            //curr14Points = new List<DataPoint>();
-            //Curr14Model = new PlotModel() { Title = "+14V母线电流(mA)" };  //线条
-            //Curr14Model.Axes.Add(xAxisCurr14);
-            //Curr14Model.Axes.Add(yAxisCurr14);
-
 
         }
 

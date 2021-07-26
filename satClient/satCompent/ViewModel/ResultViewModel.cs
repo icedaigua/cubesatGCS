@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
+using System.Data;
 using GalaSoft.MvvmLight;
 
-using TSFCS.DMDS.Client.Model;
+using satCompent.Model;
 
-namespace TSFCS.DMDS.Client.ViewModel
+namespace satCompent.ViewModel
 {
     public class ResultViewModel : ViewModelBase
     {
@@ -30,7 +30,7 @@ namespace TSFCS.DMDS.Client.ViewModel
         public ResultViewModel()
         {
             result = ResultModel.GetAllResult();
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<RecvMsg>(this, "TMRSLT", HandleResult);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<DataTable>(this, "Result", HandleResult);
         }
         #endregion
 
@@ -42,7 +42,7 @@ namespace TSFCS.DMDS.Client.ViewModel
         #endregion
 
         #region Messenger Handler
-        public void HandleResult(RecvMsg msg)
+        public void HandleResult(DataTable msg)
         {
             //result[0].Val = Convert.ToString(msg.panelVolt.val);  //帆板电压
             //result[1].Val = Convert.ToString(msg.panelCurrXP.val);  //帆板+X电流:mA
@@ -74,9 +74,9 @@ namespace TSFCS.DMDS.Client.ViewModel
             //result[27].Val = Convert.ToString(msg.rxAfc.val);  //RX AFC电平遥测:Hz
             //result[28].Val = Convert.ToString(msg.txPower.val);  //TX功放输出功率:mW
 
-            for (int i = 0; i < result.Count; i++)
+            for (int i = 0; i < msg.Columns.Count; i++)
             {
-                this.result[i].Val = Convert.ToString(msg.GetF(i).Val);
+                this.result[i].Val = Convert.ToString(msg.Rows[0][i]);
             }
         }
         #endregion

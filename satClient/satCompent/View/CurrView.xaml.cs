@@ -5,7 +5,7 @@ namespace satCompent.View
     /// <summary>
     /// CurrView.xaml 的交互逻辑
     /// </summary>
-    public partial class CurrView : Page
+    public partial class CurrView : UserControl
     {
         public CurrView()
         {

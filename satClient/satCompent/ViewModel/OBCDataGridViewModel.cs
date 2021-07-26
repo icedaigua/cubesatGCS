@@ -41,7 +41,7 @@ namespace satCompent.ViewModel
         #endregion
 
         #region Method
-        int kc = 0;
+       //int kc = 0;
         public void HandleOBCGrid(DataTable info)
         {
             try

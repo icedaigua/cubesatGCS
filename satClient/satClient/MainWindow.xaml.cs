@@ -39,12 +39,14 @@ namespace satClient
         private ManualResetEvent resetEvent = new ManualResetEvent(true); //用于Task暂停和恢复
 
         private iNetView pginet = null;  //inet
-        private OrbitView pgResult = null;  //参数
+        private ResultView pgResult = null;  //参数
         private DataGridView pggrid = null;  //参数
         private CurrView pgcurr = null;
         private CurveView pgcurve = null;
         private OBCDataGridView pgobcgrid = null;
         private ADCSDataGridView pgadcsgrid = null;
+
+
         #endregion
 
 
@@ -128,9 +130,9 @@ namespace satClient
             if ("Loaded".Equals(info))
             {
                 pginet = new iNetView();
-                pgResult = new OrbitView();
+                pgResult = new ResultView();
                 pggrid = new DataGridView();
-                pgcurr = new CurrView();
+                pgcurr = new CurrView();//new CurrView();
                 pgcurve = new CurveView(0,0);
                 pgobcgrid = new OBCDataGridView();
                 pgadcsgrid = new ADCSDataGridView();
@@ -162,10 +164,10 @@ namespace satClient
                 switch (navigation.Id)
                 {
                     case 11:
-                      
+                        this.content.Content = new Frame() { Content = pgResult };
                         break;
                     case 12:
-                      
+                        this.content.Content = new Frame() { Content = pgcurr };
                         break;
                     case 13:
                 
@@ -174,7 +176,7 @@ namespace satClient
                         break;
                 }
             }
-            else if (navigation.Parent == 2)  //第2级导航菜单：外测
+            else if (navigation.Parent == 2)  //第2级导航菜单：遥控
             {
                 switch (navigation.Id)
                 {
@@ -188,7 +190,7 @@ namespace satClient
                         break;
                 }
             }
-            else if (navigation.Parent == 3)  //第2级导航菜单：遥控
+            else if (navigation.Parent == 3)  //第2级导航菜单：自定义
             {
                 switch (navigation.Id)
                 {
@@ -341,12 +343,10 @@ namespace satClient
 
                 //if (localRecvQueue.IsEmpty()) return;
 
-                Thread.Sleep(1000);
+                Task.Delay(1000);
                 frameTest();
                 //Task.WaitAny();
                 //localRecvQueue.Dequeue();
-
-                //excelTest();
              
             }
         }
@@ -393,20 +393,20 @@ namespace satClient
             {
 
                 DataTable dt0 = recmsgParse.ParseMessage(tymsg.createOBCFrame());
-                Messenger.Default.Send<DataTable>(dt0, "OBCGrid");
-                Messenger.Default.Send<DataTable>(dt0, "ADCSGrid");
+                Messenger.Default.Send<DataTable>(dt0, "Result");
+                //Messenger.Default.Send<DataTable>(dt0, "ADCSGrid");
 
-                excelApp.DataTableToExcel(recmsgParse.ParseMessage(tymsg.createOBCFrame()));
+                excelApp.DataTableToExcel(dt0);
                 excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
 
                 DataTable dt = recmsgParse.originDataToDataTable();
 
-                Messenger.Default.Send<DataTable>(recmsgParse.originDataToDataTable(), "DataGrid");
+                //Messenger.Default.Send<DataTable>(recmsgParse.originDataToDataTable(), "DataGrid");
 
             }
             catch(Exception ex)
             {
-                Trace.WriteLine("写入excel错误" + ex.Message);
+                Trace.WriteLine("frame test错误" + ex.Message);
             }
 
         }
