@@ -1,12 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
-using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
 
 namespace satCompent.ViewModel
 {
-    public class DataGridViewModel : ViewModelBase
+    public class ADCSDataGridViewModel : ViewModelBase
     {
         #region Field
         private DataTable dt = new DataTable();
@@ -25,11 +23,10 @@ namespace satCompent.ViewModel
         #endregion
 
 
-        public DataGridViewModel()
+        public ADCSDataGridViewModel()
         {
-            Messenger.Default.Register<DataTable>(this, "DataGrid", HandleDataGrid);
+            Messenger.Default.Register<DataTable>(this, "ADCSGrid", HandleOBCGrid);
         }
-
 
         #region Override Method
         public override void Cleanup()
@@ -39,7 +36,7 @@ namespace satCompent.ViewModel
         #endregion
 
         #region Method
-        public void HandleDataGrid(DataTable info)
+        public void HandleOBCGrid(DataTable info)
         {
             DataTb = info.Copy();
         }

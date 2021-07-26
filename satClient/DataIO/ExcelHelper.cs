@@ -207,12 +207,15 @@ namespace DataIO
                     FileStream fs = new FileStream(excelName, FileMode.CreateNew);
                     IWorkbook workbook = new XSSFWorkbook();
 
+                    setExcelFormat(workbook);   //模式设置没有效果,待检查
+
                     ISheet sheet0 = workbook.CreateSheet("origin");
                     foreach (DataTable dt in dtArr)
                     {
                         ISheet sheet1 = workbook.CreateSheet(dt.TableName);                   
                     }
-                  
+                    ISheet sheet2 = workbook.CreateSheet("上行遥控");
+
                     workbook.Write(fs);
                     fs.Close();
 
@@ -221,6 +224,7 @@ namespace DataIO
                     {
                         DataTableToExcel(dt);
                     }
+                    createUpCmdTableFirstLine();
                 }
             }
             catch(Exception ex)
@@ -242,7 +246,7 @@ namespace DataIO
             //第一列为当前系统时间
             DataColumn dc = new DataColumn();
             dt.Columns.Add(dc);
-            dr[0] = DateTime.UtcNow;         
+            dr[0] = "时间";//DateTime.UtcNow;         
             for (ushort kc=1;kc<256;kc++)
             {
                 DataColumn dc1 = new DataColumn();
@@ -252,9 +256,45 @@ namespace DataIO
             DataTableToExcel(dt);
         }
 
+        private void createUpCmdTableFirstLine()
+        {
+
+            DataTable dt = new DataTable("上行遥控");
+
+            DataRow dr = dt.NewRow();
+            dt.Rows.Add(dr);
+
+            //第一列为当前系统时间
+            DataColumn dc = new DataColumn();
+            dt.Columns.Add(dc);
+            dr[0] = "时间";//DateTime.UtcNow;
+
+            //第二列为指令名称
+            DataColumn dc1 = new DataColumn();
+            dt.Columns.Add(dc1);
+            dr[1] = "指令名称";
+
+            //第三列为指令ASCII码
+            DataColumn dc2 = new DataColumn();
+            dt.Columns.Add(dc2);
+            dr[2] = "指令";
+
+            DataTableToExcel(dt);
+        }
 
 
-
+        private void setExcelFormat(IWorkbook wb)
+        {
+            ICellStyle style1 = wb.CreateCellStyle();//样式
+            style1.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Left;//文字水平对齐方式
+            style1.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;//文字垂直对齐方式
+                                                                                  //设置边框
+            style1.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+            style1.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+            style1.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+            style1.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+            style1.WrapText = true;//自动换行
+        }
 
         #region IDisposable 成员
 

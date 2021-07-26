@@ -2,50 +2,7 @@
 
 namespace satCompent.Model
 {
-    /// <summary>
-    /// PDXP帧头
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit, Pack = 4)]
-    public struct UH
-    {
-        [FieldOffset(0)]
-        public byte ver;  //版本
-        [FieldOffset(1)]
-        public ushort mid;  //卫星代号
-        [FieldOffset(3)]
-        public uint sid;  //信源
-        [FieldOffset(7)]
-        public uint did;  //信宿
-        [FieldOffset(11)]
-        public uint bid;  //信息类别
-        [FieldOffset(15)]
-        public uint no;  //包序号
-        [FieldOffset(19)]
-        public byte flag;  //信息标志
-        [FieldOffset(20)]
-        public uint res;  //保留
-        [FieldOffset(24)]
-        public ushort jd;  //积日
-        [FieldOffset(26)]
-        public uint js;  //积秒
-        [FieldOffset(30)]
-        public ushort len;  //数据长度
-
-        public UH(ushort len)
-        {
-            this.ver = 0x80;
-            this.mid = 0x5A5A;
-            this.sid = 0x01020304;
-            this.did = 0xA0A0A0A0;
-            this.bid = 0x00110111;
-            this.no = 0xFF;
-            this.flag = 0x00;
-            this.res = 0x00;
-            this.jd = 0x00;
-            this.js = 0x00;
-            this.len = len;
-        }
-    }
+   
 
     /// <summary>
     /// Float结构体
@@ -86,6 +43,199 @@ namespace satCompent.Model
             this.no = no;
             this.exceed = exceed;
             this.val = val;
+        }
+    }
+
+    /// <summary>
+    /// GPS，结构化内存排列，总字节数：104
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public struct MsgOfGps
+    {
+        [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string name;  //卫星名[8]
+        [FieldOffset(8)]
+        public int year;  //年
+        [FieldOffset(12)]
+        public int month;  //月
+        [FieldOffset(16)]
+        public int day;  //日
+        [FieldOffset(20)]
+        public int hour;  //时
+        [FieldOffset(24)]
+        public int minute;  //分
+        [FieldOffset(28)]
+        public double second;  //秒
+
+        [FieldOffset(36)]
+        public double gpsWeek;  //GPS周
+        [FieldOffset(44)]
+        public double gpsSecond;  //GPS秒
+        [FieldOffset(52)]
+        public double posX;  //卫星位置X方向:m
+        [FieldOffset(60)]
+        public double posY;  //卫星位置Y方向:m
+        [FieldOffset(68)]
+        public double posZ;  //卫星位置Z方向:m
+        [FieldOffset(76)]
+        public double speedX;  //卫星速度X方向:m/s
+        [FieldOffset(84)]
+        public double speedY;  //卫星速度Y方向:m/s
+        [FieldOffset(92)]
+        public double speedZ;  //卫星速度Z方向:m/s
+        [FieldOffset(100)]
+        public int valid;  //数据有效标识
+
+        public MsgOfGps(string satellite)
+        {
+            this.name = satellite;
+            this.year = 2000;
+            this.month = 1;
+            this.day = 1;
+            this.hour = 0;
+            this.minute = 0;
+            this.second = 0;
+
+            this.gpsWeek = this.gpsSecond = this.posX = this.posY = this.posZ = this.speedX = this.speedY = this.speedZ = this.valid = 0;
+        }
+    }
+
+    /// <summary>
+    /// 姿态角，结构化内存排列，总字节数：88
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public struct MsgOfAttitude
+    {
+        [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string name;  //卫星名[8]
+        [FieldOffset(8)]
+        public int year;  //年
+        [FieldOffset(12)]
+        public int month;  //月
+        [FieldOffset(16)]
+        public int day;  //日
+        [FieldOffset(20)]
+        public int hour;  //时
+        [FieldOffset(24)]
+        public int minute;  //分
+        [FieldOffset(28)]
+        public double second;  //秒
+
+        [FieldOffset(36)]
+        public double roll;  //滚动角
+        [FieldOffset(44)]
+        public double pitch;  //俯仰角
+        [FieldOffset(52)]
+        public double yaw;  //偏航角
+
+        public MsgOfAttitude(string satellite)
+        {
+            this.name = satellite;
+            this.year = 2000;
+            this.month = 1;
+            this.day = 1;
+            this.hour = 0;
+            this.minute = 0;
+            this.second = 0;
+
+            this.roll = this.pitch = this.yaw = 0;
+        }
+    }
+
+   
+    /// <summary>
+    /// 轨道，结构化内存排列，总字节数：84
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public struct MsgOfOrbit
+    {
+        [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string name;  //卫星名[8]
+        [FieldOffset(8)]
+        public int year;  //年
+        [FieldOffset(12)]
+        public int month;  //月
+        [FieldOffset(16)]
+        public int day;  //日
+        [FieldOffset(20)]
+        public int hour;  //时
+        [FieldOffset(24)]
+        public int minute;  //分
+        [FieldOffset(28)]
+        public double second;  //秒
+
+        [FieldOffset(36)]
+        public double axis;  //轨道半长轴a(m)
+        [FieldOffset(44)]
+        public double ecc;  //轨道偏心率e
+        [FieldOffset(52)]
+        public double dip;  //轨道倾角i
+        [FieldOffset(60)]
+        public double lng;  //升交点赤经Ω
+        [FieldOffset(68)]
+        public double arg;  //近地点幅角ω
+        [FieldOffset(76)]
+        public double mean;  //平近点角M
+
+        public MsgOfOrbit(string satellite)
+        {
+            this.name = satellite;
+            this.year = 2000;
+            this.month = 1;
+            this.day = 1;
+            this.hour = 0;
+            this.minute = 0;
+            this.second = 0;
+
+            this.axis = this.ecc = this.dip = this.lng = this.arg = this.mean = 0;
+        }
+    }
+
+    /// <summary>
+    /// 电流，结构化内存排列，总字节数：52
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public struct MsgOfCurr
+    {
+        [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string name;  //卫星名[8]
+        [FieldOffset(8)]
+        public int year;  //年
+        [FieldOffset(12)]
+        public int month;  //月
+        [FieldOffset(16)]
+        public int day;  //日
+        [FieldOffset(20)]
+        public int hour;  //时
+        [FieldOffset(24)]
+        public int minute;  //分
+        [FieldOffset(28)]
+        public double second;  //秒
+
+        [FieldOffset(36)]
+        public float lineCurr14;  //+14V母线电流:mA
+        [FieldOffset(40)]
+        public float lineCurr12P;  //+12V电流:mA
+        [FieldOffset(44)]
+        public float lineCurr12N;  //-12V电流:A
+        [FieldOffset(48)]
+        public float lineCurr5;  //+5V电流:mA
+
+        public MsgOfCurr(string satellite)
+        {
+            this.name = satellite;
+            this.year = 2000;
+            this.month = 1;
+            this.day = 1;
+            this.hour = 0;
+            this.minute = 0;
+            this.second = 0;
+
+            this.lineCurr14 = this.lineCurr12P = this.lineCurr12N = this.lineCurr5 = 0;
         }
     }
 
@@ -229,337 +379,5 @@ namespace satCompent.Model
         }
     }
 
-    /// <summary>
-    /// GPS，结构化内存排列，总字节数：104
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfGps
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public double gpsWeek;  //GPS周
-        [FieldOffset(44)]
-        public double gpsSecond;  //GPS秒
-        [FieldOffset(52)]
-        public double posX;  //卫星位置X方向:m
-        [FieldOffset(60)]
-        public double posY;  //卫星位置Y方向:m
-        [FieldOffset(68)]
-        public double posZ;  //卫星位置Z方向:m
-        [FieldOffset(76)]
-        public double speedX;  //卫星速度X方向:m/s
-        [FieldOffset(84)]
-        public double speedY;  //卫星速度Y方向:m/s
-        [FieldOffset(92)]
-        public double speedZ;  //卫星速度Z方向:m/s
-        [FieldOffset(100)]
-        public int valid;  //数据有效标识
-
-        public MsgOfGps(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.gpsWeek = this.gpsSecond = this.posX = this.posY = this.posZ = this.speedX = this.speedY = this.speedZ = this.valid = 0;
-        }
-    }
-
-    /// <summary>
-    /// 姿态角，结构化内存排列，总字节数：88
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfAttitude
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public double roll;  //滚动角
-        [FieldOffset(44)]
-        public double pitch;  //俯仰角
-        [FieldOffset(52)]
-        public double yaw;  //偏航角
-
-        public MsgOfAttitude(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.roll = this.pitch = this.yaw = 0;
-        }
-    }
-
-    /// <summary>
-    /// 帆板，结构化内存排列，总字节数：72
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfPanel
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public float panelVolt;  //帆板电压:V
-        [FieldOffset(40)]
-        public float panelCurrXP;  //帆板+X电流:mA
-        [FieldOffset(44)]
-        public float panelTempXP;  //帆板+X温度:℃
-        [FieldOffset(48)]
-        public float panelCurrXN;  //帆板-X电流:mA
-        [FieldOffset(52)]
-        public float panelTempXN;  //帆板-X温度:℃
-        [FieldOffset(56)]
-        public float panelCurrYP;  //帆板+Y电流:mA
-        [FieldOffset(60)]
-        public float panelTempYP;  //帆板+Y温度:℃
-        [FieldOffset(64)]
-        public float panelCurrYN;  //帆板-Y电流:mA
-        [FieldOffset(68)]
-        public float panelTempYN;  //帆板-Y温度:℃
-
-        public MsgOfPanel(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.panelVolt = this.panelCurrXP = this.panelTempXP = this.panelCurrXN = this.panelTempXN = this.panelCurrYP = this.panelTempYP = this.panelCurrYN = this.panelTempYN = 0;
-        }
-    }
-
-    /// <summary>
-    /// 电压，结构化内存排列，总字节数：52
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfVolt
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public float lineVolt14;  //+14V母线电压:V
-        [FieldOffset(40)]
-        public float lineVolt12P;  //+12V电压:V
-        [FieldOffset(44)]
-        public float lineVolt12N;  //-12V电压:V
-        [FieldOffset(48)]
-        public float lineVolt5;  //+5V电压:V
-
-        public MsgOfVolt(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.lineVolt14 = this.lineVolt12P = this.lineVolt12N = this.lineVolt5 = 0;
-        }
-    }
-
-    /// <summary>
-    /// 电流，结构化内存排列，总字节数：52
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfCurr
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public float lineCurr14;  //+14V母线电流:mA
-        [FieldOffset(40)]
-        public float lineCurr12P;  //+12V电流:mA
-        [FieldOffset(44)]
-        public float lineCurr12N;  //-12V电流:A
-        [FieldOffset(48)]
-        public float lineCurr5;  //+5V电流:mA
-
-        public MsgOfCurr(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.lineCurr14 = this.lineCurr12P = this.lineCurr12N = this.lineCurr5 = 0;
-        }
-    }
-
-    /// <summary>
-    /// 温度，结构化内存排列，总字节数：44
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfTemp
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public float tempObc;  //OBC温度:℃
-        [FieldOffset(40)]
-        public float tempRf;  //RF温度:℃
-
-        public MsgOfTemp(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.tempObc = this.tempRf = 0;
-        }
-    }
-
-    /// <summary>
-    /// 轨道，结构化内存排列，总字节数：84
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct MsgOfOrbit
-    {
-        [FieldOffset(0)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
-        public string name;  //卫星名[8]
-        [FieldOffset(8)]
-        public int year;  //年
-        [FieldOffset(12)]
-        public int month;  //月
-        [FieldOffset(16)]
-        public int day;  //日
-        [FieldOffset(20)]
-        public int hour;  //时
-        [FieldOffset(24)]
-        public int minute;  //分
-        [FieldOffset(28)]
-        public double second;  //秒
-
-        [FieldOffset(36)]
-        public double axis;  //轨道半长轴a(m)
-        [FieldOffset(44)]
-        public double ecc;  //轨道偏心率e
-        [FieldOffset(52)]
-        public double dip;  //轨道倾角i
-        [FieldOffset(60)]
-        public double lng;  //升交点赤经Ω
-        [FieldOffset(68)]
-        public double arg;  //近地点幅角ω
-        [FieldOffset(76)]
-        public double mean;  //平近点角M
-
-        public MsgOfOrbit(string satellite)
-        {
-            this.name = satellite;
-            this.year = 2000;
-            this.month = 1;
-            this.day = 1;
-            this.hour = 0;
-            this.minute = 0;
-            this.second = 0;
-
-            this.axis = this.ecc = this.dip = this.lng = this.arg = this.mean = 0;
-        }
-    }
 
 }

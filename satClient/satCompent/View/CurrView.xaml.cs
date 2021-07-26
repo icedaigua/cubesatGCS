@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
-namespace TSFCS.DMDS.Client.View
+namespace satCompent.View
 {
     /// <summary>
     /// CurrView.xaml 的交互逻辑
@@ -22,7 +10,7 @@ namespace TSFCS.DMDS.Client.View
         public CurrView()
         {
             InitializeComponent();
-            this.DataContext = new TSFCS.DMDS.Client.ViewModel.CurrViewModel();
+            this.DataContext = new satCompent.ViewModel.CurrViewModel();
         }
     }
 }

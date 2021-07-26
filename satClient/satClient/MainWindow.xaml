@@ -1,19 +1,17 @@
 ﻿<Window xmlns:Pages="clr-namespace:Pages;assembly=Pages"  
-         xmlns:iNet="clr-namespace:iNet;assembly=iNet" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:satClient"
-        xmlns:View="clr-namespace:satCompent.View;assembly=satCompent" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:light="http://www.galasoft.ch/mvvmlight"
         x:Class="satClient.MainWindow"
         mc:Ignorable="d"
-		Title="地面测控客户端" FontSize="20"
+		Title="地面测控客户端" 
         Icon="tubiao.ico"
-		WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+		WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}"/>
@@ -34,24 +32,27 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Margin="2">
-     
-            <TreeView x:Name="navi" Margin="10" ItemsSource="{Binding Navigation}">
+        <Grid Grid.Column="0" Margin="1">
+            <TreeView x:Name="navi"  ItemsSource="{Binding Navigation}"
+                      BorderThickness="1"
+                       Style="{DynamicResource MaterialDesignTreeView}">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                         <TextBlock FontSize="16" Text="{Binding Name}"/>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectedItemChanged">
-                    <light:EventToCommand Command="{Binding NaviCommand}" CommandParameter="{Binding SelectedItem, ElementName=navi}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseRightButtonDown">
-                    <light:EventToCommand Command="{Binding DefineCommand}" CommandParameter="{Binding SelectedItem, ElementName=navi}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <light:EventToCommand Command="{Binding NaviCommand}" CommandParameter="{Binding SelectedItem, ElementName=navi}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseRightButtonDown">
+                        <light:EventToCommand Command="{Binding DefineCommand}" CommandParameter="{Binding SelectedItem, ElementName=navi}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
             </TreeView>
+
+
         </Grid>
         <Grid Grid.Column="1" Margin="2">
             <Grid.RowDefinitions>
@@ -60,74 +61,75 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <materialDesign:ColorZone  Mode="Light">
+                <materialDesign:ColorZone  Mode="SecondaryMid">
                     <DockPanel>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="22"
-                            AutomationProperties.Name="田园一号"
-                            Text="田园一号"/>
+                        <Button DockPanel.Dock="Left"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                materialDesign:ButtonProgressAssist.Value="-1"
+                                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                Content="田园一号"
+                                FontSize="22" Height="46" Width="165"/>
 
-                        <StackPanel Orientation="Horizontal" Margin="400,0,0,0">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="2">
 
-                            <Button   
+
+                            <Button
                                 Margin="16,0,0,0"
-                                Style="{StaticResource MaterialDesignIconButton}"
-                                ToolTip="启动"
-                                Click="btn_test_Click" >
-                                <materialDesign:PackIcon Kind="Play" />
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                ToolTip="MaterialDesignIconForegroundButton"
+                                 Click="btn_test_Click">
+                                <materialDesign:PackIcon  Kind="Play" />
                             </Button>
-                            
+
                             <Button
                                 Margin="24,0,0,0"
                                 ToolTip="Home"                            
                                 Content="{materialDesign:PackIcon Kind=Home, Size=24}"
-                                Style="{DynamicResource MaterialDesignToolButton}"/>
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"/>
                             <Button
                                 Margin="24,0,0,0"
                                 ToolTip="网络设置"   
                                 Content="{materialDesign:PackIcon Kind=Web, Size=24}"
-                                Style="{DynamicResource MaterialDesignToolButton}"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
                                 Click="btn_iNet_setting"/>
                             <Button 
                                 Margin="16,0,0,0"
                                 ToolTip="设置"                              
                                 Content="{materialDesign:PackIcon Kind=CogOutline, Size=24}"
-                                Style="{DynamicResource MaterialDesignToolButton}"/>
-            
-                    </StackPanel>
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"/>
 
-                        <materialDesign:PopupBox
-                            DockPanel.Dock="Right"
+                            <materialDesign:PopupBox    
+                                 Margin="16,0,0,0"
                             PlacementMode="BottomAndAlignRightEdges"
                             StaysOpen="False">
-                            <StackPanel>
-                              
-                                <Button
+                                <StackPanel>
+                                    <Button
                                     Content="Hello World"
                                     Click="btn_test_Click"/>
 
-                                <Button
+                                    <Button
                                     Content="Nice Popup"
                                     Click="btn_test2_Click"/>
 
-                                <Button
+                                    <Button
                                     Content="Test3"
                                     Click="btn_test3_Click"/>
-                                <Separator/>
+                                    <Separator/>
 
-                                <Button
+                                    <Button
                                     Content="Goodbye"
                                     Click="btn_test4_Click"/>
-                            </StackPanel>
-                        </materialDesign:PopupBox>
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                        </StackPanel>
+
+
                     </DockPanel>
-            </materialDesign:ColorZone>
+                </materialDesign:ColorZone>
 
-        
-        </Grid>
 
+            </Grid>
             <ContentControl x:Name="content" Grid.Row="1" Margin="2"></ContentControl>
        
 

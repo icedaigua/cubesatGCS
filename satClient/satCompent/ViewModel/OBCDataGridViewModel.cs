@@ -1,15 +1,16 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
+using System.Diagnostics;
 
 namespace satCompent.ViewModel
 {
-    public class DataGridViewModel : ViewModelBase
+    public class OBCDataGridViewModel : ViewModelBase
     {
         #region Field
-        private DataTable dt = new DataTable();
+        private DataTable dt;
         #endregion
 
         #region Property
@@ -25,11 +26,12 @@ namespace satCompent.ViewModel
         #endregion
 
 
-        public DataGridViewModel()
+        public OBCDataGridViewModel()
         {
-            Messenger.Default.Register<DataTable>(this, "DataGrid", HandleDataGrid);
+            dt = new DataTable();
+            DataTb = new  DataTable();
+            Messenger.Default.Register<DataTable>(this, "OBCGrid", HandleOBCGrid);
         }
-
 
         #region Override Method
         public override void Cleanup()
@@ -39,9 +41,19 @@ namespace satCompent.ViewModel
         #endregion
 
         #region Method
-        public void HandleDataGrid(DataTable info)
+        int kc = 0;
+        public void HandleOBCGrid(DataTable info)
         {
-            DataTb = info.Copy();
+            try
+            {
+                DataTb = info.Copy();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("OBC DataGridView错误:" + ex.Message);
+            }
+
+            
         }
         #endregion
 

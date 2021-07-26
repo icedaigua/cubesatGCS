@@ -38,9 +38,13 @@ namespace satClient
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         private ManualResetEvent resetEvent = new ManualResetEvent(true); //用于Task暂停和恢复
 
-        private iNetView pgCode = null;  //源码
+        private iNetView pginet = null;  //inet
         private OrbitView pgResult = null;  //参数
         private DataGridView pggrid = null;  //参数
+        private CurrView pgcurr = null;
+        private CurveView pgcurve = null;
+        private OBCDataGridView pgobcgrid = null;
+        private ADCSDataGridView pgadcsgrid = null;
         #endregion
 
 
@@ -52,19 +56,13 @@ namespace satClient
             Messenger.Default.Register<string>(this, "MainNet", HandleMainNet);
             Messenger.Default.Register<string>(this, "Main", HandleMain);
             Messenger.Default.Register<object>(this, "Navi", HandleNavi);
-            //hkView_Initz();
+         
             createIOFolder();
             //satTimerInitz();
             TaskInitz();
         }
 
         #region Window相关
-        private void Window_Closed(object sender, EventArgs e)
-        {
-
-            excelApp.Dispose();
-            
-        }
 
         /// <summary>
         /// 日志文件系统初始化
@@ -77,11 +75,13 @@ namespace satClient
 
         private void UI_Initz()
         {
-            double workHeight = SystemParameters.WorkArea.Height;
-            double workWidth = SystemParameters.WorkArea.Width;
 
-            this.Width = workWidth;
-            this.Height = workHeight;
+            this.WindowState = WindowState.Maximized;
+           // double workHeight = SystemParameters.WorkArea.Height;
+           // double workWidth = SystemParameters.WorkArea.Width;
+
+           // this.Width = workWidth;
+           // this.Height = workHeight;
         }
 
         /// <summary>
@@ -127,13 +127,17 @@ namespace satClient
         {
             if ("Loaded".Equals(info))
             {
-                pgCode = new iNetView();
+                pginet = new iNetView();
                 pgResult = new OrbitView();
                 pggrid = new DataGridView();
-                //Messenger.Default.Send<string>("Loaded", "INET");
+                pgcurr = new CurrView();
+                pgcurve = new CurveView(0,0);
+                pgobcgrid = new OBCDataGridView();
+                pgadcsgrid = new ADCSDataGridView();
             }
             else if ("Closed".Equals(info))
             {
+                excelApp.Dispose();
             }
             else if ("Set".Equals(info))
             {
@@ -151,20 +155,20 @@ namespace satClient
  
             if (navigation.Parent == 0)  //第1级导航菜单
             {
-
+               
             }
             else if (navigation.Parent == 1)  //第2级导航菜单：遥测
             {
                 switch (navigation.Id)
                 {
                     case 11:
-                        //this.content.Content = new Frame() { Content = pgCode };
+                      
                         break;
                     case 12:
-                        this.content.Content = new Frame() { Content = pgResult };
+                      
                         break;
                     case 13:
-                        this.content.Content = new Frame() { Content = pggrid };
+                
                         break;
                     default:
                         break;
@@ -174,11 +178,11 @@ namespace satClient
             {
                 switch (navigation.Id)
                 {
-                    case 101:
-                        this.content.Content = new Frame() { Content = pgCode };
+                    case 21:
+                        this.content.Content = new Frame() { Content = pgcurr };
                         break;
-                    case 102:
-                        this.content.Content = new Frame() { Content = pgResult };
+                    case 22:
+                        this.content.Content = new Frame() { Content = pgcurve };
                         break;
                     default:
                         break;
@@ -195,9 +199,26 @@ namespace satClient
                         break;
                 }
             }
-            else if (navigation.Parent == 4)  //第2级导航菜单：自定义
+            else if (navigation.Parent == 4)  //第2级导航菜单：原始
             {
-                       
+                switch (navigation.Id)
+                {
+                    case 41:
+                        this.content.Content = new Frame() { Content = pggrid };
+                        break;
+                    case 42:
+                        this.content.Content = new Frame() { Content = pgobcgrid };
+                        //this.content.Content = pgobcgrid;
+                        break;
+                    case 43:
+                        this.content.Content = new Frame() { Content = pgadcsgrid };
+                        break;
+                    case 44:
+
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
@@ -274,7 +295,7 @@ namespace satClient
 
         private void SatTcpClient_ReceiveCompleted(object sender, iNet.SocketEventArgs e)
         {
-            localRecvQueue.Enqueue(e.Data);
+            RecvQueue.Enqueue(e.Data);
             StringBuilder builder = new StringBuilder(); //格式化接收
             foreach (byte b in e.Data)
             {
@@ -285,210 +306,6 @@ namespace satClient
             Messenger.Default.Send<string>(builder.ToString(), "INET");
         }
         #endregion
-
-
-
-        #region 本地Socket Client功能函数
-
-        #region 参数
-
-        //private IOFuctions localClientIO = new IOFuctions();
-
-        private bool localIsRunning = false;
-
-        private BlockingQueue<byte[]> localRecvQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
-        private BlockingQueue<byte[]> localSendQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
-        private AutoResetEvent localWaitHandler = new AutoResetEvent(false);  //事件信号，线程同步：处理线程通知发送线程；发送线程处于阻塞状态；默认非终止，阻塞状态
-
-        #endregion
-
-   
-        /// <summary>
-        /// 执行处理任务，解析数据
-        /// </summary>
-        public void localTaskProc()
-        {
-            try
-            {
-                while (localIsRunning)
-                {
-                    if (!localRecvQueue.IsEmpty())  //遥测接收数据队列中存在待处理的数据
-                    {
-                        byte[] data = localRecvQueue.Dequeue();  //取出遥测接收数据队列中的数据
-                        if (data != null)  //使用BlockingQueue可以不用判定，即此部可省略
-                        {
-
-                            //localJson.decodeBuf(data);  //数据解析处理
-
-                            //byte[] localsendBuff = SeqToServer.generateSequence(data);
-
-                            //localSendQueue.Enqueue(localsendBuff);
-
-                            //this.Dispatcher.Invoke(new Action(() =>
-                            //{
-                            //    hk_view.hkInfo_AddNewView(localJson.dicForShow);
-                            //}));
-
-                            localWaitHandler.Set();  //将事件状态设为终止状态，允许等待线程继续执行
-                        }
-                    }
-                    else
-                    {
-                        Thread.Sleep(10);  //休息10ms
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine("localSend Task Error:" + ex.Message);
-            }
-        }
-
-
-        #endregion
-
-
-
-        #region iNetClient
-
-        private bool remoteIsRunning = false;
-
-        private BlockingQueue<byte[]> remoteSendQueue = new BlockingQueue<byte[]>(10);  //遥测接收数据队列
-        private AutoResetEvent remoteWaitHandler = new AutoResetEvent(false);  //事件信号，线程同步：处理线程通知发送线程；发送线程处于阻塞状态；默认非终止，阻塞状态
-
-        private void iNetClientInitz()
-        {
-            //iClientUDP_frm.iNetInitz("本地网络设置", "192.168.1.100", "2012");
-            //iClientUDP_frm.setTextWidth(this.Width);
-
-            //iClientTCP_frm.setTextWidth(this.Width);
-            //iClientTCP_frm.iNetInitz("远程网络设置", "3s.dkys.org", "10293");
-
-            iNetClient_frm_init();
-        }
-
-
-
-        private void iNetClient_frm_init()
-        {
-            //iClientTCP_frm.OpenHandler += new Pages.iNetClient.OpenClickEventHandler(iNetClient_frm_create);
-            //iClientTCP_frm.CloseHandler += new Pages.iNetClient.CloseClickEventHandler(iNetClient_frm_close);
-            //iClientTCP_frm.SendHandler += new iNet.iNetSimple.SendClickEventHandler(remoteSendMsgClick);
-
-            //iClientTCP_frm.socketDataArrival +=iNetClientTaskRecv;
-
-            //iClientUDP_frm..OpenHandler += new iNet.iNetClient.OpenClickEventHandler(iNetClient_frm_create);
-            //iClientUDP_frm.socketDataArrival = iNetClientTaskRecv;
-        }
-
-        private void iNetClient_frm_close(object sender, RoutedEventArgs e)
-        {
-            remoteIsRunning = false;
-        }
-
-        private void iNetClient_frm_create(object sender, RoutedEventArgs e)
-        {
-
-            remoteIsRunning = true;
-
-            Task.Factory.StartNew(iNetClientTaskProc);  //启动处理任务     
-            //iClientTCP_frm.ShowMsg("数据处理任务启动成功");
-            Trace.WriteLine("数据处理任务启动成功");
-
-            Task.Factory.StartNew(iNetClientTaskSend);  //启动发送任务
-           // iClientTCP_frm.ShowMsg("数据发送任务启动成功");
-            Trace.WriteLine("数据发送任务启动成功");
-
-
-
-        }
-
-        private void iNetClientTaskRecv(byte[] buffer)
-        {
-            try
-            {
-
-                Int32 iRecv = buffer.Length;//remoteClient_Socket.Receive(remoteDataRecv);
-                if (iRecv > 0)
-                {
-                    byte[] recBuf = new byte[iRecv];  //遥测接收缓冲区
-                    Array.Copy(buffer, recBuf, iRecv);  //从非托管内存拷贝到托管内存
-    //                remoteRecvQueue.Enqueue(recBuf);  //遥测接收数据入队
-                    //iClientTCP_frm.ShowMsg("rec num is " + Encoding.ASCII.GetString(recBuf));
-                }
-
-            }
-            catch (Exception ex)
-            {
-                //iClientTCP_frm.ShowMsg("数据接收失败：" + ex.Message);
-                Trace.WriteLine("数据接收失败：" + ex.Message);
-            }
-
-        }
-
-        /// <summary>
-        /// 执行处理任务，解析数据
-        /// </summary>
-        public void iNetClientTaskProc()
-        {
-            while (remoteIsRunning)
-            {
-                //if (!remoteRecvQueue.IsEmpty())  //遥测接收数据队列中存在待处理的数据
-                //{
-                //    byte[] data = remoteRecvQueue.Dequeue();  //取出遥测接收数据队列中的数据
-                //    if (data != null)  //使用BlockingQueue可以不用判定，即此部可省略
-                //    {
-
-                //        //DataProc(data);  //数据解析处理
-
-                //        remoteWaitHandler.Set();  //将事件状态设为终止状态，允许等待线程继续执行
-                //    }
-                //}
-                //else
-                //{
-                //    Thread.Sleep(10);  //休息10ms
-                //}
-            }
-        }
-
-        /// <summary>
-        /// 执行发送任务,发送的是localSendQueue中的数据
-        /// </summary>
-        public void iNetClientTaskSend()
-        {
-            try
-            {
-                while (remoteIsRunning)  //控制任务运行的信号
-                {
-                    //localWaitHandler.WaitOne();  //阻塞当前线程，直到WaitHandler收到信号
-
-                    if (!localSendQueue.IsEmpty())  //遥测接收数据队列中存在待处理的数据
-                    {
-                        byte[] data = localSendQueue.Dequeue();  //取出遥测接收数据队列中的数据
-                        if (data != null)  //使用BlockingQueue可以不用判定，即此部可省略
-                        {
-                            //remoteSendMsg(data);
-                            //if (!iClientTCP_frm.SendMsg(data))  //发送失败，将数据重新放入发送队列中
-                            //    localSendQueue.Enqueue(data);
-                        }
-                    }
-                    else
-                    {
-                        //iClientTCP_frm.SendMsg(iClientTCP_frm.testbuf3);
-                    }
-
-                    Thread.Sleep(1000);  //休息10ms
-                }
-            }
-            catch
-            {
-                //iClientTCP_frm.ShowMsg("数据发送失败：" + ex.Message);
-            }
-        }
-
-
-        #endregion
-
 
         #region Task相关
 
@@ -519,13 +336,18 @@ namespace satClient
                 {
                     return -1;
                 }
-
                 // 初始化为true时执行WaitOne不阻塞
                 resetEvent.WaitOne();
+
                 //if (localRecvQueue.IsEmpty()) return;
+
+                Thread.Sleep(1000);
+                frameTest();
+                //Task.WaitAny();
                 //localRecvQueue.Dequeue();
 
                 //excelTest();
+             
             }
         }
    
@@ -550,11 +372,10 @@ namespace satClient
         private void btn_test4_Click(object sender, RoutedEventArgs e)
         {
             frameTest();
-
         }
         private void btn_iNet_setting(object sender, RoutedEventArgs e)
         {
-            this.content.Content = new Frame() { Content = pgCode };
+            this.content.Content = new Frame() { Content = pginet };
         }
 
         RecvMsgParse recmsgParse;
@@ -570,13 +391,17 @@ namespace satClient
 
             try
             {
+
+                DataTable dt0 = recmsgParse.ParseMessage(tymsg.createOBCFrame());
+                Messenger.Default.Send<DataTable>(dt0, "OBCGrid");
+                Messenger.Default.Send<DataTable>(dt0, "ADCSGrid");
+
                 excelApp.DataTableToExcel(recmsgParse.ParseMessage(tymsg.createOBCFrame()));
                 excelApp.DataTableToExcel(recmsgParse.originDataToDataTable());
 
                 DataTable dt = recmsgParse.originDataToDataTable();
 
                 Messenger.Default.Send<DataTable>(recmsgParse.originDataToDataTable(), "DataGrid");
-                //excelApp.DataTableToExcel(recmsgParse.ParseMessage(createOBCFrame()));
 
             }
             catch(Exception ex)

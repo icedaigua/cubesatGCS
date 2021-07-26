@@ -4,11 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using satClient.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
-
-
-using System.Data;
 
 namespace satClient.ViewModel
 {
@@ -58,6 +54,18 @@ namespace satClient.ViewModel
         }
         public ICommand LoadedCommand { get { return new RelayCommand(LoadedExecute, CanLoadedExecute); } }
 
+
+        private bool CanClosedExecute()
+        {
+            return true;
+        }
+        private void ClosedExecute()
+        {
+            Messenger.Default.Send<string>("closed", "main");
+        }
+        public ICommand ClosedCommand { get { return new RelayCommand(ClosedExecute, CanClosedExecute); } }
+
+
         private bool CanNaviExecute(object obj)
         {
             return true;
@@ -76,7 +84,6 @@ namespace satClient.ViewModel
         {
             Messenger.Default.Send<object>(obj, "Delete");
             Messenger.Default.Send<object>(obj, "Confirm");
-            //Messenger.Default.Send<string>("define", "INET");
         }
         public ICommand DefineCommand { get { return new RelayCommand<object>(DefineExecute, CanDefineExecute); } }
 
@@ -105,19 +112,29 @@ namespace satClient.ViewModel
             NavigationModel model_0 = new NavigationModel() { Id = 1, Name = "遥测", Parent = 0, Define = 1, Children = new List<NavigationModel>() };
             NavigationModel model_1 = new NavigationModel() { Id = 2, Name = "遥控", Parent = 0, Define = 1, Children = new List<NavigationModel>() };
             NavigationModel model_2 = new NavigationModel() { Id = 3, Name = "自定义", Parent = 0, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_3 = new NavigationModel() { Id = 4, Name = "原始", Parent = 0, Define = 1, Children = new List<NavigationModel>() };
+
+            NavigationModel model_01 = new NavigationModel() { Id = 41, Name = "遥测帧", Parent = 4, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_02 = new NavigationModel() { Id = 42, Name = "平台", Parent = 4, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_03 = new NavigationModel() { Id = 43, Name = "姿控", Parent = 4, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_04 = new NavigationModel() { Id = 44, Name = "载荷", Parent = 4, Define = 1, Children = new List<NavigationModel>() };
 
 
-            NavigationModel model_3 = new NavigationModel() { Id = 11, Name = "星务", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
-            NavigationModel model_4 = new NavigationModel() { Id = 12, Name = "电源", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
-            NavigationModel model_5 = new NavigationModel() { Id = 13, Name = "姿控", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
 
-            NavigationModel model_6 = new NavigationModel() { Id = 21, Name = "星务", Parent = 2, Define = 1, Children = new List<NavigationModel>() };
-            NavigationModel model_7 = new NavigationModel() { Id = 22, Name = "电源", Parent = 2, Define = 1, Children = new List<NavigationModel>() };
-            NavigationModel model_8 = new NavigationModel() { Id = 23, Name = "姿控", Parent = 2, Define = 1, Children = new List<NavigationModel>() };
-  
-            naviList.Add(model_0);
-            naviList.Add(model_1); naviList.Add(model_2); naviList.Add(model_3); naviList.Add(model_4); naviList.Add(model_5); naviList.Add(model_6);
-            naviList.Add(model_7); naviList.Add(model_8);
+            NavigationModel model_11 = new NavigationModel() { Id = 11, Name = "星务", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_12 = new NavigationModel() { Id = 12, Name = "电源", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_13 = new NavigationModel() { Id = 13, Name = "姿控", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_14 = new NavigationModel() { Id = 14, Name = "温度", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_15 = new NavigationModel() { Id = 15, Name = "元器件载荷", Parent = 1, Define = 1, Children = new List<NavigationModel>() };
+
+            NavigationModel model_21 = new NavigationModel() { Id = 21, Name = "星务", Parent = 2, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_22 = new NavigationModel() { Id = 22, Name = "电源", Parent = 2, Define = 1, Children = new List<NavigationModel>() };
+            NavigationModel model_23 = new NavigationModel() { Id = 23, Name = "姿控", Parent = 2, Define = 1, Children = new List<NavigationModel>() };
+
+            naviList.Add(model_3); naviList.Add(model_0); naviList.Add(model_1); naviList.Add(model_2);
+            naviList.Add(model_01); naviList.Add(model_02); naviList.Add(model_03); naviList.Add(model_04);
+            naviList.Add(model_11); naviList.Add(model_12); naviList.Add(model_13); naviList.Add(model_14); naviList.Add(model_15);
+            naviList.Add(model_21); naviList.Add(model_22); naviList.Add(model_23);
             List<NavigationModel> firstList = new List<NavigationModel>();//= naviList.Where(x => x.Parent == 0).AsList<NavigationModel>();  //第1级导航菜单
 
             foreach(NavigationModel nm in naviList)
